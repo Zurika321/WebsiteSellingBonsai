@@ -1,0 +1,101 @@
+﻿@model WebsiteSellingMiniBonsai.Models.Bonsai
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+@if (!string.IsNullOrEmpty(Model.Image))
+{
+                    <img src="@Url.Content("~/" + Model.Image)" alt="Product Image" style="max-width: 200px; max-height: 200px;" />
+}
+else
+{
+                    <span>No Image Available</span>
+}
+<h4>Bonsai</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="BonsaiName" class="control-label"></label>
+                <input asp-for="BonsaiName" class="form-control" />
+                <span asp-validation-for="BonsaiName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" type="file" accept="image/*"/>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>an asp-validation-for="BonsaiName" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FengShuiMeaning" class="control-label"></label>
+                <input asp-for="FengShuiMeaning" class="form-control" />
+                <span asp-validation-for="FengShuiMeaning" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearOld" class="control-label"></label>
+                <input asp-for="YearOld" class="form-control" />
+                <span asp-validation-for="YearOld" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinLife" class="control-label"></label>
+                <input asp-for="MinLife" class="form-control" />
+                <span asp-validation-for="MinLife" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxLife" class="control-label"></label>
+                <input asp-for="MaxLife" class="form-control" />
+                <span asp-validation-for="MaxLife" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeId" class="control-label"></label>
+                <select asp-for="TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
+                <span asp-validation-for="TypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GeneralMeaningId" class="control-label"></label>
+                <select asp-for="GeneralMeaningId" class="form-control" asp-items="ViewBag.GeneralMeaningId"></select>
+                <span asp-validation-for="GeneralMeaningId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StyleId" class="control-label"></label>
+                <select asp-for="StyleId" class="form-control" asp-items="ViewBag.StyleId"></select>
+                <span asp-validation-for="StyleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

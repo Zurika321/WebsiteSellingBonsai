@@ -1,0 +1,116 @@
+﻿@using WebsiteSellingMiniBonsai.Areas.Admin.DTOS
+@model LoginDTO
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+    <link href="~/admin/css/adminlte.css" rel="stylesheet" />
+    <link href="~/admin/css/custom.css" rel="stylesheet" />
+    <link href="~/admin/plugins/font-awesome/css/all.css" rel="stylesheet" />
+<div class="d-flex justify-content-center align-items-center bg-dark" style="Height: 100vh" id="body" >
+    <div class="login-box">
+            <div class="card card-outline card-success">
+                <div class="card-header"> <a href="index.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+                        <h1 class="mb-0"> <b>Admin</b>LTE</h1>
+                    </a> </div>
+                <div class="card-body login-card-body rounded">
+                    <p class="login-box-msg text-danger">Sign in to start your session</p>
+                @if (ViewData["Message"] != null)
+                {
+                                <p class="login-box-msg text-danger">@ViewData["Message"]</p>
+                }
+                <form asp-action="Login" method="post">
+                        <div class="input-group mb-2">
+                          <div class="form-floating">
+                            @* <label asp-for="Username" class="control-label"></label>      *@     
+                            <input asp-for="Username" class="form-control" value="" placeholder="" id="Username"/>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                            <label for="loginUsername">Username</label>
+                          </div>
+                          <div class="input-group-text">
+                            <i class="fa-light fa-user"></i>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="form-floating">
+                            @* <label asp-for="Email" class="control-label"></label>      *@     
+                            <input asp-for="Password" class="form-control" value="" placeholder="" id="loginPassword"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <label for="loginPassword">Password</label>
+                          </div>
+                          <div class="input-group-text">
+                            <i class="fa-light fa-lock"></i>
+                          </div>
+                        </div>
+                        <!--begin::Row-->
+                        <div class="row">
+                          <div class="col-8 d-inline-flex align-items-center">
+                            <div class="form-check">
+                                <input asp-for="RememberMe" class="form-check-input" type="checkbox" id="flexCheckDefault" />
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Remember Me
+                                </label>
+                            </div>
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-4">
+                            <div class="d-grid gap-2">
+                              <button type="submit" class="btn btn-success">Sign In</button>
+                            </div>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!--end::Row-->
+                      </form>
+                      <div>
+                        <a asp-action="Index">Back to List</a>
+                     </div>
+                    <!-- <div class="social-auth-links text-center mb-3 d-grid gap-2">
+                        <p>- OR -</p> <a href="#" class="btn btn-primary"> <i class="bi bi-facebook me-2"></i> Sign in using Facebook
+                        </a> <a href="#" class="btn btn-danger"> <i class="bi bi-google me-2"></i> Sign in using Google+
+                        </a>
+                    </div>
+                    <p class="mb-0"> <a href="forgot-password.html">I forgot my password</a> </p> -->
+                </div> <!-- /.login-card-body -->
+            </div>
+        </div> <!-- /.login-box -->
+     </div>
+    <script>
+        //===================== begin::OverlayScrollbars Configure =====================
+        const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+        const Default = {
+            scrollbarTheme: "os-theme-dark",
+            scrollbarAutoHide: "leave",
+            scrollbarClickScroll: true,
+        };
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+            if (
+                sidebarWrapper &&
+                typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+            ) {
+                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                    scrollbars: {
+                        theme: Default.scrollbarTheme,
+                        autoHide: Default.scrollbarAutoHide,
+                        clickScroll: Default.scrollbarClickScroll,
+                    },
+                });
+            }
+        });
+        //===================== end::OverlayScrollbars Configure =====================
+
+    </script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+    <script src="~/admin/plugins/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js"></script>
+    <script src="~/admin/js/bootstrap.bundle.min.js"></script>
+    <script src="~/admin/js/adminlte.js"></script>
+    <script src="~/admin/plugins/jquery/jquery-3.7.1.min.js"></script>
+

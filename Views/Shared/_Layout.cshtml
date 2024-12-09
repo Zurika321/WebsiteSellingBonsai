@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Website selling bonsai</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Customized Bootstrap Stylesheet 
+    <link href="~/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+
+    <!-- sử dụng style
+    <link href="~/css/style.css" rel="stylesheet"> -->
+
+    @await RenderSectionAsync("Header", required: false)
+    <style>
+      .a-link { width: auto; cursor: pointer; }
+      .a-link:hover { color: blue; }
+      .custom-toggle::after { display: none; }
+      .linknavbar:hover {border-bottom: 1px solid green;height: 50px}
+      .linknavbar a {text-decoration: none;}
+      .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1000;
+    }
+    .card {
+      transition: transform 0.3s ease;
+    }
+
+    .card div {
+      overflow: hidden;
+    }
+    :root{
+        --color-ui : rgb(85, 215, 111);
+        --bg-mode-l: rgb(255,255,255);
+        --bg-mode-d: rgb(30,30,30);
+        --text-mode-l: rgb(0,0,0);
+        --text-mode-d: rgb(255,255,255);
+    }
+    #menu_search{
+        position: absolute;
+        background-color: white;
+        bottom: 0;
+        transform: translateY(100%);
+        left: 0;
+        width: calc(100% - 50px);
+        padding: 5px;
+        display: none;
+    }
+    #menu_search li:hover{
+        background-color: rgb(200,200,200);
+    }
+    #menu_search li {
+       list-style-type: none;
+    }
+    #menu_search a {
+        text-decoration: none;
+    }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <div
+        class="container d-flex justify-content-between align-items-center"
+        style="height: 80px"
+      >
+        <img src="" alt="logo_web" class="img-fluid border" onclick="window.location.href = '/'"/>
+
+        <!-- Menu chính -->
+        <div class="d-none d-md-flex gap-3">
+          <a class="btn btn-outline-success px-1 mx-0" href="#">Trang chủ</a>
+          <a class="btn btn-outline-success px-1 mx-0" href="#">Dịch vụ</a>
+          <a class="btn btn-outline-success px-1 mx-0" href="#">Liên hệ</a>
+          <a class="btn btn-outline-success px-1 mx-0" href="#">Đăng nhập/Đăng ký</a>
+          <a class="btn btn-outline-success px-1 mx-0" style="border:1px solid rgb(85, 215, 111)" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a>
+        </div>
+
+        <!-- Dropdown menu khi màn hình nhỏ hơn 'md' -->
+        <div class="d-md-none dropdown border">
+          <button
+            class="btn dropdown-toggle custom-toggle"
+            style=";border:1px solid rgb(85, 215, 111)"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-bars" style=";color: rgb(85, 215, 111);"></i>
+          </button>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Trang chủ</a></li>
+            <li><a class="dropdown-item" href="#">Dịch vụ</a></li>
+            <li><a class="dropdown-item" href="#">Liên hệ</a></li>
+            <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
+            <li><a class="dropdown-item" href="#">Đăng ký</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="background-color: rgb(85, 215, 111)">
+        <div class="container">
+          <h3 class="fw-bold text-white">Website selling bonsai</h3>
+          <div
+            id="breadcrumb"
+            class="d-flex justify-content-center justify-content-md-start text-primary"
+          >
+            <p id="urlhome" onclick="window.location.href = '/'">Home</p>
+          </div>
+        </div>
+        <script>
+          const currentUrl = window.location.pathname;
+
+          const urlSegments = currentUrl
+            .split("/")
+            .filter((segment) => segment !== "");
+
+                if (urlSegments.length == 0){
+                    document.getElementById("urlhome").style.color = "gray"
+                }
+          const breadcrumbDiv = document.getElementById("breadcrumb");
+
+          // Tạo các liên kết cho từng phần của đường dẫn
+          urlSegments.forEach((segment, index) => {
+            // Thêm dấu "/" giữa các phần
+            const separator = document.createElement("p");
+            separator.textContent = " / ";
+            separator.classList.add("mx-2");
+            breadcrumbDiv.appendChild(separator);
+
+            // Tạo link cho từng phần của URL
+            const segmentLink = document.createElement("a");
+            segmentLink.style =
+              urlSegments.length - 1 != index ? "color: blue" : "color: gray";
+            segmentLink.href = "/" + urlSegments.slice(0, index + 1).join("/");
+            segmentLink.textContent =
+              segment.charAt(0).toUpperCase() + segment.slice(1);
+            breadcrumbDiv.appendChild(segmentLink);
+          });
+        </script>
+      </div>
+    </header>
+    <!-- nav bar -->
+    <div
+      style="
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: white;
+      "
+    >
+      <div
+        class="px-5 d-flex justify-content-between align-items-center shadow"
+        style="height: 50px"
+      >
+        <div class="d-none d-lg-flex gap-3 my-3">
+            <!-- Menu: Tất cả -->
+            <div style="border-bottom: 1px solid green;height: 50px" class="d-flex align-items-center">
+                <a asp-action="Index" asp-controller="Home">Tất cả</a>
+            </div>
+
+            <!-- Menu: Phân loại theo loại cây -->
+            <div class="d-flex align-items-center dropdown linknavbar">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Loại cây</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" onclick="submitSearch('Type', '')">Tất cả</a></li>
+                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["TypeList"] ?? new List<SelectListItem>())
+                    {
+                        <li><a class="dropdown-item" onclick="submitSearch('Type', '@item.Value')">@item.Text </a></li>
+                    }
+                    @foreach (var item in ViewData["TypeList2"] as List<BonsaiType> ?? [])
+                    {
+                        <li><a class="dropdown-item" onclick="submitSearch('Type', '@item.Id')">@item.Name 2</a></li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Menu: Phân loại theo kích thước -->
+            <div class="d-flex align-items-center dropdown linknavbar">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Kích thước</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" onclick="submitSearch('size',false,-1,-1)">Tất cả</a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('size',false,1,30)">Mini bonsai 5-30 cm</a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('size',false,30,70)">Cỡ trung 30-70 cm</a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('size',false,70,-1)">Cỡ lớn 70^ cm</a></li>
+                </ul>
+            </div>
+            
+            <!-- Menu: Phân loại theo độ tuổi -->
+            <div class="d-flex align-items-center dropdown linknavbar">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Độ tuổi</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,-1,-1)">Tất cả</a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,1,30)">Cây trẻ 1 -30 tuổi</a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,30,70)">Cây trung niên 30 -70 tuổi </a></li>
+                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,70,-1)">Cây cổ thụ 70^ tuổi </a></li>
+                </ul>
+            </div>
+
+            <!-- Menu: Phân loại theo phong cách -->
+            <div class="d-flex align-items-center dropdown linknavbar">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Phong cách</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" onclick="submitSearch('Style', '')">Tất cả</a></li>
+                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["StyleList"])
+                        {
+                                <li><a class="dropdown-item" onclick="submitSearch('Style', '@item.Value')">@item.Text</a></li>
+                        }
+                </ul>
+            </div>
+
+            <!-- Menu: Phân loại theo ý nghĩa phong thủy -->
+            <div class="d-flex align-items-center dropdown linknavbar">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Ý nghĩa phong thủy</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaning', '')">Tất cả</a></li>
+                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["GeneralMeaningList"])
+                    {
+                            <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaning', '@item.Value')">@item.Text</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <form method="Get" asp-action="Index" asp-controller="Home" id="searchForm" class="col col-lg-auto d-flex align-items-center" style="position: relative;">
+            <input type="text" name="search" 
+                   style="width: calc(100% - 50px);border:1px solid rgb(85, 215, 111);" 
+                   id="search" 
+                   placeholder="Search here" 
+                   value="@(ViewData["Search"] ?? "")" />
+                   <input type="hidden" id="sizeMin" name="sizeMin" value="@(ViewData["sizeMin"] ?? "")" />
+                   <input type="hidden" id="sizeMax" name="sizeMax" value="@(ViewData["sizeMax"] ?? "")" />
+                   <input type="hidden" id="yearOldMin" name="yearOldMin" value="@(ViewData["yearOldMin"] ?? "")" />
+                   <input type="hidden" id="yearOldMax" name="yearOldMax" value="@(ViewData["yearOldMax"] ?? "")" />
+                   <input type="hidden" id="TypeId" name="TypeId" value="@(ViewData["TypeId"] ?? "")" />
+                   <input type="hidden" id="StyleId" name="StyleId" value="@(ViewData["StyleId"] ?? "")" />
+                   <input type="hidden" id="GeneralMeaningId" name="GeneralMeaningId" value="@(ViewData["GeneralMeaningId"] ?? "")" />
+            <button style="border:1px solid green;background-color: rgb(85, 215, 111)" type="submit">
+                <i class="fa-solid fa-magnifying-glass mx-2 text-light"></i>
+            </button>
+            <div id="menu_search">
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+            </div>
+        </form>
+        <script>
+            function submitSearch(WhatAttribute,Id,min,max) {
+                if (min && max){
+                    let Name = WhatAttribute + "Min"
+                    document.getElementById(Name).value = min;
+                    Name = WhatAttribute + "Max"
+                    document.getElementById(Name).value = max;
+                }else{
+                    let Name = WhatAttribute + "Id"
+                    document.getElementById(Name).value = Id;
+                }
+                document.getElementById("searchForm").submit();
+            }
+        </script>
+      </div>
+    </div>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <button
+      id="scrollToTopButton"
+      style="
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        z-index: 2;
+        bottom: 20px;
+        right: 10px;
+      "
+      class="btn btn-primary d-none"
+      onclick="window.location.href ='#header'"
+    >
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Hàm kiểm tra vị trí cuộn và hiển thị/ẩn nút
+      function toggleScrollButton() {
+        const button = document.getElementById("scrollToTopButton");
+        if (window.scrollY > 200) {
+          button.classList.remove("d-none");
+          button.classList.add("d-block");
+        } else {
+          button.classList.remove("d-block");
+          button.classList.add("d-none");
+        }
+      }
+
+      // Lắng nghe sự kiện cuộn
+      window.addEventListener("scroll", toggleScrollButton);
+    </script>
+
+    <footer
+      class="mt-3"
+      style="background-color: rgba(0, 0, 0, 0.9); opacity: 0.9"
+    >
+      <div class="container py-3">
+        <div class="row">
+          <div
+            class="col-12 col-md-6 col-xl-4 d-flex justify-content-center my-3"
+          >
+            <div class="card h-100 w-100 p-3">
+              <h5>Thông tin liên hệ</h5>
+              <p>Văn phòng: Tòa nhà xyz - đường Tân Thới Hiệp - Quận 12</p>
+              <p>Hotline: 099821411</p>
+              <p>Email: xyz@gmail.com</p>
+            </div>
+          </div>
+          <div
+            class="col-12 col-md-6 col-xl-4 d-flex justify-content-center my-3"
+          >
+            <div class="card h-100 w-100 p-3">
+              <h5>Chính sách</h5>
+              <h5>- Chính sách hỗ trợ</h5>
+              <p class="mx-3 a-link">Xem chi tiết</p>
+              <h5>- Chính sách hoàn trả</h5>
+              <p class="mx-3 a-link">Xem chi tiết</p>
+            </div>
+          </div>
+          <div
+            class="col-12 col-md-6 col-xl-4 d-flex justify-content-center my-3"
+          >
+            <div class="card h-100 w-100 p-3">
+              <h5>Phương thức thanh toán</h5>
+              <div class="row">
+                <div class="col-3">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE7IHpS2tFtqdhpXkSzNKkuuhhlA2MsGOMog&s"
+                    alt="thanhtoan"
+                    class="img-fluid border a-link"
+                  />
+                </div>
+                <div class="col-3">
+                  <img
+                    src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/05/c9/34/05c93406-55a3-1ceb-9d44-41aa69faed68/AppIcon-0-0-1x_U007emarketing-0-5-0-0-85-220.png/1200x600wa.png"
+                    alt="thanhtoan"
+                    class="img-fluid border a-link"
+                  />
+                </div>
+                <div class="col-3">
+                  <img
+                    src="https://www.vban.vn/Uploads/cmsimages/Logo/vietcombank.png"
+                    alt="thanhtoan"
+                    class="img-fluid border a-link"
+                  />
+                </div>
+                <div class="col-3">
+                  <img
+                    src="https://www.vban.vn/Uploads/cmsimages/Logo/visa.png"
+                    alt="thanhtoan"
+                    class="img-fluid border a-link"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr style="background-color: white; height: 2px" />
+
+        <div class="row text-center mt-3">
+          <div class="col">
+            <a href="/" class="text-white">Website selling bonsai</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+@*     <!-- Tải jQuery trước -->
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<!-- Tải jQuery Validate sau jQuery -->
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<!-- Tải jQuery Unobtrusive Validate sau jQuery Validate -->
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+  </body>
+</html>

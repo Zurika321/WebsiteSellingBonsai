@@ -1,0 +1,114 @@
+﻿@model IEnumerable<WebsiteSellingMiniBonsai.Models.Bonsai>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="card card-success card-outline">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md"><h3 class="card-title">Bonsais</h3></div>
+            <div class="col-md-auto">
+                <button id="btnAdd" type="button" class="btn btn-success">
+                   <a asp-action="Create" class="text-white text-decoration-none"><i class="fa-light fa-add me-1"></i> Add new</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+         <div class="table-responsive ">
+            <table id="tbl" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.BonsaiName)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.FengShuiMeaning)
+                        </th>
+                         <th>
+                                        @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                         <th>
+                                         @Html.DisplayNameFor(model => model.Quantity)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Size)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.YearOld)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.MinLife)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.MaxLife)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Type)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.GeneralMeaning)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Style)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                                @foreach (var item in Model)
+                                {
+                        <tr>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.BonsaiName)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.FengShuiMeaning)
+                            </td>
+                             <td>
+                                            @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                             <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.Size)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.YearOld)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.MinLife)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.MaxLife)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.Type.Name)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.GeneralMeaning.Meaning)
+                            </td>
+                            <td>
+                                            @Html.DisplayFor(modelItem => item.Style.Name)
+                            </td>
+                            <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-sharp-duotone fa-regular fa-pen-to-square" style="color: blue"></i></a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" title="View"><i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-duotone fa-regular fa-trash" style="--fa-primary-color: #ff0000; --fa-secondary-color: #ff0000;"></i></a>
+                            </td>
+                        </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    </div>
