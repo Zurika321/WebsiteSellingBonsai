@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebsiteSellingMiniBonsai.Models
+namespace WebsiteSellingBonsai.Models
 {
     [Table("Styles")]
     public class Style

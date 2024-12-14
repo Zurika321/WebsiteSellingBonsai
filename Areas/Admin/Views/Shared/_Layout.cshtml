@@ -1,4 +1,4 @@
-﻿@using WebsiteSellingMiniBonsai.Areas.Admin.Utils
+﻿@using WebsiteSellingBonsaiAPI.Utils
 @{
     var userInfo = Context.Session.Get<AdminUser>("userInfo");
     var currentPath = Context.Request.Path.ToString().ToLower();
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="~/admin/css/adminlte.css" />
     <link rel="stylesheet" href="~/admin/css/custom.css" />
     <link rel="stylesheet" href="~/alert/ThongBao.css" />
+    @RenderSection("Header", required: false)
 </head>
 <body class ="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse bg-body-tertiary">
     <!--begin::App Wrapper-->

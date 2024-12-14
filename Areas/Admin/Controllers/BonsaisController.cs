@@ -12,31 +12,62 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using WebsiteSellingMiniBonsai.Areas.Admin.DTOS;
-using WebsiteSellingMiniBonsai.Areas.Admin.Utils;
-using WebsiteSellingMiniBonsai.Models;
+using WebsiteSellingBonsaiAPI.DTOS;
+using WebsiteSellingBonsaiAPI.Utils;
+using WebsiteSellingBonsaiAPI.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class BonsaisController : Controller
     {
-        private readonly MiniBonsaiDB _context;
+        private readonly MiniBonsaiDBAPI _context;
         private readonly IWebHostEnvironment _hostEnv;
+        private readonly HttpClient _httpClient;
 
-        public BonsaisController(MiniBonsaiDB context, IWebHostEnvironment hostEnv)
+        public BonsaisController(MiniBonsaiDBAPI context, IWebHostEnvironment hostEnv, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _hostEnv = hostEnv;
+            _httpClient = httpClientFactory.CreateClient();
+            if (_httpClient.DefaultRequestHeaders.Contains("WebsiteSellingBonsai"))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("WebsiteSellingBonsai");
+            }
+            // Thêm API Key
+            _httpClient.DefaultRequestHeaders.Add("WebsiteSellingBonsai", "kjasdfh32112");
         }
-        
+
         // GET: Admin/Bonsais
         public async Task<IActionResult> Index()
         {
-            var miniBonsaiDB = _context.Bonsais.Include(b => b.GeneralMeaning).Include(b => b.Style).Include(b => b.Type);
-            return View(await miniBonsaiDB.ToListAsync());
+            List<BonsaiDTO> bonsaiList = new List<BonsaiDTO>();
+            try
+            {
+                // Gọi API để lấy danh sách bonsai
+                var response = await _httpClient.GetAsync("https://localhost:44351/api/bonsais");
+                if (response.IsSuccessStatusCode)
+                {
+                    // Deserialize JSON trả về thành danh sách BonsaiDTO
+                    var jsonData = await response.Content.ReadAsStringAsync();
+                    bonsaiList = JsonConvert.DeserializeObject<List<BonsaiDTO>>(jsonData);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Không thể lấy dữ liệu từ API.";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
+
+            return View(bonsaiList);
         }
+
 
         // GET: Admin/Bonsais/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -46,16 +77,33 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var bonsai = await _context.Bonsais
-                .Include(b => b.GeneralMeaning)
-                .Include(b => b.Style)
-                .Include(b => b.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (bonsai == null)
-            {
-                return NotFound();
-            }
+            BonsaiDTO bonsai = null;
 
+            try
+            {
+                var responseBonsai = await _httpClient.GetAsync($"https://localhost:44351/api/bonsais/{id}");
+
+                if (responseBonsai.IsSuccessStatusCode)
+                {
+                    // Đọc dữ liệu JSON và deserialize thành BonsaiDTO
+                    var jsonData = await responseBonsai.Content.ReadAsStringAsync();
+                    bonsai = JsonConvert.DeserializeObject<BonsaiDTO>(jsonData);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Không thể lấy dữ liệu từ API.";
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HttpRequestException: {httpEx.Message}");
+                ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
             return View(bonsai);
         }
 
@@ -74,20 +122,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Tạo danh sách chứa lỗi
-                var errorMessages = ModelState
-                    .Where(ms => ms.Value.Errors.Count > 0)
-                    .SelectMany(ms => ms.Value.Errors.Select(e => e.ErrorMessage))
-                    .ToList();
-
-                ViewBag.ErrorMessages = errorMessages;
-
-                // Ghi log để debug nếu cần
-                foreach (var error in errorMessages)
-                {
-                    Console.WriteLine($"Validation Error: {error}");
-                }
-
                 try
                 {
                     var AvatarPath = "";
@@ -105,6 +139,10 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                         var fileName = bonsai.BonsaiName;/*Path.GetFileNameWithoutExtension(bonsai.Image.FileName);*/
                         var extension = Path.GetExtension(bonsai.Image.FileName);
                         var newFileName = $"{fileName}_{DateTime.Now:yyyyMMddHHmmss}{extension}";
+                        //var newFileName = $"{Guid.NewGuid()}{extension}"; bảo mật 1
+                        //var fileBytes = memoryStream.ToArray(); bảo mật siêu cấp
+                        //var hash = SHA256.HashData(fileBytes);
+                        //var fileHash = BitConverter.ToString(hash).Replace("-", "").ToLower();
 
                         var filePath = Path.Combine(uploadFolder, newFileName);
 
@@ -132,7 +170,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                         TypeId = bonsai.TypeId,
                         StyleId = bonsai.StyleId,
                         GeneralMeaningId = bonsai.GeneralMeaningId, 
-
                     };
                     _context.Add(bonsaiEntity);
                     await _context.SaveChangesAsync();
@@ -188,6 +225,29 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            var bonsaiDTO = new BonsaiDTO
+            {
+                Id = bonsai.Id,
+                BonsaiName = bonsai.BonsaiName,
+                Description = bonsai.Description,
+                FengShuiMeaning = bonsai.FengShuiMeaning,
+                Size = bonsai.Size,
+                YearOld = bonsai.YearOld,
+                MinLife = bonsai.MinLife,
+                MaxLife = bonsai.MaxLife,
+                Price = bonsai.Price,
+                Quantity = bonsai.Quantity,
+                ImageOld = bonsai.Image,
+                nopwr = bonsai.NOPWR,
+                rates = bonsai.Rates,
+                TypeId = bonsai.TypeId,
+                StyleId = bonsai.StyleId,
+                GeneralMeaningId = bonsai.GeneralMeaningId,
+                //CreatedBy = product.CreatedBy,
+                //CreatedDate = product.CreatedDate,
+                //UpdatedBy = product.UpdatedBy,
+                //UpdatedDate = product.UpdatedDate,
+            };
             ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning", bonsai.GeneralMeaningId);
             ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name", bonsai.StyleId);
             ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name", bonsai.TypeId);

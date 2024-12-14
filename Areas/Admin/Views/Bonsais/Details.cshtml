@@ -1,5 +1,4 @@
-﻿@model WebsiteSellingMiniBonsai.Models.Bonsai
-
+﻿@model WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO
 @{
     ViewData["Title"] = "Details";
 }
@@ -20,13 +19,14 @@
             @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.Image))
+            @if (!string.IsNullOrEmpty(Model.ImageOld))
             {
-                <img src="@Url.Content("~/" + Model.Image)" alt="Product Image" style="max-width: 200px; max-height: 200px;" />
+                <img src="@Url.Content("~/" + Model.ImageOld)" alt="Product Image" style="max-height: 200px;" />
             }
             else
             {
-                <span>No Image Available</span>
+                <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png"
+                style="max-height: 300px"/>
             }
         </dd>
         
@@ -52,7 +52,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Model.Price.ToString("F3") vnđ
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Quantity)
