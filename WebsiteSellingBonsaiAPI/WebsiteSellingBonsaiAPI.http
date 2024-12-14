@@ -1,0 +1,6 @@
+@WebsiteSellingBonsaiAPI_HostAddress = http://localhost:5109
+
+GET {{WebsiteSellingBonsaiAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

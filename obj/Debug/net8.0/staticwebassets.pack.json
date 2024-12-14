@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebsiteSellingMiniBonsai.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WebsiteSellingMiniBonsai.bundle.scp.css"
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebsiteSellingBonsai.bundle.scp.css",
+      "PackagePath": "staticwebassets\\WebsiteSellingBonsai.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\Data\\Product\\canh_20241204084644.png",
@@ -8449,6 +8449,38 @@
       "PackagePath": "staticwebassets\\admin\\plugins\\bootstrap-icons\\zoom-out.svg"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5-content.css",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5-content.css"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5-editor.css",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5-editor.css"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.css",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.css"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.css.map",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.css.map"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.js",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.js"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.js.map",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.js.map"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.umd.js",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.umd.js"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\ckeditor5\\ckeditor5.umd.js.map",
+      "PackagePath": "staticwebassets\\admin\\plugins\\ckeditor5\\ckeditor5.umd.js.map"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\wwwroot\\admin\\plugins\\font-awesome\\css\\all.css",
       "PackagePath": "staticwebassets\\admin\\plugins\\font-awesome\\css\\all.css"
     },
@@ -8965,20 +8997,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebsiteSellingMiniBonsai.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebsiteSellingBonsai.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebsiteSellingMiniBonsai.props",
-      "PackagePath": "build\\WebsiteSellingMiniBonsai.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebsiteSellingBonsai.props",
+      "PackagePath": "build\\WebsiteSellingBonsai.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebsiteSellingMiniBonsai.props",
-      "PackagePath": "buildMultiTargeting\\WebsiteSellingMiniBonsai.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebsiteSellingBonsai.props",
+      "PackagePath": "buildMultiTargeting\\WebsiteSellingBonsai.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebsiteSellingMiniBonsai.props",
-      "PackagePath": "buildTransitive\\WebsiteSellingMiniBonsai.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebsiteSellingBonsai.props",
+      "PackagePath": "buildTransitive\\WebsiteSellingBonsai.props"
     }
   ],
   "ElementsToRemove": []

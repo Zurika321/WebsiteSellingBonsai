@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace WebsiteSellingMiniBonsai.Models
+namespace WebsiteSellingBonsai.Models
 {
     [Table("AdminUsers")]
     public class AdminUser //: BaseModel

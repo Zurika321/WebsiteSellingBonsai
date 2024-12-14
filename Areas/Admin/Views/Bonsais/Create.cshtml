@@ -1,4 +1,4 @@
-﻿@model WebsiteSellingMiniBonsai.Areas.Admin.DTOS.BonsaiDTO
+﻿@model WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -27,8 +27,6 @@
         </div>
 }
 
-
-
 <h1>Create</h1>
 
 <h4>Bonsai</h4>
@@ -39,7 +37,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" type="file" accept="image/*"/>
+                <input asp-for="Image" class="form-control" type="file" accept="image/*" id="Avatar">
+                <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png"
+                id="imgPreview" style="max-height: 300px"/>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -114,7 +114,71 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Header {
+    @{
+                <link href="~/admin/plugins/ckeditor5/ckeditor5.css" rel="stylesheet" />
+    }
 }
-        
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/admin/plugins/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/admin/plugins/ckeditor5/"
+                        }
+                    }
+                </script>
+                   <script type="module">
+            import {
+                ClassicEditor,
+                Essentials,
+                Paragraph,
+                Bold,
+                Italic,
+                Font
+            } from 'ckeditor5';
+
+            // Lấy tất cả phần tử với ID 'Details' hoặc 'Description'
+            const editors = document.querySelectorAll('#FengShuiMeaning, #Description');
+
+            // Khởi tạo editor cho từng phần tử
+            editors.forEach(editorElement => {
+                ClassicEditor
+                    .create(editorElement, {
+                        plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                        toolbar: [
+                            'undo', 'redo', '|', 'bold', 'italic', '|',
+                            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                        ]
+                    })
+                    .then(editor => {
+                        console.log(`Editor initialized for:`, editorElement.id);
+                    })
+                    .catch(error => {
+                        console.error(`Error initializing editor for ${editorElement.id}:`, error);
+                    });
+            });
+        </script>
+            <script>
+        window.onload = () => {
+            document.getElementById("Avatar").onchange = (e) => {
+                var preview = document.getElementById('imgPreview');
+                var file = e.target.files[0];
+                var reader  = new FileReader();
+
+                reader.onloadend = function () {
+                  preview.src = reader.result;
+                }
+
+                if (file) {
+                  reader.readAsDataURL(file);
+                } else {
+                    preview.src = 'https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png';
+                }
+            };
+        }
+    </script>
+}     

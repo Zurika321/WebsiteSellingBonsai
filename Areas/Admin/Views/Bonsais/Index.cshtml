@@ -1,8 +1,44 @@
-﻿@model IEnumerable<WebsiteSellingMiniBonsai.Models.Bonsai>
+﻿@model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+<style>
+    .img_show_preview {
+    display: inline-block;
+    max-height: 50px;
+    max-width: 100px;
+    position: relative;
+    }
+    .img_show_preview {
+    display: inline-block;
+    max-height: 50px;
+    max-width: 100px;
+    position: relative;
+    }
+    .img_show_preview {
+    display: inline-block;
+    max-height: 50px;
+    max-width: 100px;
+    position: relative;
+    }
+    .img_show_preview .img1 {
+        max-height: 50px;
+        max-width: 100px;
+    }
+    .img_show_preview .img2 {
+        max-height: 200px;
+        max-width: 400px;
+        position: absolute;
+        left: 0;
+        top : 0;
+        display: none
+    }
+    .img_show_preview:hover .img2 {
+        display: block
+    }
+</style>
 
 <h1>Index</h1>
 
@@ -23,6 +59,9 @@
                 <thead>
                     <tr>
                         <th>
+                                        @Html.DisplayNameFor(model => model.Image)
+                        </th>
+                        <th>
                                         @Html.DisplayNameFor(model => model.BonsaiName)
                         </th>
                         <th>
@@ -37,27 +76,6 @@
                          <th>
                                          @Html.DisplayNameFor(model => model.Quantity)
                         </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.Size)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.YearOld)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.MinLife)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.MaxLife)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.Type)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.GeneralMeaning)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.Style)
-                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -66,40 +84,32 @@
                                 {
                         <tr>
                             <td>
+                                @if (!string.IsNullOrEmpty(item.ImageOld))
+                                {
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
+                                        <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img1"/>
+                                        <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img2"/>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span>No Image Available</span>
+                                }
+                            </td>
+                            <td>
                                             @Html.DisplayFor(modelItem => item.BonsaiName)
                             </td>
                             <td>
-                                            @Html.DisplayFor(modelItem => item.Description)
+                                            @Html.Raw(item.Description)
                             </td>
                             <td>
-                                            @Html.DisplayFor(modelItem => item.FengShuiMeaning)
+                                            @Html.Raw(item.FengShuiMeaning)
                             </td>
                              <td>
-                                            @Html.DisplayFor(modelItem => item.Price)
+                                            @item.Price.ToString("F3") vnđ
                             </td>
                              <td>
                                             @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.Size)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.YearOld)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.MinLife)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.MaxLife)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.Type.Name)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.GeneralMeaning.Meaning)
-                            </td>
-                            <td>
-                                            @Html.DisplayFor(modelItem => item.Style.Name)
                             </td>
                             <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-sharp-duotone fa-regular fa-pen-to-square" style="color: blue"></i></a>
