@@ -1,4 +1,4 @@
-﻿namespace WebsiteSellingMiniBonsai.Models
+﻿namespace WebsiteSellingBonsai.Models
 {
     public class BaseModel
     {

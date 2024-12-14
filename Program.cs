@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using WebsiteSellingMiniBonsai.Models;
+using WebsiteSellingBonsai.Middleware;
 
 namespace WebsiteSellingMiniBonsai
 {
@@ -7,11 +7,27 @@ namespace WebsiteSellingMiniBonsai
     {
         public static void Main(string[] args)
         {
+            var MyPolicies = "_Policies";
+            var AllowLocalhost = "AllowLocalhost";
             var builder = WebApplication.CreateBuilder(args);
 
             //Thêm Database MiniBonsaiDB
-            builder.Services.AddDbContext<MiniBonsaiDB>(options =>
+            builder.Services.AddDbContext<MiniBonsaiDBAPI>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(MyPolicies,
+                    builder =>
+                    {
+                        builder.SetIsOriginAllowed(_ => true)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                    });
+            });
+
+            builder.Services.AddHttpClient();
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
@@ -46,6 +62,7 @@ namespace WebsiteSellingMiniBonsai
             app.UseSession();
 
             app.UseRouting();
+            app.UseMiddleware<ApiKeyMiddleware>();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -53,6 +70,7 @@ namespace WebsiteSellingMiniBonsai
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
             );
 
+            app.UseCors(MyPolicies);
 
             app.MapControllerRoute(
                 name: "default",

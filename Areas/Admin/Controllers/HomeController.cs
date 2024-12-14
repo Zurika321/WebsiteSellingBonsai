@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebsiteSellingMiniBonsai.Areas.Admin.Controllers
+namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {

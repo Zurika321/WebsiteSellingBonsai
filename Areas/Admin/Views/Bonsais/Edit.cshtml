@@ -1,18 +1,10 @@
-﻿@model WebsiteSellingMiniBonsai.Models.Bonsai
+﻿@model WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
-@if (!string.IsNullOrEmpty(Model.Image))
-{
-                    <img src="@Url.Content("~/" + Model.Image)" alt="Product Image" style="max-width: 200px; max-height: 200px;" />
-}
-else
-{
-                    <span>No Image Available</span>
-}
 <h4>Bonsai</h4>
 <hr />
 <div class="row">
@@ -28,8 +20,16 @@ else
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input asp-for="Image" class="form-control" type="file" accept="image/*"/>
+                @if (!string.IsNullOrEmpty(Model.ImageOld))
+                {
+                     <img src="@Url.Content("~/" + Model.ImageOld)" alt="Product Image" style="max-height: 300px;" id="imgPreview" />
+                }
+                else
+                {
+                    <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png" alt="Product Image" style="max-width: 200px; max-height: 300px;" id="imgPreview" />
+                }
                 <span asp-validation-for="Image" class="text-danger"></span>
-            </div>an asp-validation-for="BonsaiName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -96,6 +96,71 @@ else
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Header {
+    @{
+                        <link href="~/admin/plugins/ckeditor5/ckeditor5.css" rel="stylesheet" />
+    }
 }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/admin/plugins/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/admin/plugins/ckeditor5/"
+                            }
+                        }
+                    </script>
+                       <script type="module">
+                import {
+                    ClassicEditor,
+                    Essentials,
+                    Paragraph,
+                    Bold,
+                    Italic,
+                    Font
+                } from 'ckeditor5';
+
+                // Lấy tất cả phần tử với ID 'Details' hoặc 'Description'
+                const editors = document.querySelectorAll('#FengShuiMeaning, #Description');
+
+                // Khởi tạo editor cho từng phần tử
+                editors.forEach(editorElement => {
+                    ClassicEditor
+                        .create(editorElement, {
+                            plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                            toolbar: [
+                                'undo', 'redo', '|', 'bold', 'italic', '|',
+                                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                            ]
+                        })
+                        .then(editor => {
+                            console.log(`Editor initialized for:`, editorElement.id);
+                        })
+                        .catch(error => {
+                            console.error(`Error initializing editor for ${editorElement.id}:`, error);
+                        });
+                });
+            </script>
+                <script>
+            window.onload = () => {
+                document.getElementById("Image").onchange = (e) => {
+                    var preview = document.getElementById('imgPreview');
+                    var file = e.target.files[0];
+                    var reader  = new FileReader();
+
+                    reader.onloadend = function () {
+                      preview.src = reader.result;
+                    }
+
+                    if (file) {
+                      reader.readAsDataURL(file);
+                    } else {
+                      preview.src = '';
+                    }
+                };
+            }
+        </script>
+}     

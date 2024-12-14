@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebsiteSellingMiniBonsai.Areas.Admin.DTOS;
-using WebsiteSellingMiniBonsai.Areas.Admin.Utils;
+using WebsiteSellingBonsaiAPI.DTOS;
+using WebsiteSellingBonsaiAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebsiteSellingMiniBonsai.Models;
+using WebsiteSellingBonsaiAPI.Models;
 
-namespace WebsiteSellingMiniBonsai.Areas.Admin.Controllers
+namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class UsersController : Controller
     {
-        private readonly MiniBonsaiDB _context;
+        private readonly MiniBonsaiDBAPI _context;
 
-        public UsersController(MiniBonsaiDB context)
+        public UsersController(MiniBonsaiDBAPI context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace WebsiteSellingMiniBonsai.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var thongBao = new ThongBao
-            {
+			{
                 Message = "Thao tác thành công",
                 MessageType = "Primary",
                 DisplayTime = 5

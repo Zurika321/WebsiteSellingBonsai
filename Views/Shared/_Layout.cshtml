@@ -4,14 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Website selling bonsai</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
 
     <!-- Customized Bootstrap Stylesheet 
     <link href="~/css/bootstrap.min.css" rel="stylesheet"/>-->
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="~/admin/plugins/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/alert/ThongBao.css" />
 
     <!-- sử dụng style
     <link href="~/css/style.css" rel="stylesheet"> -->
@@ -179,10 +177,6 @@
                         @foreach (var item in (IEnumerable<SelectListItem>)ViewData["TypeList"] ?? new List<SelectListItem>())
                     {
                         <li><a class="dropdown-item" onclick="submitSearch('Type', '@item.Value')">@item.Text </a></li>
-                    }
-                    @foreach (var item in ViewData["TypeList2"] as List<BonsaiType> ?? [])
-                    {
-                        <li><a class="dropdown-item" onclick="submitSearch('Type', '@item.Id')">@item.Name 2</a></li>
                     }
                 </ul>
             </div>
@@ -393,6 +387,20 @@
 
 <!-- Tải jQuery Unobtrusive Validate sau jQuery Validate -->
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
+    <script src="~/alert/ThongBao.js"></script>
+    @{
+        string thongBaoJson = TempData["ThongBao"]?.ToString();
+    }
+
+    @if (!string.IsNullOrEmpty(thongBaoJson))
+    {
+            <script>
+                // Giải mã JSON và gọi hàm JavaScript
+                var thongBao = @Html.Raw(thongBaoJson);
+                console.log(thongBao.MessageType)
+                ThongBao.Primary(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
+            </script>
+    }
 
     <script src="~/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
