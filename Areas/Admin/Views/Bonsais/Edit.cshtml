@@ -7,11 +7,13 @@
 <h1>Edit</h1>
 <h4>Bonsai</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+@if(Model != null){
+<div class="container row border">
+    <div class="col">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input asp-for="ImageOld" type="hidden"/>
             <div class="form-group">
                 <label asp-for="BonsaiName" class="control-label"></label>
                 <input asp-for="BonsaiName" class="form-control" />
@@ -32,12 +34,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FengShuiMeaning" class="control-label"></label>
-                <input asp-for="FengShuiMeaning" class="form-control" />
+                <textarea asp-for="FengShuiMeaning" class="form-control" ></textarea>
                 <span asp-validation-for="FengShuiMeaning" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -86,16 +88,12 @@
                 <span asp-validation-for="StyleId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary w-100 my-3" />
             </div>
         </form>
+        <a asp-action="Index" class="btn btn-outline-success w-100 mb-3">Back to List</a>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Header {
     @{
                         <link href="~/admin/plugins/ckeditor5/ckeditor5.css" rel="stylesheet" />
@@ -156,11 +154,16 @@
                     }
 
                     if (file) {
-                      reader.readAsDataURL(file);
+                        reader.readAsDataURL(file);
                     } else {
-                      preview.src = '';
+                        preview.src = 'https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png';
                     }
                 };
             }
         </script>
 }     
+}else
+{
+    <div>Bonsai với id @ViewData["id"] bạn tìm có thể đã bị xóa hoặc không tồn tại</div>
+    <a asp-action="Index">Back to List</a>
+}

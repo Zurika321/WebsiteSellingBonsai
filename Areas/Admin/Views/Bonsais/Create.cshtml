@@ -15,37 +15,25 @@
         @ViewBag.ErrorMessage
         </div>
 }
-@if (ViewBag.ErrorMessages != null && ViewBag.ErrorMessages.Count > 0)
-{
-        <div class="alert alert-danger">
-            <ul>
-            @foreach (var error in ViewBag.ErrorMessages)
-            {
-                        <li>@error</li>
-            }
-            </ul>
-        </div>
-}
-
 <h1>Create</h1>
 
 <h4>Bonsai</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container border row">
+    <div class="col">
         <form asp-action="Create" asp-area="Admin" asp-controller="Bonsais" method="Post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" type="file" accept="image/*" id="Avatar">
-                <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png"
-                id="imgPreview" style="max-height: 300px"/>
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="BonsaiName" class="control-label"></label>
                 <input asp-for="BonsaiName" class="form-control" />
                 <span asp-validation-for="BonsaiName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" type="file" accept="image/*" id="Image">
+                <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png"
+                id="imgPreview" style="max-height: 300px"/>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -54,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FengShuiMeaning" class="control-label"></label>
-                <input asp-for="FengShuiMeaning" class="form-control" />
+                <textarea asp-for="FengShuiMeaning" class="form-control" /></textarea>
                 <span asp-validation-for="FengShuiMeaning" class="text-danger"></span>
             </div>
              <div class="form-group">
@@ -104,14 +92,11 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary w-100 my-3" />
             </div>
         </form>
+        <a asp-action="Index" class="btn btn-outline-success w-100 mb-3">Back to List</a>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Header {
@@ -162,9 +147,10 @@
                     });
             });
         </script>
-            <script>
+        <script>
+            console.log("a")
         window.onload = () => {
-            document.getElementById("Avatar").onchange = (e) => {
+                document.getElementById("Image").onchange = (e) => {
                 var preview = document.getElementById('imgPreview');
                 var file = e.target.files[0];
                 var reader  = new FileReader();
@@ -174,7 +160,7 @@
                 }
 
                 if (file) {
-                  reader.readAsDataURL(file);
+                    reader.readAsDataURL(file);
                 } else {
                     preview.src = 'https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png';
                 }

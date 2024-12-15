@@ -52,6 +52,47 @@
                 </button>
             </div>
         </div>
+        @{
+            var options = new List<string> { "BonsaiName", "Description", "FengShuiMeaning", "Price", "Quantity" };
+            var selectedOption = ViewData["search_by"]?.ToString();
+        }
+
+        <form asp-action="Index" method="post" class="row g-2 p-3 border rounded shadow-sm bg-light mt-2">
+            <div class="col-auto border text-center">
+                <label for="searchBy" class="form-label fw-bold">Search By</label>
+                <select id="searchBy" name="search_by" class="form-select">
+                            @foreach (var option in options)
+                            {
+                            <option value="@option">@option</option>
+                            }
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" id="searchInput" name="search" class="form-control" placeholder="Enter keyword..." value="@(ViewData["search"] ?? "")" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary d-flex align-items-center">
+                    <i class="bi bi-search me-1"></i> Search
+                </button>
+            </div>
+        </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var selectedOption = '@selectedOption';
+                var selectElement = document.getElementById('searchBy');
+
+                if (selectElement && selectedOption){
+                    for (var i = 0; i < selectElement.options.length; i++) {
+                        if (selectElement.options[i].value === selectedOption) {
+                            selectElement.options[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                
+            });
+        </script>
     </div>
     <div class="card-body">
          <div class="table-responsive ">

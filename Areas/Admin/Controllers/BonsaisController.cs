@@ -17,37 +17,35 @@ using WebsiteSellingBonsaiAPI.Utils;
 using WebsiteSellingBonsaiAPI.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.IO;
+using System.Reflection;
+using Azure;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class BonsaisController : Controller
     {
-        private readonly MiniBonsaiDBAPI _context;
         private readonly IWebHostEnvironment _hostEnv;
         private readonly HttpClient _httpClient;
 
-        public BonsaisController(MiniBonsaiDBAPI context, IWebHostEnvironment hostEnv, IHttpClientFactory httpClientFactory)
+        public BonsaisController(IWebHostEnvironment hostEnv, IHttpClientFactory httpClientFactory)
         {
-            _context = context;
             _hostEnv = hostEnv;
             _httpClient = httpClientFactory.CreateClient();
             if (_httpClient.DefaultRequestHeaders.Contains("WebsiteSellingBonsai"))
             {
                 _httpClient.DefaultRequestHeaders.Remove("WebsiteSellingBonsai");
             }
-            // Thêm API Key
             _httpClient.DefaultRequestHeaders.Add("WebsiteSellingBonsai", "kjasdfh32112");
         }
 
         // GET: Admin/Bonsais
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search_by,string search)
         {
             List<BonsaiDTO> bonsaiList = new List<BonsaiDTO>();
             try
             {
-                // Gọi API để lấy danh sách bonsai
-                var response = await _httpClient.GetAsync("https://localhost:44351/api/bonsais");
+                var response = await _httpClient.GetAsync("https://localhost:44351/api/bonsaisAPI");
                 if (response.IsSuccessStatusCode)
                 {
                     // Deserialize JSON trả về thành danh sách BonsaiDTO
@@ -63,6 +61,27 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 Console.WriteLine($"Exception: {ex.Message}");
                 ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
+
+            if (!string.IsNullOrEmpty(search_by) && !string.IsNullOrEmpty(search))
+            {
+                var propertyInfo = typeof(BonsaiDTO).GetProperty(search_by, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (propertyInfo != null)
+                {
+                    bonsaiList = bonsaiList
+                        .Where(b =>
+                        {
+                            var value = propertyInfo.GetValue(b)?.ToString();
+                            return value != null && value.Contains(search, StringComparison.OrdinalIgnoreCase);
+                        })
+                        .ToList();
+                    ViewData["search"] =search;
+                    ViewData["search_by"] = search_by;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = $"Cột '{search_by}' không tồn tại.";
+                }
             }
 
             return View(bonsaiList);
@@ -81,7 +100,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 
             try
             {
-                var responseBonsai = await _httpClient.GetAsync($"https://localhost:44351/api/bonsais/{id}");
+                var responseBonsai = await _httpClient.GetAsync($"https://localhost:44351/api/bonsaisAPI/{id}");
 
                 if (responseBonsai.IsSuccessStatusCode)
                 {
@@ -104,15 +123,52 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 Console.WriteLine($"Exception: {ex.Message}");
                 ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
             }
+            ViewData["id"] = id;
+
             return View(bonsai);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning");
-            ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name");
-            ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name");
+            try
+            {
+                var phanloaiResponse = await _httpClient.GetAsync("https://localhost:44351/api/PhanLoaiBonsaiAPI");
+
+                if (phanloaiResponse.IsSuccessStatusCode)
+                {
+                    var phanloai = Newtonsoft.Json.JsonConvert.DeserializeObject<PhanLoaiBonsaiDTO>(
+                        await phanloaiResponse.Content.ReadAsStringAsync()
+                    );
+
+                    // Tạo SelectList từ dữ liệu của DTO
+                    ViewData["GeneralMeaningId"] = new SelectList(phanloai?.GeneralMeanings, "Id", "Meaning");
+                    ViewData["StyleId"] = new SelectList(phanloai?.Styles, "Id", "Name");
+                    ViewData["TypeId"] = new SelectList(phanloai?.Types, "Id", "Name");
+
+                    return View();
+                }
+                else
+                {
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = "Không thể tải dữ liệu từ API.",
+                        MessageType = "Danger",
+                        DisplayTime = 5
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                {
+                    Message = $"Exception: { ex.Message}",
+                    MessageType = "Danger",
+                    DisplayTime = 10
+                }); 
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi gọi API.";
+            }
+
             return View();
         }
 
@@ -125,6 +181,187 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 try
                 {
                     var AvatarPath = "";
+                    if (bonsai.Image != null)
+                    {
+                        var webRootPath = _hostEnv.WebRootPath;
+
+                        var uploadFolder = Path.Combine(webRootPath, "Data/Product");
+
+                        if (!Directory.Exists(uploadFolder))
+                        {
+                            Directory.CreateDirectory(uploadFolder);
+                        }
+
+                        var extension = Path.GetExtension(bonsai.Image.FileName);
+                        var fileName = bonsai.BonsaiName;
+                                       /*Path.GetFileNameWithoutExtension(bonsai.Image.FileName);*/
+                       
+                        var newFileName = $"{fileName}_{DateTime.Now:yyyyMMddHHmmss}{extension}";
+                        //var newFileName = $"{Guid.NewGuid()}{extension}"; bảo mật 1
+
+                        //var fileBytes = memoryStream.ToArray(); bảo mật siêu cấp
+                        //var hash = SHA256.HashData(fileBytes);
+                        //var fileHash = BitConverter.ToString(hash).Replace("-", "").ToLower();
+
+                        var filePath = Path.Combine(uploadFolder, newFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await bonsai.Image.CopyToAsync(fileStream);
+                        }
+
+                        AvatarPath = $"Data/Product/{newFileName}";
+                    }
+
+                    var userInfo = HttpContext.Session.Get<AdminUser>("userInfo");
+
+                    var bonsaiEntity = new Bonsai
+                    {
+                        BonsaiName = bonsai.BonsaiName,
+                        Description = bonsai.Description,
+                        FengShuiMeaning = bonsai.FengShuiMeaning,
+                        Size = bonsai.Size,
+                        YearOld = bonsai.YearOld,
+                        MinLife = bonsai.MinLife,
+                        MaxLife = bonsai.MaxLife,
+                        Price = bonsai.Price,
+                        Quantity = bonsai.Quantity,
+                        Image = AvatarPath, // Có thể là "" nếu không có ảnh
+                        TypeId = bonsai.TypeId,
+                        StyleId = bonsai.StyleId,
+                        GeneralMeaningId = bonsai.GeneralMeaningId,
+                    };
+
+                    // Gửi tới API Controller
+                    var response = await _httpClient.PostAsJsonAsync("https://localhost:44351/api/bonsaisAPI", bonsaiEntity);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                        {
+                            Message = $"Đã tạo thành công {bonsaiEntity.BonsaiName}",
+                            MessageType = "Primary",
+                            DisplayTime = 5
+                        });
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                        {
+                            Message = "Có lỗi xảy ra khi gửi dữ liệu tới API.",
+                            MessageType = "Danger",
+                            DisplayTime = 5
+                        });
+                        ViewBag.ErrorMessage = "Có lỗi xảy ra khi gửi dữ liệu tới API.";
+                        return View();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = "Có lỗi xảy ra khi lưu dữ liệu.",
+                        MessageType = "Danger",
+                        DisplayTime = 5
+                    });
+                    ViewBag.ErrorMessage = "Có lỗi xảy ra khi lưu dữ liệu.";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Lỗi sai định dạng !ModelState.IsValid";
+            }
+
+            var phanloaiResponse = await _httpClient.GetAsync("https://localhost:44351/api/PhanLoaiBonsaiAPI");
+            if (phanloaiResponse.IsSuccessStatusCode)
+            {
+                var phanloai = Newtonsoft.Json.JsonConvert.DeserializeObject<PhanLoaiBonsaiDTO>(
+                    await phanloaiResponse.Content.ReadAsStringAsync()
+                );
+
+                // Tạo SelectList từ dữ liệu của DTO
+                ViewData["GeneralMeaningId"] = new SelectList(phanloai?.GeneralMeanings, "Id", "Meaning");
+                ViewData["StyleId"] = new SelectList(phanloai?.Styles, "Id", "Name");
+                ViewData["TypeId"] = new SelectList(phanloai?.Types, "Id", "Name");
+            }
+
+            return View();
+        }
+
+            // GET: Admin/Bonsais/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            BonsaiDTO bonsai = null;
+            try
+            {
+                var responseBonsai = await _httpClient.GetAsync($"https://localhost:44351/api/bonsaisAPI/{id}");
+                var phanloaiResponse = await _httpClient.GetAsync("https://localhost:44351/api/PhanLoaiBonsaiAPI");
+
+                if (phanloaiResponse.IsSuccessStatusCode &&
+                    responseBonsai.IsSuccessStatusCode)
+                {
+                    var phanloai = Newtonsoft.Json.JsonConvert.DeserializeObject<PhanLoaiBonsaiDTO>(
+                        await phanloaiResponse.Content.ReadAsStringAsync()
+                    );
+                    var jsonData = await responseBonsai.Content.ReadAsStringAsync();
+                    bonsai = JsonConvert.DeserializeObject<BonsaiDTO>(jsonData);
+
+                    ViewData["GeneralMeaningId"] = new SelectList(phanloai?.GeneralMeanings, "Id", "Meaning");
+                    ViewData["StyleId"] = new SelectList(phanloai?.Styles, "Id", "Name");
+                    ViewData["TypeId"] = new SelectList(phanloai?.Types, "Id", "Name");
+
+                    return View(bonsai);
+                }
+                else
+                {
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = "Không thể tải dữ liệu từ API.",
+                        MessageType = "Danger",
+                        DisplayTime = 5
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                {
+                    Message = $"Exception: {ex.Message}",
+                    MessageType = "Danger",
+                    DisplayTime = 10
+                });
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi gọi API.";
+            }
+            @ViewData["id"] = id;
+
+            return View(bonsai);
+        }
+
+        // POST: Admin/Bonsais/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [FromForm] BonsaiDTO bonsai)
+        {
+            if (id != bonsai.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var AvatarPath = bonsai.ImageOld;
                     if (bonsai.Image != null)
                     {
                         var webRootPath = _hostEnv.WebRootPath;
@@ -155,8 +392,10 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     }
 
                     var userInfo = HttpContext.Session.Get<AdminUser>("userInfo");
+
                     var bonsaiEntity = new Bonsai
                     {
+                        Id = id,
                         BonsaiName = bonsai.BonsaiName,
                         Description = bonsai.Description,
                         FengShuiMeaning = bonsai.FengShuiMeaning,
@@ -166,129 +405,67 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                         MaxLife = bonsai.MaxLife,
                         Price = bonsai.Price,
                         Quantity = bonsai.Quantity,
-                        Image = AvatarPath,
+                        Image = AvatarPath, // Có thể là "" nếu không có ảnh
                         TypeId = bonsai.TypeId,
                         StyleId = bonsai.StyleId,
-                        GeneralMeaningId = bonsai.GeneralMeaningId, 
-                    };
-                    _context.Add(bonsaiEntity);
-                    await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Tạo mới Bonsai thành công!";
-                    var thongBao = new ThongBao
-                    {
-                        Message = "Tạo mới Bonsai thành công!",
-                        MessageType = "Primary",
-                        DisplayTime = 5
+                        GeneralMeaningId = bonsai.GeneralMeaningId,
                     };
 
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
-                    return RedirectToAction(nameof(Index));
+                    // Gửi tới API Controller
+                    var response = await _httpClient.PutAsJsonAsync(
+                         $"https://localhost:44351/api/bonsaisAPI/{bonsai.Id}",
+                         bonsaiEntity
+                     );
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                        {
+                            Message = $"Đã sửa thành công {bonsaiEntity.BonsaiName}",
+                            MessageType = "Primary",
+                            DisplayTime = 5
+                        });
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                        {
+                            Message = "Có lỗi xảy ra khi gửi dữ liệu tới API.",
+                            MessageType = "Danger",
+                            DisplayTime = 5
+                        });
+                        ViewBag.ErrorMessage = "Có lỗi xảy ra khi gửi dữ liệu tới API.";
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
-                    var thongBao = new ThongBao
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
                     {
                         Message = "Có lỗi xảy ra khi lưu dữ liệu.",
-                        MessageType = "Primary",
+                        MessageType = "Danger",
                         DisplayTime = 5
-                    };
-
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
+                    });
                     ViewBag.ErrorMessage = "Có lỗi xảy ra khi lưu dữ liệu.";
-                    ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning");
-                    ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name");
-                    ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name");
-                    return View();
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = "Lỗi sai định dạng !ModelState.IsValid";
+                ViewBag.ErrorMessage = "Sai kiểu dữ liệu";
             }
-            ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning");
-            ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name");
-            ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name");
-            return View();
-        }
+            var phanloaiResponse = await _httpClient.GetAsync("https://localhost:44351/api/PhanLoaiBonsaiAPI");
+            if (phanloaiResponse.IsSuccessStatusCode)
+            {
+                var phanloai = Newtonsoft.Json.JsonConvert.DeserializeObject<PhanLoaiBonsaiDTO>(
+                    await phanloaiResponse.Content.ReadAsStringAsync()
+                );
 
-        // GET: Admin/Bonsais/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+                // Tạo SelectList từ dữ liệu của DTO
+                ViewData["GeneralMeaningId"] = new SelectList(phanloai?.GeneralMeanings, "Id", "Meaning");
+                ViewData["StyleId"] = new SelectList(phanloai?.Styles, "Id", "Name");
+                ViewData["TypeId"] = new SelectList(phanloai?.Types, "Id", "Name");
             }
-
-            var bonsai = await _context.Bonsais.FindAsync(id);
-            if (bonsai == null)
-            {
-                return NotFound();
-            }
-            var bonsaiDTO = new BonsaiDTO
-            {
-                Id = bonsai.Id,
-                BonsaiName = bonsai.BonsaiName,
-                Description = bonsai.Description,
-                FengShuiMeaning = bonsai.FengShuiMeaning,
-                Size = bonsai.Size,
-                YearOld = bonsai.YearOld,
-                MinLife = bonsai.MinLife,
-                MaxLife = bonsai.MaxLife,
-                Price = bonsai.Price,
-                Quantity = bonsai.Quantity,
-                ImageOld = bonsai.Image,
-                nopwr = bonsai.NOPWR,
-                rates = bonsai.Rates,
-                TypeId = bonsai.TypeId,
-                StyleId = bonsai.StyleId,
-                GeneralMeaningId = bonsai.GeneralMeaningId,
-                //CreatedBy = product.CreatedBy,
-                //CreatedDate = product.CreatedDate,
-                //UpdatedBy = product.UpdatedBy,
-                //UpdatedDate = product.UpdatedDate,
-            };
-            ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning", bonsai.GeneralMeaningId);
-            ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name", bonsai.StyleId);
-            ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name", bonsai.TypeId);
-            return View(bonsai);
-        }
-
-        // POST: Admin/Bonsais/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BonsaiName,Description,FengShuiMeaning,Size,Price,Quantity,YearOld,MinLife,MaxLife,TypeId,StyleId,GeneralMeaningId")] Bonsai bonsai)
-        {
-            if (id != bonsai.Id)
-            {
-                return NotFound();
-            }
-
-            if (bonsai.BonsaiName != null)
-            {
-                try
-                {
-                    _context.Update(bonsai);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BonsaiExists(bonsai.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["GeneralMeaningId"] = new SelectList(_context.GeneralMeaning, "Id", "Meaning", bonsai.GeneralMeaningId);
-            ViewData["StyleId"] = new SelectList(_context.Styles, "Id", "Name", bonsai.StyleId);
-            ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name", bonsai.TypeId);
             return View(bonsai);
         }
 
@@ -300,15 +477,34 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var bonsai = await _context.Bonsais
-                .Include(b => b.GeneralMeaning)
-                .Include(b => b.Style)
-                .Include(b => b.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (bonsai == null)
+            BonsaiDTO bonsai = null;
+
+            try
             {
-                return NotFound();
+                var responseBonsai = await _httpClient.GetAsync($"https://localhost:44351/api/bonsaisAPI/{id}");
+
+                if (responseBonsai.IsSuccessStatusCode)
+                {
+                    // Đọc dữ liệu JSON và deserialize thành BonsaiDTO
+                    var jsonData = await responseBonsai.Content.ReadAsStringAsync();
+                    bonsai = JsonConvert.DeserializeObject<BonsaiDTO>(jsonData);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Không thể lấy dữ liệu từ API.";
+                }
             }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HttpRequestException: {httpEx.Message}");
+                ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                ViewBag.ErrorMessage = "Có lỗi xảy ra khi kết nối tới API.";
+            }
+            ViewData["id"] = id;
 
             return View(bonsai);
         }
@@ -318,19 +514,42 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bonsai = await _context.Bonsais.FindAsync(id);
-            if (bonsai != null)
+            try
             {
-                _context.Bonsais.Remove(bonsai);
+                // Gửi yêu cầu DELETE tới API
+                var response = await _httpClient.DeleteAsync($"https://localhost:44351/api/bonsaisAPI/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = $"Đã xóa thành công Bonsai với ID {id}",
+                        MessageType = "Primary",
+                        DisplayTime = 5
+                    });
+                }
+                else
+                {
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = "Không thể xóa Bonsai. Có thể ID không tồn tại hoặc xảy ra lỗi trên máy chủ.",
+                        MessageType = "Danger",
+                        DisplayTime = 5
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                {
+                    Message = "Có lỗi xảy ra khi xóa Bonsai.",
+                    MessageType = "Danger",
+                    DisplayTime = 5
+                });
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool BonsaiExists(int id)
-        {
-            return _context.Bonsais.Any(e => e.Id == id);
         }
     }
 }

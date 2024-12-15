@@ -42,7 +42,7 @@ namespace WebsiteSellingBonsai.Controllers
             {
                 if (page == null) page = 1;
 
-                var bonsaisApiUrl = "https://localhost:44351/api/bonsais";
+                var bonsaisApiUrl = "https://localhost:44351/api/bonsaisAPI";
                 var productsResponse = await _httpClient.GetAsync(bonsaisApiUrl);
                 productsResponse.EnsureSuccessStatusCode();
                 var productsJson = await productsResponse.Content.ReadAsStringAsync();
@@ -121,6 +121,11 @@ namespace WebsiteSellingBonsai.Controllers
                     MessageType = "Danger",
                     DisplayTime = 10
                 };
+
+                // Truyền totalPages vào ViewData để hiển thị trong View
+                ViewData["TotalPages"] = 1;
+                ViewData["CurrentPage"] = page;
+                ViewData["totalBonsais"] = 0;
 
                 TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
                 var types = await _context.Types.Select(t => new { t.Id, t.Name }).OrderBy(t => t.Name).ToListAsync();
