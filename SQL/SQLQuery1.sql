@@ -3,9 +3,9 @@
     Name NVARCHAR(100) NOT NULL, -- Tên phong cách
 
     CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'admin',
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 );
 
 INSERT INTO Styles (Name)
@@ -20,9 +20,9 @@ CREATE TABLE GeneralMeanings (
     Meaning NVARCHAR(100) NOT NULL, -- Ý nghĩa phong thủy
 
     CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'admin',
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 );
 INSERT INTO GeneralMeanings (Meaning)
 VALUES
@@ -42,9 +42,9 @@ CREATE TABLE Types (
     Name NVARCHAR(100) NOT NULL, -- Loại cây
     
     CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'admin',
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 );
 INSERT INTO Types (Name)
 VALUES
@@ -66,7 +66,7 @@ CREATE TABLE AdminUsers (
 
 INSERT INTO AdminUsers (Username,Avatar,Password,Displayname,Email,Phone,Role)
 VALUES
-(N'Admin','','Admin123','Admin','','','admin');
+(N'Admin','','Admin123','Admin','','','Admin');
 
 CREATE TABLE Bonsais (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -87,9 +87,9 @@ CREATE TABLE Bonsais (
     StyleId INT, -- FK đến bảng Styles
 
     CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'admin',
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 
     FOREIGN KEY (TypeId) REFERENCES Types(Id),
     FOREIGN KEY (GeneralMeaningId) REFERENCES GeneralMeanings(Id),
@@ -118,15 +118,33 @@ VALUES
 
 CREATE TABLE Cart (
     CART_ID INT PRIMARY KEY IDENTITY(1,1),
-
+    USE_ID INT,
 
     CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'admin',
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 
-    FOREIGN KEY (TypeId) REFERENCES Types(Id),
+    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
 );
+
+CREATE TABLE CartDetails (
+    CART_D_ID INT PRIMARY KEY IDENTITY(1,1),
+    CART_ID INT,
+    BONSAI_ID INT,
+    QUANTITY INT,
+    PRICE DECIMAL(18, 2),
+    TotalPrice AS (QUANTITY * PRICE),
+    
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
+    UpdatedDate DATETIME DEFAULT GETDATE(),
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
+    
+    FOREIGN KEY (CART_ID) REFERENCES Cart(CART_ID),
+    FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
+);
+
 
 
 SELECT *FROM Bonsais;

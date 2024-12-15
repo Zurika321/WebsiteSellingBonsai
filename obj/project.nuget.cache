@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jac8BpRT8zQ=",
+  "dgSpecHash": "PFHovdmpSoQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\WebsiteSellingBonsai.csproj",
+  "projectFilePath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\WebsiteSellingBonsai.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NAM VO\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\NAM VO\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

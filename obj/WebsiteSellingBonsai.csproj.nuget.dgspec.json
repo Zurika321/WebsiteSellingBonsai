@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\WebsiteSellingBonsai.csproj": {}
+    "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\WebsiteSellingBonsai.csproj": {}
   },
   "projects": {
     "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj": {
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\WebsiteSellingBonsai.csproj": {
+    "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\WebsiteSellingBonsai.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\WebsiteSellingBonsai.csproj",
+        "projectUniqueName": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\WebsiteSellingBonsai.csproj",
         "projectName": "WebsiteSellingBonsai",
-        "projectPath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\WebsiteSellingBonsai.csproj",
+        "projectPath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\WebsiteSellingBonsai.csproj",
         "packagesPath": "C:\\Users\\NAM VO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingMiniBonsai\\obj\\",
+        "outputPath": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NAM VO\\AppData\\Roaming\\NuGet\\NuGet.Config",
