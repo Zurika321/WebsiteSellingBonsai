@@ -23,6 +23,7 @@
     <div class="col">
         <form asp-action="Create" asp-area="Admin" asp-controller="Bonsais" method="Post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ImageOld" type="hidden" value=""/>
             <div class="form-group">
                 <label asp-for="BonsaiName" class="control-label"></label>
                 <input asp-for="BonsaiName" class="form-control" />

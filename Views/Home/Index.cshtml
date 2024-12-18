@@ -18,6 +18,7 @@
 }
 
 .img-container {
+    position: relative;
     overflow: hidden; /* Tránh ảnh bị tràn */
 }
 
@@ -32,7 +33,7 @@
 }
 
 .card-body {
-    position: relative;
+    /* position: relative; */
     overflow: hidden; /* Giới hạn nội dung bên trong card */
 }
 
@@ -44,7 +45,7 @@
 
 /* Ẩn thông tin khi không hover */
 .hover-info {
-    /* height: 100%; */
+    height: 100%;
     position: absolute;
     top: 0;
     left: 100%;
@@ -79,49 +80,38 @@
     background-color: #1e7e34;
 }
     </style>
+<div class="container">
     <h2>Cây Bonsais</h2> 
+    <a asp-action="Index" asp-area="Admin" asp-controller="Home">admin</a>
     <p id="output"></p>
 <script>
-    // Hàm để lấy tham số từ URL
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
     }
 
-    // Lấy các tham số search, TypeId, StyleId, GeneralMeaningId từ URL
-    const sizeMin = getQueryParam("sizeMin");
-    const sizeMax = getQueryParam("sizeMax");
-    const YearOldMin = getQueryParam("YearOldMin");
-    const YearOldMax = getQueryParam("YearOldMax");
     const typeId = getQueryParam("TypeId");
     const styleId = getQueryParam("StyleId");
     const generalMeaningId = getQueryParam("GeneralMeaningId");
 
-    // Chuyển dữ liệu từ ViewData thành đối tượng JavaScript
-    const typeList = @Html.Raw(Json.Serialize(ViewData["TypeList"]));  // Dữ liệu về các loại cây
-    const styleList = @Html.Raw(Json.Serialize(ViewData["StyleList"])); // Dữ liệu về các phong cách
-    const generalMeaningList = @Html.Raw(Json.Serialize(ViewData["GeneralMeaningList"])); // Dữ liệu về ý nghĩa
+    const typeList = @Html.Raw(Json.Serialize(ViewData["TypeList"]));
+    const styleList = @Html.Raw(Json.Serialize(ViewData["StyleList"]));
+    const generalMeaningList = @Html.Raw(Json.Serialize(ViewData["GeneralMeaningList"]));
 
-    // Hàm để tìm tên dựa trên ID từ danh sách
     function getNameById(list, id) {
-        const item = list.find(element => element.value == id);  // Tìm kiếm theo giá trị 'value' (ID)
-        return item ? item.text : "Không có tên";  // Trả về 'text' nếu tìm thấy
+        const item = list.find(element => element.value == id);
+        return item ? item.text : "Không có tên";
     }
 
-    // Tìm tên từ các ID
     const typeName = typeId ? getNameById(typeList, typeId) : "Không có giá trị TypeId";
     const styleName = styleId ? getNameById(styleList, styleId) : "Không có giá trị StyleId";
-    const generalMeaning = generalMeaningId ? getNameById(generalMeaningList, generalMeaningId) : "Không có giá trị GeneralMeaningId";
+    const generalMeaningName = generalMeaningId ? getNameById(generalMeaningList, generalMeaningId) : "Không có giá trị GeneralMeaningId";
 
-    // Hiển thị các giá trị trong thẻ <p> với id là "output"
     let outputText = "";
     if (typeId) outputText += `<strong>Loại cây:</strong> ${typeName} <br>`;
     if (styleId) outputText += `<strong>Kiểu:</strong> ${styleName} <br>`;
-    if (generalMeaningId) outputText += `<strong>Ý nghĩa chung:</strong> ${generalMeaning} <br>`;
-    if (sizeMin && sizeMin != -1) outputText += `<strong>sizeMin:</strong> ${sizeMin} <br>`;
-    if (sizeMax && sizeMax != -1) outputText += `<strong>sizeMax:</strong> ${sizeMax} <br>`;
-    if (YearOldMin && YearOldMin != -1) outputText += `<strong>YearOldMin cây:</strong> ${YearOldMin} <br>`;
-    if (YearOldMax && YearOldMax != -1) outputText += `<strong>YearOldMax:</strong> ${YearOldMax} <br>`;
+    if (generalMeaningId) outputText += `<strong>Ý nghĩa chung:</strong> ${generalMeaningName} <br>`;
+    if (!typeId && !styleId && !generalMeaningId) document.getElementById("phanloai_all").parentElement.classList.add("border_link");
 
     // Ghi vào thẻ <p>
     document.getElementById("output").innerHTML = outputText;
@@ -146,14 +136,33 @@
             <p>Tổng kết quả hiển thị: @itemsOnCurrentPage/@ViewData["totalBonsais"] (page @currentPage)</p>
         </div>
         <div>
-            <select>
-                <option value="value">Sắp xếp mặc định</option>
-                <option value="value">Gía tiền từ thấp đến cao</option>
-                <option value="value">Gía tiền từ cao đến thấp</option>
-            </select>
-        </div>
         
+        <select id="Box_Sort">
+                <option value="Id_low">Sắp xếp mặc định</option>
+                <option value="Price_low" >Gía tiền từ thấp đến cao</option>
+                <option value="Price_high" >Gía tiền từ cao đến thấp</option>
+                <option value="Size_low" >Kích thước từ thấp đến cao</option>
+                <option value="Size_high" >Kích thước từ cao đến thấp</option>
+                <option value="YearOld_low" >Độ tuối từ thấp đến cao</option>
+                <option value="YearOld_high" >Đổ tuổi từ cao đến thấp</option>
+            </select>
+            <script>
+                var sortby = getQueryParam("sortby"); // Giá trị này được truyền từ Controller
+                var sortbytype = getQueryParam("typesort"); // Giá trị này được truyền từ Controller
+                var sortValue = sortby + "_" + sortbytype;
+                 document.getElementById('Box_Sort').value = !sortby ? "Id_low" : sortValue;
+
+                document.getElementById('Box_Sort').addEventListener('change', function() {
+                    var selectedValue = this.value.split("_")[0];
+                    var sortByType = this.value.split("_")[1];
+
+                    submitSearch("sortby", selectedValue);
+                    submitSearch("typesort", sortByType);
+                });
+            </script>
+        </div>
     </div>
+</div>
 
     @* Phần Sản phẩm *@
     <div class="row">
@@ -187,7 +196,7 @@
                             <div class="default-info">
                                 <h5 class="card-title">@bonsai.BonsaiName</h5>
                                 <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
-                                <p class="card-text text-muted">@bonsai.Description</p>
+                                <p class="card-text text-muted">@Html.Raw(bonsai.Description)</p>
                             </div>          
                         </div>
                     </div>
@@ -211,12 +220,12 @@
                 @if ((int)ViewData["CurrentPage"] > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="?search=@ViewData["Search"]&TypeId=@ViewData["TypeId"]&StyleId=@ViewData["StyleId"]&GeneralMeaningId=@ViewData["GeneralMeaningId"]&page=1" aria-label="First">
+                        <a class="page-link" onclick="submitSearch('page',1)" aria-label="First">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?search=@ViewData["Search"]&TypeId=@ViewData["TypeId"]&StyleId=@ViewData["StyleId"]&GeneralMeaningId=@ViewData["GeneralMeaningId"]&page=@((int)ViewData["CurrentPage"] - 1)" aria-label="Previous">
+                        <a class="page-link" onclick="submitSearch('page',@ViewData["CurrentPage"]-1)" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -227,7 +236,7 @@
                     if (i >= 1 && i <= (int)ViewData["CurrentPage"] + 2 && i <= (int)ViewData["TotalPages"])
                     {
                         <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
-                            <a class="page-link" href="?search=@ViewData["Search"]&TypeId=@ViewData["TypeId"]&StyleId=@ViewData["StyleId"]&GeneralMeaningId=@ViewData["GeneralMeaningId"]&page=@i">@i</a>
+                            <a class="page-link" onclick="submitSearch('page',@i)">@i</a>
                         </li>
                     }
                 }
@@ -235,12 +244,12 @@
                 @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
                 {
                     <li class="page-item">
-                        <a class="page-link" href="?search=@ViewData["Search"]&TypeId=@ViewData["TypeId"]&StyleId=@ViewData["StyleId"]&GeneralMeaningId=@ViewData["GeneralMeaningId"]&page=@((int)ViewData["CurrentPage"] + 1)" aria-label="Next">
+                        <a class="page-link" onclick="submitSearch('page',@ViewData["CurrentPage"]+1)" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?search=@ViewData["Search"]&TypeId=@ViewData["TypeId"]&StyleId=@ViewData["StyleId"]&GeneralMeaningId=@ViewData["GeneralMeaningId"]&page=@ViewData["TotalPages"]" aria-label="Last">
+                        <a class="page-link" onclick="submitSearch('page',@ViewData["TotalPages"])" aria-label="Last">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>
