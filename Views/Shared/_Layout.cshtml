@@ -66,6 +66,9 @@
     #menu_search a {
         text-decoration: none;
     }
+    .border_link{
+        border-bottom: 1px solid green;height: 50px
+    }
     </style>
   </head>
   <body>
@@ -165,64 +168,51 @@
       >
         <div class="d-none d-lg-flex gap-3 my-3">
             <!-- Menu: Tất cả -->
-            <div style="border-bottom: 1px solid green;height: 50px" class="d-flex align-items-center">
-                <a asp-action="Index" asp-controller="Home">Tất cả</a>
+            <div class="d-flex align-items-center">
+                <a asp-action="Index" asp-controller="Home" id="phanloai_all" style="text-decoration: none;">Tất cả</a>
             </div>
 
             <!-- Menu: Phân loại theo loại cây -->
             <div class="d-flex align-items-center dropdown linknavbar">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Loại cây</a>
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="phanloai_type">Loại cây</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" onclick="submitSearch('Type', '')">Tất cả</a></li>
-                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["TypeList"] ?? new List<SelectListItem>())
+                    <li><a class="dropdown-item" onclick="submitSearch('TypeId', '')">Tất cả</a></li>
+                    @if (ViewData["TypeList"] != null)
                     {
-                        <li><a class="dropdown-item" onclick="submitSearch('Type', '@item.Value')">@item.Text </a></li>
+                        @foreach (var item in (SelectList)ViewData["TypeList"])
+                        {
+                                    <li><a class="dropdown-item" onclick="submitSearch('TypeId', '@item.Value')">@item.Text</a></li>
+                        }
                     }
-                </ul>
-            </div>
-
-            <!-- Menu: Phân loại theo kích thước -->
-            <div class="d-flex align-items-center dropdown linknavbar">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Kích thước</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" onclick="submitSearch('size',false,-1,-1)">Tất cả</a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('size',false,1,30)">Mini bonsai 5-30 cm</a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('size',false,30,70)">Cỡ trung 30-70 cm</a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('size',false,70,-1)">Cỡ lớn 70^ cm</a></li>
-                </ul>
-            </div>
-            
-            <!-- Menu: Phân loại theo độ tuổi -->
-            <div class="d-flex align-items-center dropdown linknavbar">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Độ tuổi</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,-1,-1)">Tất cả</a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,1,30)">Cây trẻ 1 -30 tuổi</a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,30,70)">Cây trung niên 30 -70 tuổi </a></li>
-                    <li><a class="dropdown-item" onclick="submitSearch('yearOld',false,70,-1)">Cây cổ thụ 70^ tuổi </a></li>
                 </ul>
             </div>
 
             <!-- Menu: Phân loại theo phong cách -->
             <div class="d-flex align-items-center dropdown linknavbar">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Phong cách</a>
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="phanloai_style">Phong cách</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" onclick="submitSearch('Style', '')">Tất cả</a></li>
-                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["StyleList"])
+                    <li><a class="dropdown-item" onclick="submitSearch('StyleId', '')">Tất cả</a></li>
+                    @if (ViewData["StyleList"] != null)
+                    {
+                        @foreach (var item in (SelectList)ViewData["StyleList"])
                         {
-                                <li><a class="dropdown-item" onclick="submitSearch('Style', '@item.Value')">@item.Text</a></li>
+                            <li><a class="dropdown-item" onclick="submitSearch('StyleId', '@item.Value')">@item.Text</a></li>
                         }
+                    }
                 </ul>
             </div>
 
             <!-- Menu: Phân loại theo ý nghĩa phong thủy -->
             <div class="d-flex align-items-center dropdown linknavbar">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Ý nghĩa phong thủy</a>
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="phanloai_generalmeaning">Ý nghĩa phong thủy</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaning', '')">Tất cả</a></li>
-                        @foreach (var item in (IEnumerable<SelectListItem>)ViewData["GeneralMeaningList"])
+                    <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaningId', '')">Tất cả</a></li>
+                    @if (ViewData["GeneralMeaningList"] != null)
                     {
-                            <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaning', '@item.Value')">@item.Text</a></li>
+                        @foreach (var item in (SelectList)ViewData["GeneralMeaningList"])
+                        {
+                            <li><a class="dropdown-item" onclick="submitSearch('GeneralMeaningId', '@item.Value')">@item.Text</a></li>
+                        }
                     }
                 </ul>
             </div>
@@ -233,10 +223,9 @@
                    id="search" 
                    placeholder="Search here" 
                    value="@(ViewData["Search"] ?? "")" />
-                   <input type="hidden" id="sizeMin" name="sizeMin" value="@(ViewData["sizeMin"] ?? "")" />
-                   <input type="hidden" id="sizeMax" name="sizeMax" value="@(ViewData["sizeMax"] ?? "")" />
-                   <input type="hidden" id="yearOldMin" name="yearOldMin" value="@(ViewData["yearOldMin"] ?? "")" />
-                   <input type="hidden" id="yearOldMax" name="yearOldMax" value="@(ViewData["yearOldMax"] ?? "")" />
+                   <input type="hidden" id="sortby" name="sortby" value="@(ViewData["sortby"] ?? "")" />
+                   <input type="hidden" id="typesort" name="typesort" value="@(ViewData["typesort"] ?? "")" />
+                   <input type="hidden" id="page" name="page" value="@(ViewData["page"] ?? "")" />
                    <input type="hidden" id="TypeId" name="TypeId" value="@(ViewData["TypeId"] ?? "")" />
                    <input type="hidden" id="StyleId" name="StyleId" value="@(ViewData["StyleId"] ?? "")" />
                    <input type="hidden" id="GeneralMeaningId" name="GeneralMeaningId" value="@(ViewData["GeneralMeaningId"] ?? "")" />
@@ -250,16 +239,9 @@
             </div>
         </form>
         <script>
-            function submitSearch(WhatAttribute,Id,min,max) {
-                if (min && max){
-                    let Name = WhatAttribute + "Min"
-                    document.getElementById(Name).value = min;
-                    Name = WhatAttribute + "Max"
-                    document.getElementById(Name).value = max;
-                }else{
-                    let Name = WhatAttribute + "Id"
-                    document.getElementById(Name).value = Id;
-                }
+            function submitSearch(WhatAttribute,Id) {
+                let Name = WhatAttribute
+                document.getElementById(Name).value = Id;
                 document.getElementById("searchForm").submit();
             }
         </script>

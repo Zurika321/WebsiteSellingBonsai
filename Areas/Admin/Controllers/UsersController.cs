@@ -176,14 +176,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 if (result != null)
                 {
                     HttpContext.Session.Set<AdminUser>("userInfo", result);
-                    var thongBao = new ThongBao
-                    {
-                        Message = "Phiên làm việc login vừa hết hạn, bạn vừa được đăng nhập lại bằng cookie!",
-                        MessageType = "Primary",
-                        DisplayTime = 5
-                    };
-
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
                     return RedirectToAction("Index", "Home");
                 }
                 else

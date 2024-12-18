@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebsiteSellingBonsai.Middleware;
+using WebsiteSellingBonsaiAPI.Utils;
 
 namespace WebsiteSellingMiniBonsai
 {
@@ -27,6 +28,7 @@ namespace WebsiteSellingMiniBonsai
                     });
             });
 
+            builder.Services.AddScoped<ProcessingServices>();
             builder.Services.AddHttpClient();
 
             builder.Services.AddDistributedMemoryCache();
