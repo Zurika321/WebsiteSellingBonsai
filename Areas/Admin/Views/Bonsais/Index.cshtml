@@ -11,18 +11,6 @@
     max-width: 100px;
     position: relative;
     }
-    .img_show_preview {
-    display: inline-block;
-    max-height: 50px;
-    max-width: 100px;
-    position: relative;
-    }
-    .img_show_preview {
-    display: inline-block;
-    max-height: 50px;
-    max-width: 100px;
-    position: relative;
-    }
     .img_show_preview .img1 {
         max-height: 50px;
         max-width: 100px;
@@ -32,7 +20,8 @@
         max-width: 400px;
         position: absolute;
         left: 0;
-        top : 0;
+        top : -50%;
+          transform: translateY(-50%);
         display: none
     }
     .img_show_preview:hover .img2 {
@@ -97,8 +86,9 @@
     <div class="card-body">
          <div class="table-responsive ">
             <table id="tbl" class="table table-bordered table-hover">
+                <div class="bg-light text-center" style="height:50px">a</div>
                 <thead>
-                    <tr><
+                    <tr>
                         <th>
                                         @Html.DisplayNameFor(model => model.Image)
                         </th>
@@ -134,7 +124,10 @@
                                 }
                                 else
                                 {
-                                    <span>No Image Available</span>
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img1"/>
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img2"/>
+                                    </div>
                                 }
                             </td>
                             <td>

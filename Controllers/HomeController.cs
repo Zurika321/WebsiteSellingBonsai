@@ -27,16 +27,6 @@ namespace WebsiteSellingBonsai.Controllers
         public async Task<IActionResult> Index(string search, int? typeid, int? styleid, int? GeneralMeaningId, int? page, string sortby, string typesort)
         {
             var (bonsais, errorbonsai) = await _processingServices.FetchDataApiGetList<BonsaiDTO>("https://localhost:44351/api/bonsaisAPI");
-            if (errorbonsai != "")
-            {
-                ViewData["Error"] = errorbonsai;
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorbonsai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
-            }
 
             var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("https://localhost:44351/api/PhanLoaiBonsaiAPI");
             if (phanloai != null)
@@ -72,38 +62,53 @@ namespace WebsiteSellingBonsai.Controllers
             ViewData["typesort"] = typesort;
 
             const int pageSize = 4;
-            var totalCount = bonsais.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-
-            var pagedBonsais = new List<BonsaiDTO>();
-
-            // Sử dụng Reflection để sắp xếp theo thuộc tính động
-            var propertyInfo = typeof(BonsaiDTO).GetProperty(sortby);
-            if (propertyInfo != null)
+            
+            
+            if (bonsais != null)
             {
-                if (typesort == "low")
+                var totalCount = bonsais.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+                var pagedBonsais = new List<BonsaiDTO>();
+
+                // Sử dụng Reflection để sắp xếp theo thuộc tính động
+                var propertyInfo = typeof(BonsaiDTO).GetProperty(sortby);
+                if (propertyInfo != null)
                 {
-                    pagedBonsais = bonsais
-                        .OrderBy(b => propertyInfo.GetValue(b, null))  // Sắp xếp tăng dần
-                        .Skip((page.Value - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
+                    if (typesort == "low")
+                    {
+                        pagedBonsais = bonsais
+                            .OrderBy(b => propertyInfo.GetValue(b, null))  // Sắp xếp tăng dần
+                            .Skip((page.Value - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+                    }
+                    else
+                    {
+                        pagedBonsais = bonsais
+                            .OrderByDescending(b => propertyInfo.GetValue(b, null))  // Sắp xếp giảm dần
+                            .Skip((page.Value - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+                    }
                 }
-                else
-                {
-                    pagedBonsais = bonsais
-                        .OrderByDescending(b => propertyInfo.GetValue(b, null))  // Sắp xếp giảm dần
-                        .Skip((page.Value - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
-                }
+
+                ViewData["TotalPages"] = totalPages;
+                ViewData["CurrentPage"] = page;
+                ViewData["totalBonsais"] = bonsais.Count();
+
+                return View(pagedBonsais);
             }
-
-            ViewData["TotalPages"] = totalPages;
-            ViewData["CurrentPage"] = page;
-            ViewData["totalBonsais"] = bonsais.Count();
-
-            return View(pagedBonsais);
+            ViewData["Error"] = errorbonsai;
+            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+            {
+                Message = errorbonsai,
+                MessageType = "Warning",
+                DisplayTime = 5
+            });
+            ViewData["TotalPages"] = 1;
+            ViewData["CurrentPage"] = 1;
+            ViewData["totalBonsais"] = 0;
+            return View(null);
         }
 
         //if (sizeMin.HasValue && sizeMin >= 1) bonsais = bonsais.Where(b => b.Size >= sizeMin.Value).ToList();
