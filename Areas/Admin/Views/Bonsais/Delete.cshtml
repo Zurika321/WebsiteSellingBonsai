@@ -28,8 +28,7 @@
             }
             else
             {
-                    <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png"
-                    style="max-height: 300px"/>
+                    <img src="/Data/noimage.png" style="max-height: 300px"/>
             }
         </dd>
 
@@ -98,6 +97,30 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Style.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Style.CreatedBy)
+        </dd>
+            <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Style.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Style.UpdatedBy)
+        </dd>
+            <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Style.UpdatedDate)
         </dd>
     </dl>
     

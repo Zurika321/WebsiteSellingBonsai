@@ -1,13 +1,6 @@
 ﻿@using WebsiteSellingBonsaiAPI.Utils
 @{
     var userInfo = Context.Session.Get<AdminUser>("userInfo");
-    var currentPath = Context.Request.Path.ToString().ToLower();
-
-    // Bỏ qua kiểm tra nếu đang truy cập Login
-    if (string.IsNullOrEmpty(userInfo?.Username) && !currentPath.Contains("/admin/users/login"))
-    {
-        Context.Response.Redirect("/admin/users/login");
-    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +117,7 @@
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
                             <li class="user-header text-bg-primary">
-                                <img src="~/admin/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
+                                <img src="@Url.Content("~/" +userInfo?.Avatar)" class="rounded-circle shadow" alt="User Image">
                                 <p>
                                     @userInfo?.Displayname - @userInfo?.Role
                                     <small>Member since Nov. 2023</small>
@@ -138,7 +131,7 @@
                                     <div class="col-4 text-center"> <a href="#">Friends</a> </div>
                                 </div> <!--end::Row-->
                             </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
-                            <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> </li> <!--end::Menu Footer-->
+                            <li class="user-footer"> <a class="btn btn-default btn-flat">Profile</a> <form asp-action="Logout" asp-controller="Users" method="post" class="btn btn-default btn-flat float-end"><button type=submit>Sign out</button></form> </li> <!--end::Menu Footer-->
                         </ul>
                     </li> <!--end::User Menu Dropdown-->
                 </ul> <!--end::End Navbar Links-->
@@ -266,7 +259,20 @@
     <script src="~/alert/ThongBao.js"></script>
    
     @{
-        string thongBaoJson = TempData["ThongBao"]?.ToString();
+        // Lấy thông báo từ Session nếu có, nếu không lấy từ TempData
+        string thongBaoJson = Context.Session.GetString("ThongBao");
+
+        // Nếu không có thông báo trong Session, lấy thông báo từ TempData
+        if (string.IsNullOrEmpty(thongBaoJson))
+        {
+            thongBaoJson = TempData["ThongBao"]?.ToString();
+        }
+
+        // Xóa thông báo khỏi Session sau khi đã sử dụng
+        if (!string.IsNullOrEmpty(thongBaoJson))
+        {
+            Context.Session.Remove("ThongBao");
+        }
     }
 
     @if (!string.IsNullOrEmpty(thongBaoJson))
@@ -275,7 +281,7 @@
             // Giải mã JSON và gọi hàm JavaScript
             var thongBao = @Html.Raw(thongBaoJson);
             console.log(thongBao.MessageType)
-            ThongBao.Primary(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
+            thong_bao_chung(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
         </script>
     }
 

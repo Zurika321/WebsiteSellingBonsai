@@ -7,47 +7,82 @@
       "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\controllers\\bonsaisapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\middleware\\userrolemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:middleware\\userrolemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\utils\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\controllers\\bonsaiscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\controllers\\bonsaiscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\dtos\\bonsaidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\utils\\processingservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\controllers\\bonsaisapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\controllers\\bonsaiscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\controllers\\bonsaiscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\controllers\\adminusersapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\wwwroot\\alert\\thongbao.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:wwwroot\\alert\\thongbao.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\views\\bonsais\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\views\\bonsais\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\views\\users\\sigin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\views\\users\\sigin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\views\\users\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\views\\users\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\utils\\processingservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\dtos\\adminuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\areas\\admin\\views\\bonsais\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:areas\\admin\\views\\bonsais\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\models\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\dtos\\bonsaidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\models\\adminusers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsai\\middleware\\apikeymiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC205E6C-C1B4-4AAB-87F7-1BBC171D25CB}|WebsiteSellingBonsai.csproj|solutionrelative:middleware\\apikeymiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\utils\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{830DD402-8010-4E49-9EB0-1B499EB4A591}|..\\WebsiteSellingBonsaiAPI\\WebsiteSellingBonsaiAPI.csproj|c:\\users\\nam vo\\source\\repos\\websitesellingbonsaiapi\\utils\\rememberme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -60,30 +95,185 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
+              "Title": "AdminUsersAPIController.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Controllers\\AdminUsersAPIController.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Controllers\\AdminUsersAPIController.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Controllers\\AdminUsersAPIController.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Controllers\\AdminUsersAPIController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T16:25:42.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Bonsais\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Bonsais\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Bonsais\\Edit.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Bonsais\\Edit.cshtml",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABoAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-20T15:41:16.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ThongBao.js",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\alert\\ThongBao.js",
+              "RelativeDocumentMoniker": "wwwroot\\alert\\ThongBao.js",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\alert\\ThongBao.js",
+              "RelativeToolTip": "wwwroot\\alert\\ThongBao.js",
+              "ViewState": "AQIAADgAAAAAAAAAAAAgwBwAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-12-20T14:08:09.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Sigin.cshtml",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Users\\Sigin.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Users\\Sigin.cshtml",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Users\\Sigin.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Users\\Sigin.cshtml",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACAAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-20T11:16:53.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Users\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Users\\Login.cshtml",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Users\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Users\\Login.cshtml",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAIwA4AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-20T11:10:29.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Review.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Models\\Review.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Models\\Review.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Models\\Review.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Models\\Review.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAQwAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T10:33:25.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BonsaiDTO.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T10:29:25.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AdminUserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\AdminUserDTO.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\DTOS\\AdminUserDTO.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\AdminUserDTO.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\DTOS\\AdminUserDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T10:24:41.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\DTOS\\LoginDTO.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\LoginDTO.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\DTOS\\LoginDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T10:24:19.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AdminUsers.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Models\\AdminUsers.cs",
+              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Models\\AdminUsers.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Models\\AdminUsers.cs",
+              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Models\\AdminUsers.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-20T10:10:09.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Areas\\Admin\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAKcAAAAAAAAAAAAUwKkAAAAAAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAzwAYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T15:35:29.643Z",
+              "WhenOpened": "2024-12-20T10:09:15.931Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "UserRoleMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Middleware\\UserRoleMiddleware.cs",
+              "RelativeDocumentMoniker": "Middleware\\UserRoleMiddleware.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Middleware\\UserRoleMiddleware.cs",
+              "RelativeToolTip": "Middleware\\UserRoleMiddleware.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAIAwwC8AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T06:09:47.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ApiKeyMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Middleware\\ApiKeyMiddleware.cs",
+              "RelativeDocumentMoniker": "Middleware\\ApiKeyMiddleware.cs",
+              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Middleware\\ApiKeyMiddleware.cs",
+              "RelativeToolTip": "Middleware\\ApiKeyMiddleware.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T05:59:30.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAACgAAAA+AAAA",
+              "ViewState": "AQIAAAgBAAAAAAAAAAAAABsBAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-12-18T15:26:00.813Z",
               "EditorCaption": ""
@@ -91,25 +281,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "BonsaiDTO.cs",
-              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
-              "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
-              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
-              "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\DTOS\\BonsaiDTO.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwA4AAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T10:13:02.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "BonsaisAPIController.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Controllers\\BonsaisAPIController.cs",
               "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Controllers\\BonsaisAPIController.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Controllers\\BonsaisAPIController.cs",
               "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Controllers\\BonsaisAPIController.cs",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAlwK8AAAA3AAAA",
+              "ViewState": "AQIAAKIAAAAAAAAAAAAlwLQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-18T10:12:24.716Z",
               "EditorCaption": ""
@@ -122,40 +299,40 @@
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAOMAAAAAAAAAAAApwOUAAABlAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAAAGcAAABUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-12-18T08:52:33.6Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 20,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAAC8AAAARAAAA",
+              "ViewState": "AQIAAEwAAAAAAAAAAAAAAFUAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-12-18T08:50:57.104Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAApwEgAAAAAAAAA",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAIwGEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-18T08:35:35.747Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 22,
               "Title": "Session.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Utils\\Session.cs",
               "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Utils\\Session.cs",
@@ -163,38 +340,24 @@
               "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Utils\\Session.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T08:29:56.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-18T08:29:56.347Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Bonsais\\Create.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Bonsais\\Create.cshtml",
-              "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Views\\Bonsais\\Create.cshtml",
-              "RelativeToolTip": "Areas\\Admin\\Views\\Bonsais\\Create.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAA7AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-18T08:05:20.318Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "ProcessingServices.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Utils\\ProcessingServices.cs",
               "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Utils\\ProcessingServices.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Utils\\ProcessingServices.cs",
               "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Utils\\ProcessingServices.cs",
-              "ViewState": "AQIAAJkAAAAAAAAAAAAAwKUAAAAAAAAA",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAkwGQAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-18T07:59:09.442Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 23,
               "Title": "RememberMe.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Utils\\RememberMe.cs",
               "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Utils\\RememberMe.cs",
@@ -202,38 +365,37 @@
               "RelativeToolTip": "..\\WebsiteSellingBonsaiAPI\\Utils\\RememberMe.cs",
               "ViewState": "AQIAABYAAAAAAAAAAAAQwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T07:52:02.826Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-18T07:52:02.826Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "BonsaisController.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Controllers\\BonsaisController.cs",
               "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\BonsaisController.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Areas\\Admin\\Controllers\\BonsaisController.cs",
               "RelativeToolTip": "Areas\\Admin\\Controllers\\BonsaisController.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAYwAYAAAASAAAA",
+              "ViewState": "AQIAACIAAAAAAAAAAAAQwDYAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-18T07:38:09.342Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB4AAAA5AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-18T07:36:31.648Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsaiAPI\\Program.cs",
               "RelativeDocumentMoniker": "..\\WebsiteSellingBonsaiAPI\\Program.cs",

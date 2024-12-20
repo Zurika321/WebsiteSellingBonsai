@@ -1,22 +1,22 @@
 ﻿// Tạo đối tượng ThongBao với các phương thức như Primary, Success, Danger
-const ThongBao = {
-    // Phương thức tạo thông báo loại Primary
-    Primary: function (thong_bao, x) {
-        thong_bao_chung(thong_bao, x, 'Primary');
-    },
-    // Phương thức tạo thông báo loại Success
-    Success: function (thong_bao, x) {
-        thong_bao_chung(thong_bao, x, 'Success');
-    },
-    // Phương thức tạo thông báo loại Danger
-    Danger: function (thong_bao, x) {
-        thong_bao_chung(thong_bao, x, 'Danger');
-    },
-    // Phương thức tạo thông báo loại Warning
-    Warning: function (thong_bao, x) {
-        thong_bao_chung(thong_bao, x, 'Warning');
-    }
-};
+//const ThongBao = {
+//    // Phương thức tạo thông báo loại Primary
+//    Primary: function (thong_bao, x) {
+//        thong_bao_chung(thong_bao, x, 'Primary');
+//    },
+//    // Phương thức tạo thông báo loại Success
+//    Success: function (thong_bao, x) {
+//        thong_bao_chung(thong_bao, x, 'Success');
+//    },
+//    // Phương thức tạo thông báo loại Danger
+//    Danger: function (thong_bao, x) {
+//        thong_bao_chung(thong_bao, x, 'Danger');
+//    },
+//    // Phương thức tạo thông báo loại Warning
+//    Warning: function (thong_bao, x) {
+//        thong_bao_chung(thong_bao, x, 'Warning');
+//    }
+//};
 
 const Icon = {
     Primary: '<i class="fa-regular fa-circle-info"></i>',
