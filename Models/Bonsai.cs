@@ -9,7 +9,6 @@ namespace WebsiteSellingBonsai.Models
         [Key]
         public int Id { get; set; } // Id khớp với cột Id trong DB
 
-        [Column("Name")]
         public string BonsaiName { get; set; } // Tên ánh xạ tới cột Name
 
         public string Description { get; set; }

@@ -59,18 +59,19 @@ CREATE TABLE AdminUsers (
    Avatar NVARCHAR(1000),
    Password NVARCHAR(12),
    Displayname NVARCHAR(50),-- Tên dùng để hiển thị
-   Email NVARCHAR(100),
+   Address NVARCHAR(100),
+   Email NVARCHAR(50),
    Phone NVARCHAR(10),
    Role NVARCHAR(10),
 );
 
-INSERT INTO AdminUsers (Username,Avatar,Password,Displayname,Email,Phone,Role)
+INSERT INTO AdminUsers (Username,Avatar,Password,Displayname,Email,Phone,Role,Address)
 VALUES
-(N'Admin','','Admin123','Admin','','','Admin');
+(N'Admin','','Admin123','Admin','','','Admin',N'');
 
 CREATE TABLE Bonsais (
     Id INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(100) NOT NULL,
+    BonsaiName NVARCHAR(100) NOT NULL,
     Description NVARCHAR(MAX), -- Mô tả
     FengShuiMeaning NVARCHAR(100),
     Size INT, -- Kích thước (cm)
@@ -96,7 +97,7 @@ CREATE TABLE Bonsais (
     FOREIGN KEY (StyleId) REFERENCES Styles(Id)
 );
 
-INSERT INTO Bonsais (Name, Description, FengShuiMeaning,Price , Quantity, Size, YearOld, MinLife, MaxLife, TypeId, GeneralMeaningId, StyleId,Image)
+INSERT INTO Bonsais (BonsaiName, Description, FengShuiMeaning,Price , Quantity, Size, YearOld, MinLife, MaxLife, TypeId, GeneralMeaningId, StyleId,Image)
 VALUES
 -- Cây lá kim
 (N'Cây tùng', N'Biểu tượng của sự trường thọ, thích hợp làm cây cảnh và bonsai.', N'Tượng trưng cho sự trường tồn và thịnh vượng.',100,10, 20, 10, 20, 100, 1, 3, 1,''),
@@ -116,7 +117,7 @@ VALUES
 (N'Cây sung cảnh', N'Biểu tượng của sự sung túc, thường dùng làm bonsai.', N'Tượng trưng cho sự giàu sang và sung túc.',100,10, 30, 10, 25, 80, 4, 5, 2,''),
 (N'Cây khế cảnh', N'Tượng trưng cho sự tài lộc, thích hợp làm bonsai sân vườn.', N'Tượng trưng cho sự tài lộc và bình yên.',100,10, 40, 12, 30, 100, 4, 2, 4,'');
 
-CREATE TABLE Cart (
+CREATE TABLE Carts (
     CART_ID INT PRIMARY KEY IDENTITY(1,1),
     USE_ID INT,
 
@@ -133,34 +134,60 @@ CREATE TABLE CartDetails (
     CART_ID INT,
     BONSAI_ID INT,
     QUANTITY INT,
-    PRICE DECIMAL(18, 2),
+    PRICE DECIMAL,
     TotalPrice AS (QUANTITY * PRICE),
+    
+    FOREIGN KEY (CART_ID) REFERENCES Carts(CART_ID),
+    FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
+);
+
+CREATE TABLE Orders (
+    ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
+    USE_ID INT,
+	Paymentmethod NVARCHAR(100),
+	Status NVARCHAR(24),
+	Total DECIMAL,
+
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
+    UpdatedDate DATETIME DEFAULT GETDATE(),
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
+
+    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
+);
+
+CREATE TABLE OrderDetails (
+    ORDER_D_ID INT PRIMARY KEY IDENTITY(1,1),
+    ORDER_ID INT,
+    BONSAI_ID INT,
+    QUANTITY INT,
+    PRICE DECIMAL,
+    TotalPrice AS (QUANTITY * PRICE),
+    
+    FOREIGN KEY (ORDER_ID) REFERENCES Orders(ORDER_ID),
+    FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
+);
+
+CREATE TABLE Reviews (
+    REVIEW_ID INT PRIMARY KEY IDENTITY(1,1),
+    BONSAI_ID INT,
+    USE_ID INT,
+    Rate FLOAT, 
+	Comment NVARCHAR(2048),
     
     CreatedDate DATETIME DEFAULT GETDATE(),
     CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
     UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
     
-    FOREIGN KEY (CART_ID) REFERENCES Cart(CART_ID),
+    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
     FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
 
-
-
-SELECT *FROM Bonsais;
-SELECT *FROM AdminUsers;
-
-SELECT b.Id AS BonsaiId, b.Name AS BonsaiName, b.Description,b.FengShuiMeaning,b.Image,b.NOPWR,b.Rates,b.Size, b.YearOld, b.MinLife, b.MaxLife,
-       t.Name AS TypeName, g.Meaning AS FengShui, s.Name AS StyleName
-FROM Bonsais b, Types t, GeneralMeanings g, Styles s
-WHERE b.TypeId = t.Id
-  AND b.GeneralMeaningId = g.Id
-  AND b.StyleId = s.Id;
-
-/*CREATE VIEW BonsaiDetails AS
+CREATE VIEW BonsaiPhanLoai AS
 SELECT 
     b.Id AS BonsaiId, 
-    b.Name AS BonsaiName, 
+    b.BonsaiName AS BonsaiName, 
     b.Description,
     b.FengShuiMeaning,
     b.Image,
@@ -181,5 +208,29 @@ JOIN
     GeneralMeanings g ON b.GeneralMeaningId = g.Id
 JOIN 
     Styles s ON b.StyleId = s.Id;
-*/
 
+ 
+
+DROP TABLE Bonsais;
+DROP TABLE GeneralMeanings;
+DROP TABLE Styles;
+DROP TABLE Types;
+DROP TABLE Carts;
+DROP TABLE CartDetails;
+DROP TABLE Orders;
+DROP TABLE OrderDetails;
+DROP TABLE Reviews;
+DROP TABLE AdminUsers;
+DROP VIEW BonsaiPhanLoai;
+
+SELECT *FROM GeneralMeanings;
+SELECT *FROM Styles;
+SELECT *FROM Types;
+SELECT *FROM Carts;
+SELECT *FROM CartDetails;
+SELECT *FROM Orders;
+SELECT *FROM OrderDetails;
+SELECT *FROM Reviews;
+SELECT *FROM AdminUsers;
+Select * FROM Bonsais
+Select * FROM BonsaiPhanLoai

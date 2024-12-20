@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebsiteSellingBonsaiAPI.Models;
+using System.Numerics;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
@@ -54,7 +55,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminUsers/Create
-        public IActionResult Create()
+        public IActionResult Sigin()
         {
             return View();
         }
@@ -64,15 +65,41 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("USE_ID,Username,Password,Displayname,Email,Phone")] AdminUser adminUser)
+        public async Task<IActionResult> Sigin(LoginDTO sigin)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(adminUser);
+                if (sigin.Password != sigin.ComfrimPassword)
+                {
+                    ViewData["Message"] = "Password and confirm password do not match!";
+                    sigin.Password = "";
+                    sigin.ComfrimPassword = "";
+                    return View(sigin);
+                }
+                bool hasUserName = _context.AdminUser
+                .Any(user => user.Username == sigin.Username);
+                if (hasUserName)
+                {
+                    ViewData["Message"] = "username already exists!";
+                    return View();
+                }
+                AdminUser adminuser = new AdminUser(){
+                    Username = sigin.Username,
+                    Password = sigin.Username,
+                    Avatar = "Data/usernoimage.png",
+                    Displayname = sigin.Username,
+                    Address = "",
+                    Email = "",
+                    Phone = "",
+                    Role = "User",
+                };
+                _context.Add(adminuser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Login));
             }
-            return View(adminUser);
+            ViewData["Message"] = "Please enter full information!";
+
+            return View();
         }
 
         // GET: Admin/AdminUsers/Edit/5
@@ -167,7 +194,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Login()
         {
-            var login = Request.Cookies.Get<LoginDTO>("UserCredential");
+            var login = Request.Cookies.Get<LoginDTO>("CokieUserWebsiteSellingBonsai");
             if (login != null)
             {
                 var result = await _context.AdminUser.AsTracking()
@@ -198,7 +225,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 int time = 3;
                 if (login.RememberMe)
                 {
-                    Response.Cookies.Append<LoginDTO>("UserCredential", login, new CookieOptions
+                    Response.Cookies.Append<LoginDTO>("CokieUserWebsiteSellingBonsai", login, new CookieOptions
                     {
                         Expires = DateTimeOffset.UtcNow.AddDays(1),
                         HttpOnly = true,
@@ -216,19 +243,48 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 var thongBao = new ThongBao
                 {
                     Message = mes,
-                    MessageType = "Succes",
+                    MessageType = "Success",
                     DisplayTime = time
                 };
 
                 // Chuyển model sang TempData dưới dạng JSON
                 TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
-                return RedirectToAction("Index", "Home");
+
+                if (result.Role == "Admin") return RedirectToAction("Index", "Home", new { area = "Admin" });
+                return RedirectToAction("", "", new { area = "Home" });
             }
             else
             {
                 ViewData["Message"] = "Wrong username or password";
             }
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Logout()
+        {
+            if (Request.Cookies.ContainsKey("CokieUserWebsiteSellingBonsai"))
+            {
+                Response.Cookies.Delete("CokieUserWebsiteSellingBonsai");
+            }
+
+            if (HttpContext.Session.Get<AdminUser>("userInfo") != null)
+            {
+                HttpContext.Session.Remove("userInfo");
+            }
+
+            // Chuyển thông báo thành công qua TempData
+            var thongBao = new ThongBao
+            {
+                Message = "Đã đăng xuất thành công",
+                MessageType = "Succes",
+                DisplayTime = 3
+            };
+            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
+
+            // Redirect về trang đăng nhập
+            return RedirectToAction("Login", "Users");
         }
     }
 }

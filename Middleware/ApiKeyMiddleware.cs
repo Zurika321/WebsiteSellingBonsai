@@ -8,7 +8,7 @@ namespace WebsiteSellingBonsai.Middleware
 	public class ApiKeyMiddleware
 	{
 		private readonly RequestDelegate _next;
-		private const string ApiKeyHeaderName = "WebsiteSellingBonsai"; // Tên của header chứa mật khẩu
+		private const string ApiKeyHeaderName = "WebsiteSellingBonsai";
 
 		public ApiKeyMiddleware(RequestDelegate next)
 		{
@@ -24,11 +24,8 @@ namespace WebsiteSellingBonsai.Middleware
 				{
 					context.Response.StatusCode = 401; // Unauthorized nếu không có mật khẩu
 
-					// Lấy danh sách tất cả các header
-					var headersList = string.Join("\n", context.Request.Headers.Select(header => $"{header.Key}: {string.Join(", ", header.Value)}"));
-
-					// Gửi phản hồi bao gồm danh sách header
-					await context.Response.WriteAsync($"API Key is missing.\n\nHeaders received:\n{headersList}");
+					//var headersList = string.Join("\n", context.Request.Headers.Select(header => $"{header.Key}: {string.Join(", ", header.Value)}"));
+					//await context.Response.WriteAsync($"API Key is missing.\n\nHeaders received:\n{headersList}"); danh sách header nhận được
 					return;
 				}
 

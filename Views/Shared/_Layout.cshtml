@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using WebsiteSellingBonsaiAPI.Utils
+@{
+    var userInfo = Context.Session.Get<AdminUser>("userInfo");
+}
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -84,7 +88,31 @@
           <a class="btn btn-outline-success px-1 mx-0" href="#">Trang chủ</a>
           <a class="btn btn-outline-success px-1 mx-0" href="#">Dịch vụ</a>
           <a class="btn btn-outline-success px-1 mx-0" href="#">Liên hệ</a>
-          <a class="btn btn-outline-success px-1 mx-0" href="#">Đăng nhập/Đăng ký</a>
+          <div class="dropdown">
+          @if (userInfo != null)
+          { 
+            <button class="btn btn-light dropdown-toggle px-1 mx-0" type="button" id="dropdownUserInfo" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="~/@(string.IsNullOrEmpty(userInfo.Avatar) ? "Data/usernoimage.png" : userInfo.Avatar)" 
+                        class="img-fluid rounded-circle" 
+                        alt="User Avatar" 
+                        style="width: 30px; height: 30px; object-fit: cover;" />
+                <span>@userInfo.Username</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
+                <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                <li>
+                    <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post" class="d-inline">
+                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                    </form>
+                </li>
+                <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+            </ul>
+          }
+          else
+          {
+            <a class="btn btn-outline-success px-1 mx-0" href="#">Đăng nhập/Đăng ký</a>      
+          }
+          </div>
           <a class="btn btn-outline-success px-1 mx-0" style="border:1px solid rgb(85, 215, 111)" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a>
         </div>
 
@@ -105,8 +133,20 @@
             <li><a class="dropdown-item" href="#">Trang chủ</a></li>
             <li><a class="dropdown-item" href="#">Dịch vụ</a></li>
             <li><a class="dropdown-item" href="#">Liên hệ</a></li>
-            <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
-            <li><a class="dropdown-item" href="#">Đăng ký</a></li>
+            @if (userInfo != null)
+            {
+                <li>
+                    <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
+                        <button type="submit" class="dropdown-item btn btn-default btn-flat float-end">Đăng xuất</button>
+                    </form>
+                </li>
+                <li><a class="dropdown-item" href="#">Thông tin</a></li>
+            }
+            else
+            {
+                <li><a class="dropdown-item" asp-action="Login" asp-area="Admin" asp-controller="Users">Đăng nhập</a></li>
+                <li><a class="dropdown-item" asp-action="Sigin" asp-area="Admin" asp-controller="Users">Đăng ký</a></li>
+            }
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a></li>
           </ul>
         </div>
@@ -361,27 +401,28 @@
         </div>
       </div>
     </footer>
-@*     <!-- Tải jQuery trước -->
-<script src="~/lib/jquery/dist/jquery.js"></script>
-
-<!-- Tải jQuery Validate sau jQuery -->
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-
-<!-- Tải jQuery Unobtrusive Validate sau jQuery Validate -->
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
     <script src="~/alert/ThongBao.js"></script>
     @{
-        string thongBaoJson = TempData["ThongBao"]?.ToString();
+        string thongBaoJson = Context.Session.GetString("ThongBao");
+
+        if (string.IsNullOrEmpty(thongBaoJson))
+        {
+            thongBaoJson = TempData["ThongBao"]?.ToString();
+        }
+
+        if (!string.IsNullOrEmpty(thongBaoJson))
+        {
+            Context.Session.Remove("ThongBao");
+        }
     }
 
     @if (!string.IsNullOrEmpty(thongBaoJson))
     {
-            <script>
-                // Giải mã JSON và gọi hàm JavaScript
-                var thongBao = @Html.Raw(thongBaoJson);
-                console.log(thongBao.MessageType)
-                ThongBao.Primary(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
-            </script>
+        <script>
+            var thongBao = @Html.Raw(thongBaoJson);
+            console.log(thongBao.MessageType)
+            (thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
+        </script>
     }
 
     <script src="~/js/bootstrap.bundle.min.js"></script>

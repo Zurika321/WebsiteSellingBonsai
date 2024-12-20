@@ -65,6 +65,7 @@ namespace WebsiteSellingMiniBonsai
 
             app.UseRouting();
             app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<UserRoleMiddleware>();
             app.UseAuthorization();
 
             app.MapControllerRoute(

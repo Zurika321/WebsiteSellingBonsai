@@ -21,6 +21,7 @@
 		<Folder Include="Areas\Admin\Models\" />
 		<Folder Include="App_Data\" />
 		<Folder Include="SQL\" />
+		<Folder Include="wwwroot\Data\NewFolder\" />
 		<Folder Include="wwwroot\Data\Product\" />
 	</ItemGroup>
 

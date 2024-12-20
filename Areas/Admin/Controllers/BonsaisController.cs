@@ -25,19 +25,17 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
     [Area("Admin")]
     public class BonsaisController : Controller
     {
-        private readonly IWebHostEnvironment _hostEnv;
-        private readonly HttpClient _httpClient;
+        //private readonly HttpClient _httpClient;
         private readonly ProcessingServices _processingServices;
 
-        public BonsaisController(IWebHostEnvironment hostEnv, IHttpClientFactory httpClientFactory, ProcessingServices processingServices)
+        public BonsaisController(/*IHttpClientFactory httpClientFactory, */ProcessingServices processingServices)
         {
-            _hostEnv = hostEnv;
-            _httpClient = httpClientFactory.CreateClient();
-            if (_httpClient.DefaultRequestHeaders.Contains("WebsiteSellingBonsai"))
-            {
-                _httpClient.DefaultRequestHeaders.Remove("WebsiteSellingBonsai");
-            }
-            _httpClient.DefaultRequestHeaders.Add("WebsiteSellingBonsai", "kjasdfh32112");
+            //_httpClient = httpClientFactory.CreateClient();
+            //if (_httpClient.DefaultRequestHeaders.Contains("WebsiteSellingBonsai"))
+            //{
+            //    _httpClient.DefaultRequestHeaders.Remove("WebsiteSellingBonsai");
+            //}
+            //_httpClient.DefaultRequestHeaders.Add("WebsiteSellingBonsai", "kjasdfh32112");
             _processingServices = processingServices;
         }
 
@@ -154,6 +152,10 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     TypeId = bonsai.TypeId,
                     StyleId = bonsai.StyleId,
                     GeneralMeaningId = bonsai.GeneralMeaningId,
+                    CreatedBy = userInfo.Username,
+                    CreatedDate = DateTime.Now,
+                    UpdatedBy = userInfo.Username,
+                    UpdatedDate = DateTime.Now,
                 };
 
                 var (newbonsai , errornewbonsai) = await _processingServices.FetchDataApiPost<Bonsai>("BonsaisAPI",bonsaiEntity);
@@ -276,10 +278,14 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     MaxLife = bonsai.MaxLife,
                     Price = bonsai.Price,
                     Quantity = bonsai.Quantity,
-                    Image = AvatarPath, // Có thể là "" nếu không có ảnh
+                    Image = AvatarPath,
                     TypeId = bonsai.TypeId,
                     StyleId = bonsai.StyleId,
                     GeneralMeaningId = bonsai.GeneralMeaningId,
+                    CreatedBy = bonsai.CreatedBy,
+                    CreatedDate = bonsai.CreatedDate,
+                    UpdatedBy = userInfo.Username,
+                    UpdatedDate = DateTime.Now,
                 };
 
                 // Gửi tới API Controller
