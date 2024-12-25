@@ -85,12 +85,12 @@ namespace WebsiteSellingBonsai.Middleware
                                 var thongBao = new ThongBao
                                 {
                                     Message = "Bạn không có quyền truy cập trang này",
-                                    MessageType = "Success",
+                                    MessageType = "Warning",
                                     DisplayTime = 3
                                 };
                                 context.Session.Set("ThongBao", thongBao);
 
-                                context.Response.Redirect("/Home/Index");
+                                context.Response.Redirect("/");
                                 return;
                             }
                         }

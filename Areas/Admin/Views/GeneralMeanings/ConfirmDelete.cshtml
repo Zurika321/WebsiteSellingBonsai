@@ -1,0 +1,22 @@
+﻿@model WebsiteSellingBonsaiAPI.Models.GeneralMeaning
+
+<h2>Xóa General Meaning</h2>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["ErrorMessage"]
+    </div>
+}
+
+<p>Bản ghi này đang bị ràng buộc với các Bonsais liên quan. Nếu bạn muốn xóa, vui lòng nhập mật khẩu để xác nhận.</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="form-group">
+        <label for="password">Mật khẩu xác nhận:</label>
+        <input type="password" id="password" name="password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
