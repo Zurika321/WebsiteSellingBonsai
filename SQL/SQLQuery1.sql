@@ -141,20 +141,20 @@ CREATE TABLE CartDetails (
     FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
 
-CREATE TABLE Orders (
-    ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
-    USE_ID INT,
-	Paymentmethod NVARCHAR(100),
-	Status NVARCHAR(24),
-	Total DECIMAL,
+	CREATE TABLE Orders (
+		ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
+		USE_ID INT,
+		Paymentmethod NVARCHAR(100),
+		Status NVARCHAR(24),
+		Total DECIMAL,
 
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
-    UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
+		CreatedDate DATETIME DEFAULT GETDATE(),
+		CreatedBy NVARCHAR(50) DEFAULT 'Admin',
+		UpdatedDate DATETIME DEFAULT GETDATE(),
+		UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
 
-    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
-);
+		FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
+	);
 
 CREATE TABLE OrderDetails (
     ORDER_D_ID INT PRIMARY KEY IDENTITY(1,1),
@@ -209,10 +209,16 @@ JOIN
 JOIN 
     Styles s ON b.StyleId = s.Id;
 
- 
+ CREATE TABLE Banners (
+    BAN_ID INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255),
+    ImageURL NVARCHAR(1024)
+);
+
 
 DROP TABLE Bonsais;
 DROP TABLE GeneralMeanings;
+DROP TABLE Banners;
 DROP TABLE Styles;
 DROP TABLE Types;
 DROP TABLE Carts;
@@ -224,6 +230,7 @@ DROP TABLE AdminUsers;
 DROP VIEW BonsaiPhanLoai;
 
 SELECT *FROM GeneralMeanings;
+SELECT *FROM Banners;
 SELECT *FROM Styles;
 SELECT *FROM Types;
 SELECT *FROM Carts;

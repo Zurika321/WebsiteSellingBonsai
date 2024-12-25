@@ -25,14 +25,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         // GET: Admin/AdminUsers
         public async Task<IActionResult> Index()
         {
-            var thongBao = new ThongBao
-			{
-                Message = "Thao tác thành công",
-                MessageType = "Primary",
-                DisplayTime = 5
-            };
-
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
             return View(await _context.AdminUser.ToListAsync());
         }
 
@@ -251,7 +243,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
 
                 if (result.Role == "Admin") return RedirectToAction("Index", "Home", new { area = "Admin" });
-                return RedirectToAction("", "", new { area = "Home" });
+                return Redirect("/");
             }
             else
             {
