@@ -26,7 +26,12 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string search, int? typeid, int? styleid, int? GeneralMeaningId, int? page, string sortby, string typesort)
         {
+            if (page == null) page = 1;
+            if (string.IsNullOrEmpty(sortby)) sortby = "Id";
+            if (string.IsNullOrEmpty(typesort)) typesort = "low";
+
             var (bonsais, errorbonsai) = await _processingServices.FetchDataApiGetList<BonsaiDTO>("https://localhost:44351/api/bonsaisAPI");
+            var (banners, errorbanner) = await _processingServices.FetchDataApiGetList<BannerDTO>("https://localhost:44351/api/bannersAPI");
 
             var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("https://localhost:44351/api/PhanLoaiBonsaiAPI");
             if (phanloai != null)
@@ -45,15 +50,6 @@ namespace WebsiteSellingBonsai.Controllers
                 });
             }
 
-            if (page == null) page = 1;
-            if (string.IsNullOrEmpty(sortby)) sortby = "Id";
-            if (string.IsNullOrEmpty(typesort)) typesort = "low";
-
-            if (typeid.HasValue) bonsais = bonsais.Where(b => b.TypeId == typeid.Value).ToList();
-            if (styleid.HasValue) bonsais = bonsais.Where(b => b.StyleId == styleid.Value).ToList();
-            if (GeneralMeaningId.HasValue) bonsais = bonsais.Where(b => b.GeneralMeaningId == GeneralMeaningId.Value).ToList();
-            if (!string.IsNullOrEmpty(search)) bonsais = bonsais.Where(b => b.BonsaiName.Contains(search) || b.Type.Name.Contains(search)).ToList();
-
             ViewData["Search"] = search;
             ViewData["TypeId"] = typeid;
             ViewData["StyleId"] = styleid;
@@ -61,11 +57,21 @@ namespace WebsiteSellingBonsai.Controllers
             ViewData["sortby"] = sortby;
             ViewData["typesort"] = typesort;
 
-            const int pageSize = 4;
+            const int pageSize = 12;
             
             
             if (bonsais != null)
             {
+                if (typeid.HasValue) bonsais = bonsais.Where(b => b.TypeId == typeid.Value).ToList();
+                if (styleid.HasValue) bonsais = bonsais.Where(b => b.StyleId == styleid.Value).ToList();
+                if (GeneralMeaningId.HasValue) bonsais = bonsais.Where(b => b.GeneralMeaningId == GeneralMeaningId.Value).ToList();
+                //if (!string.IsNullOrEmpty(search)) bonsais = bonsais.Where(b => b.BonsaiName.Contains(search) || b.Type.Name.Contains(search)).ToList();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    string lowerSearch = search.ToLower();
+                    bonsais = bonsais.Where(b =>
+                        b.BonsaiName.ToLower().Contains(lowerSearch)).ToList();
+                }
                 var totalCount = bonsais.Count();
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
                 var pagedBonsais = new List<BonsaiDTO>();
@@ -92,6 +98,21 @@ namespace WebsiteSellingBonsai.Controllers
                     }
                 }
 
+                if (errorbanner != "")
+                {
+                    ViewData["Banners"] = new BannerDTO();
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = errorbanner,
+                        MessageType = "Danger",
+                        DisplayTime = 5
+                    });
+                }
+                else
+                {
+                    ViewData["Banners"] = banners;
+                }
+
                 ViewData["TotalPages"] = totalPages;
                 ViewData["CurrentPage"] = page;
                 ViewData["totalBonsais"] = bonsais.Count();
@@ -108,6 +129,7 @@ namespace WebsiteSellingBonsai.Controllers
             ViewData["TotalPages"] = 1;
             ViewData["CurrentPage"] = 1;
             ViewData["totalBonsais"] = 0;
+
             return View(null);
         }
 

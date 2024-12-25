@@ -2,19 +2,71 @@
   "Files": [
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebsiteSellingBonsai.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WebsiteSellingBonsai.bundle.scp.css"
+      "PackagePath": "staticwebassets\\WebsiteSellingBonsai.tj8w7zcg9i.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\canh_20241219165458.png",
       "PackagePath": "staticwebassets\\Data\\Product\\canh_20241219165458.png"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\canh_20241223072740.png",
+      "PackagePath": "staticwebassets\\Data\\Product\\canh_20241223072740.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\canh_20241223124850_20241223151858.png",
+      "PackagePath": "staticwebassets\\Data\\Product\\canh_20241223124850_20241223151858.png"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\conifer-dawn-daylight-evergreen-167698_20241220210710.jpg",
       "PackagePath": "staticwebassets\\Data\\Product\\conifer-dawn-daylight-evergreen-167698_20241220210710.jpg"
     },
     {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\giphy_20241219161237.gif",
-      "PackagePath": "staticwebassets\\Data\\Product\\giphy_20241219161237.gif"
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\giphy_20241223104523.gif",
+      "PackagePath": "staticwebassets\\Data\\Product\\giphy_20241223104523.gif"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud2.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud2_20241223145843.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud2_20241223145843.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud3.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud3_20241223145853.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud3_20241223145853.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud_20241223145833.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud_20241223145833.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud_20241223150632.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\backgroud_20241223150632.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\canh_20241223124850.png",
+      "PackagePath": "staticwebassets\\Data\\banner\\canh_20241223124850.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\giphy_20241223123328.gif",
+      "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223123328.gif"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\giphy_20241223125312.gif",
+      "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223125312.gif"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\giphy_20241223134721.gif",
+      "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223134721.gif"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\noimage.png",
@@ -9011,6 +9063,10 @@
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebsiteSellingBonsai.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebsiteSellingBonsai.Microsoft.AspNetCore.StaticWebAssets.props",

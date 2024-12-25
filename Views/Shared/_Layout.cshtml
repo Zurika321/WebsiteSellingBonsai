@@ -1,10 +1,12 @@
 ﻿@using WebsiteSellingBonsaiAPI.Utils
+@using WebsiteSellingBonsaiAPI.Models
+@using WebsiteSellingBonsaiAPI.DTOS
 @{
     var userInfo = Context.Session.Get<AdminUser>("userInfo");
 }
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Website selling bonsai</title>
@@ -20,38 +22,38 @@
 
     @await RenderSectionAsync("Header", required: false)
     <style>
-      .a-link { width: auto; cursor: pointer; }
-      .a-link:hover { color: blue; }
-      .custom-toggle::after { display: none; }
-      .linknavbar:hover {border-bottom: 1px solid green;height: 50px}
-      .linknavbar a {text-decoration: none;}
-      .dropdown:hover .dropdown-menu {
+        .a-link { width: auto; cursor: pointer; }
+        .a-link:hover { color: blue; }
+        .custom-toggle::after { display: none; }
+        .linknavbar:hover {border-bottom: 1px solid green;height: 50px}
+        .linknavbar a {text-decoration: none;}
+        .dropdown:hover .dropdown-menu {
         display: block;
         margin-top: 0;
         }
 
-    .dropdown-menu {
+        .dropdown-menu {
         display: none;
         position: absolute;
         top: 100%;
         right: 0;
         z-index: 1000;
-    }
-    .card {
-      transition: transform 0.3s ease;
-    }
+        }
+        .card {
+        transition: transform 0.3s ease;
+        }
 
-    .card div {
-      overflow: hidden;
-    }
-    :root{
+        .card div {
+        overflow: hidden;
+        }
+        :root{
         --color-ui : rgb(85, 215, 111);
         --bg-mode-l: rgb(255,255,255);
         --bg-mode-d: rgb(30,30,30);
         --text-mode-l: rgb(0,0,0);
         --text-mode-d: rgb(255,255,255);
-    }
-    #menu_search{
+        }
+        #menu_search{
         position: absolute;
         background-color: white;
         bottom: 0;
@@ -60,144 +62,304 @@
         width: calc(100% - 50px);
         padding: 5px;
         display: none;
-    }
-    #menu_search li:hover{
+        }
+        #menu_search li:hover{
         background-color: rgb(200,200,200);
-    }
-    #menu_search li {
-       list-style-type: none;
-    }
-    #menu_search a {
+        }
+        #menu_search li {
+        list-style-type: none;
+        }
+        #menu_search a {
         text-decoration: none;
-    }
-    .border_link{
+        }
+        .border_link{
         border-bottom: 1px solid green;height: 50px
-    }
+        }
     </style>
-  </head>
-  <body>
-    <header id="header">
-      <div
-        class="container d-flex justify-content-between align-items-center"
-        style="height: 80px"
-      >
-        <img src="" alt="logo_web" class="img-fluid border" onclick="window.location.href = '/'"/>
+</head>
+<body>
+    <header id="header" style="
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: white;
+    ">
+        <div class="container d-flex justify-content-between align-items-center py-2" style="height: 80px">
+            <!-- Logo -->
+            <img src="~/Data/noimage.png" alt="logo_web" class="img-fluid border rounded" style="cursor: pointer; max-height: 60px;" onclick="window.location.href = '/'" />
 
-        <!-- Menu chính -->
-        <div class="d-none d-md-flex gap-3">
-          <a class="btn btn-outline-success px-1 mx-0" href="#">Trang chủ</a>
-          <a class="btn btn-outline-success px-1 mx-0" href="#">Dịch vụ</a>
-          <a class="btn btn-outline-success px-1 mx-0" href="#">Liên hệ</a>
-          <div class="dropdown">
-          @if (userInfo != null)
-          { 
-            <button class="btn btn-light dropdown-toggle px-1 mx-0" type="button" id="dropdownUserInfo" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="~/@(string.IsNullOrEmpty(userInfo.Avatar) ? "Data/usernoimage.png" : userInfo.Avatar)" 
+            <!-- Main Menu -->
+            <nav class="d-none d-md-flex align-items-center gap-3">
+                <a class="btn btn-outline-success px-2 mx-1" href="#">Trang chủ</a>
+                <a class="btn btn-outline-success px-2 mx-1" href="#">Dịch vụ</a>
+                <a class="btn btn-outline-success px-2 mx-1" href="#">Liên hệ</a>
+            </nav>
+
+            <!-- Search Form -->
+            @*       <form method="Get" asp-action="Index" asp-controller="Home" id="searchForm" class="d-flex align-items-center mx-3" style="position: relative;">
+         <input type="text" name="search" 
+                   style="width: calc(100% - 50px);border:1px solid rgb(85, 215, 111);" 
+                   id="search" 
+                   placeholder="Search here" 
+                   value="@(ViewData["Search"] ?? "")" />
+        <input type="hidden" id="sortby" name="sortby" value="@(ViewData["sortby"] ?? "")" />
+        <input type="hidden" id="typesort" name="typesort" value="@(ViewData["typesort"] ?? "")" />
+        <input type="hidden" id="page" name="page" value="@(ViewData["page"] ?? "")" />
+        <input type="hidden" id="TypeId" name="TypeId" value="@(ViewData["TypeId"] ?? "")" />
+        <input type="hidden" id="StyleId" name="StyleId" value="@(ViewData["StyleId"] ?? "")" />
+        <input type="hidden" id="GeneralMeaningId" name="GeneralMeaningId" value="@(ViewData["GeneralMeaningId"] ?? "")" />
+        <button style="border: 1px solid green; background-color: rgb(85, 215, 111)" type="submit">
+          <i class="fa-solid fa-magnifying-glass mx-2 text-light"></i>
+        </button>
+      </form> *@
+
+            <!-- User Info -->
+            <div class="dropdown d-none d-md-block">
+                @if (userInfo != null)
+                {
+                    <button class="btn btn-light dropdown-toggle px-2 mx-1" type="button" id="dropdownUserInfo" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/@(string.IsNullOrEmpty(userInfo.Avatar) ? "Data/usernoimage.png" : userInfo.Avatar)" 
                         class="img-fluid rounded-circle" 
                         alt="User Avatar" 
                         style="width: 30px; height: 30px; object-fit: cover;" />
-                <span>@userInfo.Username</span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
-                <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                <li>
-                    <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post" class="d-inline">
-                        <button type="submit" class="dropdown-item">Đăng xuất</button>
-                    </form>
-                </li>
-                <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
-            </ul>
-          }
-          else
-          {
-            <a class="btn btn-outline-success px-1 mx-0" href="#">Đăng nhập/Đăng ký</a>      
-          }
-          </div>
-          <a class="btn btn-outline-success px-1 mx-0" style="border:1px solid rgb(85, 215, 111)" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a>
-        </div>
-
-        <!-- Dropdown menu khi màn hình nhỏ hơn 'md' -->
-        <div class="d-md-none dropdown border">
-          <button
-            class="btn dropdown-toggle custom-toggle"
-            style=";border:1px solid rgb(85, 215, 111)"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-bars" style=";color: rgb(85, 215, 111);"></i>
-          </button>
-
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Trang chủ</a></li>
-            <li><a class="dropdown-item" href="#">Dịch vụ</a></li>
-            <li><a class="dropdown-item" href="#">Liên hệ</a></li>
-            @if (userInfo != null)
-            {
-                <li>
-                    <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
-                        <button type="submit" class="dropdown-item btn btn-default btn-flat float-end">Đăng xuất</button>
-                    </form>
-                </li>
-                <li><a class="dropdown-item" href="#">Thông tin</a></li>
-            }
-            else
-            {
-                <li><a class="dropdown-item" asp-action="Login" asp-area="Admin" asp-controller="Users">Đăng nhập</a></li>
-                <li><a class="dropdown-item" asp-action="Sigin" asp-area="Admin" asp-controller="Users">Đăng ký</a></li>
-            }
-            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng </a></li>
-          </ul>
-        </div>
-      </div>
-      <div style="background-color: rgb(85, 215, 111)">
-        <div class="container">
-          <h3 class="fw-bold text-white">Website selling bonsai</h3>
-          <div
-            id="breadcrumb"
-            class="d-flex justify-content-center justify-content-md-start text-primary"
-          >
-            <p id="urlhome" onclick="window.location.href = '/'">Home</p>
-          </div>
-        </div>
-        <script>
-          const currentUrl = window.location.pathname;
-
-          const urlSegments = currentUrl
-            .split("/")
-            .filter((segment) => segment !== "");
-
-                if (urlSegments.length == 0){
-                    document.getElementById("urlhome").style.color = "gray"
+                        <span>@userInfo.Username</span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                        <li>
+                            <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
+                                <button type="submit" class="dropdown-item">Đăng xuất</button>
+                            </form>
+                        </li>
+                    </ul>
                 }
-          const breadcrumbDiv = document.getElementById("breadcrumb");
+                else
+                {
+                    <a class="btn btn-outline-success px-2 mx-1" asp-action="Login" asp-area="Admin" asp-controller="Users">Đăng nhập/Đăng ký</a>
+                }
+            </div>
 
-          // Tạo các liên kết cho từng phần của đường dẫn
-          urlSegments.forEach((segment, index) => {
-            // Thêm dấu "/" giữa các phần
-            const separator = document.createElement("p");
+
+            <!-- Dropdown Menu for Small Screens -->
+            <div class="d-md-none dropdown">
+                <button
+                class="btn dropdown-toggle custom-toggle"
+                style=";border:1px solid rgb(85, 215, 111)"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars" style=";color: rgb(85, 215, 111);"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Trang chủ</a></li>
+                    <li><a class="dropdown-item" href="#">Dịch vụ</a></li>
+                    <li><a class="dropdown-item" href="#">Liên hệ</a></li>
+                    @if (userInfo != null)
+                    {
+
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a></li>
+                        <li>
+                            <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
+                                <button type="submit" class="dropdown-item">Đăng xuất</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a class="dropdown-item" asp-action="Login" asp-area="Admin" asp-controller="Users">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" asp-action="SignIn" asp-area="Admin" asp-controller="Users">Đăng ký</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <div id="breadcrumb-navigation" class="container py-2 bg-light border-top d-flex align-items-center">
+        <a href="/" class="text-primary text-decoration-none">Home</a>
+        <script>
+            const currentUrl = window.location.pathname;
+            const urlSegments = currentUrl.split("/").filter(segment => segment !== "");
+            const breadcrumbDiv = document.getElementById("breadcrumb-navigation");
+
+            urlSegments.forEach((segment, index) => {
+            const separator = document.createElement("span");
             separator.textContent = " / ";
-            separator.classList.add("mx-2");
+            separator.classList.add("mx-1");
             breadcrumbDiv.appendChild(separator);
 
-            // Tạo link cho từng phần của URL
             const segmentLink = document.createElement("a");
-            segmentLink.style =
-              urlSegments.length - 1 != index ? "color: blue" : "color: gray";
+            segmentLink.style = index !== urlSegments.length - 1 ? "color: #007bff; text-decoration: none;" : "color: gray;";
             segmentLink.href = "/" + urlSegments.slice(0, index + 1).join("/");
-            segmentLink.textContent =
-              segment.charAt(0).toUpperCase() + segment.slice(1);
+            segmentLink.textContent = segment.charAt(0).toUpperCase() + segment.slice(1);
             breadcrumbDiv.appendChild(segmentLink);
-          });
+            });
         </script>
-      </div>
-    </header>
+    </div>
+
+    @{
+        // var bannersS = new[]
+        // {
+        //     new { id = 1, image = "Data/banner/backgroud.jpg" },
+        //     new { id = 2, image = "Data/banner/backgroud2.jpg" }
+        // };
+        var banners = ViewData["Banners"] as List<BannerDTO>;
+        if (banners == null){
+            banners = new List<BannerDTO>();
+        }
+    }
+    <style>
+        #main_banner{
+            position: relative;
+        }
+        #menu_banner{
+            align-items: center;
+            overflow-x: hidden;
+            overflow: hidden;
+            width: calc(100% - 40px);
+            margin-left: 20px;
+        }
+        #list_banner{
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
+        #list_banner > div {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        .banner{
+            width: 100%;
+            z-index: 9;
+        }
+        #btn-left{
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            z-index: 9;
+        }
+        #btn-right{
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            z-index: 9;
+        }
+    </style>
+  <!-- Dynamic Banner Image -->
+  <div id="main_banner">
+    <button id="btn-left" title="cuộn sang trái">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="btn-right" title="cuộn sang phải">
+        <i
+        class="fa-solid fa-chevron-left"
+        style="transform: rotate(180deg)"
+        ></i>
+    </button>
+    <div id="menu_banner">
+       <div id="list_banner">
+            @foreach (var banner in banners)
+            {
+                <div class="banner" style="background-image: url('@banner.ImageOld'); background-size: cover; background-position: center; height: 400px;">
+                    <div class="h-100 d-flex align-items-end">
+                        <div style="background-color: rgba(0, 0, 0, 0.3)" class="w-100 text-center">
+                            <h1 class="text-white text-center fw-bold">@banner.Title</h1>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+  </div>
+      
+  
+  
+  <script>
+        const track = document.querySelector("#list_banner");
+        let index = 0;
+        let interval;
+
+        const updateAnimeItems = () => {
+          const animeItems = document.querySelectorAll(".banner");
+          return animeItems;
+        };
+
+        const updateCarousel = () => {
+          const animeItems = updateAnimeItems();
+          track.style.transform = `translateX(-${index * 100}%)`;
+        };
+
+        let tienlen = true;
+        const startAutoScroll = () => {
+          interval = setInterval(() => {
+            const animeItems = updateAnimeItems(); // Cập nhật lại animeItems
+            if (animeItems.length <= 1) return;
+            if (tienlen) {
+              index++;
+              if (index >= animeItems.length) {
+                index -= 2;
+                tienlen = false;
+              }
+            } else {
+              index--;
+              if (index <= -1) {
+                index += 2;
+                tienlen = true;
+              }
+            }
+            updateCarousel();
+          }, 6000);
+        };
+
+        const resetAndRestartAutoScroll = () => {
+          clearInterval(interval);
+          startAutoScroll();
+        };
+
+        document.getElementById("btn-left").addEventListener("click", () => {
+          index--;
+          const animeItems = updateAnimeItems();
+          if (index < 0) {
+            index = animeItems.length - 1;
+          }
+          updateCarousel();
+          resetAndRestartAutoScroll();
+        });
+
+        document.getElementById("btn-right").addEventListener("click", () => {
+          index++;
+          const animeItems = updateAnimeItems();
+          if (index >= animeItems.length) {
+            index = 0;
+          }
+          updateCarousel();
+          resetAndRestartAutoScroll();
+        });
+
+        // Cập nhật lại animeItems mỗi 5 giây
+        setInterval(() => {
+          updateCarousel(); // Cập nhật carousel sau mỗi 5 giây
+        }, 5000);
+
+        // Cập nhật lại kiểu của các phần tử anime
+        const updateAnimeStyle = () => {
+          const animeItems = updateAnimeItems();
+          animeItems.forEach((item) => {
+            item.style.flex = "0 0 100%";
+          });
+        };
+
+        startAutoScroll();
+      </script>
+
     <!-- nav bar -->
     <div
       style="
         position: sticky;
-        top: 0;
+        top: 70px;
         z-index: 10;
         background-color: white;
       "
@@ -304,7 +466,7 @@
         right: 10px;
       "
       class="btn btn-primary d-none"
-      onclick="window.location.href ='#header'"
+      onclick="window.location.href ='#'"
     >
       <i class="fa-solid fa-arrow-up"></i>
     </button>
@@ -419,9 +581,10 @@
     @if (!string.IsNullOrEmpty(thongBaoJson))
     {
         <script>
+            // Giải mã JSON và gọi hàm JavaScript
             var thongBao = @Html.Raw(thongBaoJson);
             console.log(thongBao.MessageType)
-            (thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
+            thong_bao_chung(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
         </script>
     }
 

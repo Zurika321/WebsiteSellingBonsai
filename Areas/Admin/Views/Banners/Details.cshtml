@@ -1,0 +1,41 @@
+﻿@model WebsiteSellingBonsaiAPI.DTOS.BannerDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Banner</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageOld)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ImageOld))
+            {
+                <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + Model.ImageOld)')">
+                    <img src="@Url.Content("~/" + Model.ImageOld)" alt="Product Image" class="img1" />
+				</div>
+            }
+            else
+            {
+                <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + Model.ImageOld)')">
+                    <img src="/Data/noimage.png" alt="Product Image" class="img1" />
+                </div>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.BAN_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

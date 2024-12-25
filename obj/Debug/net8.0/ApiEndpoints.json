@@ -1,0 +1,697 @@
+[
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AdminUsersAPIController",
+    "Method": "GetAdminUser",
+    "RelativePath": "api/AdminUsersAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.Models.AdminUser, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AdminUsersAPIController",
+    "Method": "PostAdminUser",
+    "RelativePath": "api/AdminUsersAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adminUser",
+        "Type": "WebsiteSellingBonsaiAPI.Models.AdminUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.AdminUser",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AdminUsersAPIController",
+    "Method": "GetAdminUser",
+    "RelativePath": "api/AdminUsersAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.AdminUser",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AdminUsersAPIController",
+    "Method": "PutAdminUser",
+    "RelativePath": "api/AdminUsersAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "adminUser",
+        "Type": "WebsiteSellingBonsaiAPI.Models.AdminUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AdminUsersAPIController",
+    "Method": "DeleteAdminUser",
+    "RelativePath": "api/AdminUsersAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
+    "Method": "Getbanners",
+    "RelativePath": "api/BannersAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.DTOS.BannerDTO, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
+    "Method": "PostBanner",
+    "RelativePath": "api/BannersAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "banner",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Banner",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Banner",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
+    "Method": "GetBanner",
+    "RelativePath": "api/BannersAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.BannerDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
+    "Method": "PutBanner",
+    "RelativePath": "api/BannersAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "banner",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Banner",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
+    "Method": "DeleteBanner",
+    "RelativePath": "api/BannersAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaisAPIController",
+    "Method": "GetBonsais",
+    "RelativePath": "api/BonsaisAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaisAPIController",
+    "Method": "PostBonsai",
+    "RelativePath": "api/BonsaisAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bonsai",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Bonsai",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Bonsai",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaisAPIController",
+    "Method": "GetBonsai",
+    "RelativePath": "api/BonsaisAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaisAPIController",
+    "Method": "PutBonsai",
+    "RelativePath": "api/BonsaisAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "bonsai",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Bonsai",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaisAPIController",
+    "Method": "DeleteBonsai",
+    "RelativePath": "api/BonsaisAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaiTypesAPIController",
+    "Method": "GetTypes",
+    "RelativePath": "api/BonsaiTypesAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.Models.BonsaiType, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaiTypesAPIController",
+    "Method": "PostBonsaiType",
+    "RelativePath": "api/BonsaiTypesAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bonsaiType",
+        "Type": "WebsiteSellingBonsaiAPI.Models.BonsaiType",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.BonsaiType",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaiTypesAPIController",
+    "Method": "GetBonsaiType",
+    "RelativePath": "api/BonsaiTypesAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.BonsaiType",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaiTypesAPIController",
+    "Method": "PutBonsaiType",
+    "RelativePath": "api/BonsaiTypesAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "bonsaiType",
+        "Type": "WebsiteSellingBonsaiAPI.Models.BonsaiType",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BonsaiTypesAPIController",
+    "Method": "DeleteBonsaiType",
+    "RelativePath": "api/BonsaiTypesAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
+    "Method": "GetGeneralMeaning",
+    "RelativePath": "api/GeneralMeaningsAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.Models.GeneralMeaning, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
+    "Method": "PostGeneralMeaning",
+    "RelativePath": "api/GeneralMeaningsAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "generalMeaning",
+        "Type": "WebsiteSellingBonsaiAPI.Models.GeneralMeaning",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.GeneralMeaning",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
+    "Method": "GetGeneralMeaning",
+    "RelativePath": "api/GeneralMeaningsAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.GeneralMeaning",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
+    "Method": "PutGeneralMeaning",
+    "RelativePath": "api/GeneralMeaningsAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "generalMeaning",
+        "Type": "WebsiteSellingBonsaiAPI.Models.GeneralMeaning",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
+    "Method": "DeleteGeneralMeaning",
+    "RelativePath": "api/GeneralMeaningsAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.PhanLoaiBonsaiAPIController",
+    "Method": "GetBonsais",
+    "RelativePath": "api/PhanLoaiBonsaiAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.PhanLoaiBonsaiDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.StylesAPIController",
+    "Method": "GetStyles",
+    "RelativePath": "api/StylesAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.Models.Style, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.StylesAPIController",
+    "Method": "PostStyle",
+    "RelativePath": "api/StylesAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "style",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Style",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Style",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.StylesAPIController",
+    "Method": "GetStyle",
+    "RelativePath": "api/StylesAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Style",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.StylesAPIController",
+    "Method": "PutStyle",
+    "RelativePath": "api/StylesAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "style",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Style",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.StylesAPIController",
+    "Method": "DeleteStyle",
+    "RelativePath": "api/StylesAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.WeatherForecast, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

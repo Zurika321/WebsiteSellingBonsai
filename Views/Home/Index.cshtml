@@ -7,80 +7,84 @@
 
     <style>
 .card {
-    background-color: #f9fdf9; /* Màu nền nhạt, hợp với cây cảnh */
-    transition: transform 0.3s ease, border-color 0.3s ease;
+background-color: #f9fdf9; /* Màu nền nhạt, hợp với cây cảnh */
+transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.05);
-    border-color: #218838;
-    box-shadow: -15px -15px 15px 5px rgba(0, 0, 0, 0.3),15px 15px 15px 5px rgba(0, 0, 0, 0.3);
+transform: scale(1.05);
+border-color: #218838;
+}
+.product-card {
+position: relative;
 }
 
-.img-container {
-    position: relative;
-    overflow: hidden; /* Tránh ảnh bị tràn */
+.product-card .hover-overlay {
+opacity: 0;
 }
 
-.img_show_product {
-    display: block;
-    width: 100%;
-    transition: transform 0.3s ease;
+.product-card:hover .hover-overlay {
+opacity: 1;
 }
 
-.img_show_product:hover {
-    transform: scale(1.1); /* Phóng to ảnh khi hover */
+.card-title {
+font-size: 1rem;
+font-weight: bold;
+margin-bottom: 0.5rem;
 }
 
-.card-body {
-    /* position: relative; */
-    overflow: hidden; /* Giới hạn nội dung bên trong card */
-}
-
-/* Hiển thị mặc định */
-.default-info {
-    text-align: center;
-    line-height: 1.6;
-}
-
-/* Ẩn thông tin khi không hover */
-.hover-info {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 100%;
-    background-color: rgba(40, 167, 69, 0.95);
-    color: white;
-    font-size: 16px;
-    text-align: center;
-    transition: left 0.3s ease-in-out;
-    line-height: 2;
-    font-weight: bold;
-    text-wrap: wrap;
-    z-index: 2;
-}
-
-/* Hiện thông tin khi hover vào card */
-.card:hover .hover-info {
-    left: 0;
-}
-
-/* Tùy chỉnh nút */
-.hover-info button {
-    background-color: #218838;
-    border: none;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.hover-info button:hover {
-    background-color: #1e7e34;
+.card-text {
+font-size: 0.875rem;
 }
     </style>
 <div class="container">
+    <section id="featured-products" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-success">Sản Phẩm Nổi Bật</h2>
+      <p class="text-muted">Khám phá những mẫu bonsai đẹp nhất chúng tôi cung cấp</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Product Card 1 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 1" style="object-fit: cover; height: 200px;">
+          <div class="card-body">
+            <h5 class="card-title text-success">Bonsai Nhật Bản</h5>
+            <p class="card-text text-muted">Phong cách tinh tế, mang lại không gian thiền định.</p>
+            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Card 2 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 2" style="object-fit: cover; height: 200px;">
+          <div class="card-body">
+            <h5 class="card-title text-success">Bonsai Nghệ Thuật</h5>
+            <p class="card-text text-muted">Tác phẩm nghệ thuật sống động từ thiên nhiên.</p>
+            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Card 3 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 3" style="object-fit: cover; height: 200px;">
+          <div class="card-body">
+            <h5 class="card-title text-success">Bonsai Phong Thủy</h5>
+            <p class="card-text text-muted">Mang lại may mắn và tài lộc cho gia chủ.</p>
+            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <h2>Cây Bonsais</h2> 
     <a asp-action="Index" asp-area="Admin" asp-controller="Home">admin</a>
     <a asp-area=""></a>
@@ -123,7 +127,7 @@
             <p>Tổng kết quả tìm thấy: @ViewData["totalBonsais"]</p>
             @{
                 var totalBonsais = (int)ViewData["totalBonsais"]; // Tổng số bonsai
-                var resultsPerPage = 4; // Số kết quả trên mỗi trang
+                var resultsPerPage = 12; // Số kết quả trên mỗi trang
                 var totalPages = (int)Math.Ceiling((double)totalBonsais / resultsPerPage); // Tổng số trang
                 var currentPage = (int)ViewData["CurrentPage"]; // Trang hiện tại
 
@@ -165,52 +169,47 @@
     </div>
 </div>
 
-    @* Phần Sản phẩm *@
-    <div class="row">
+@* Phần product *@
+<div class="container">
+   <div class="row">
         @if (Model != null && Model.Any())
         {
             @foreach (var bonsai in Model)
             {
-                <div class="col col-sm-6 col-lg-4 col-xl-3 justify-content-center d-flex my-2">
-                    <div class="card border-success" style="width: 18rem; border: 2px solid #28a745; border-radius: 10px; overflow: hidden;">
-                        <div class="img-container">
+              <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
+                <div class="card product-card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                  <div class="position-relative">
                             @if (!string.IsNullOrEmpty(bonsai.ImageOld))
                             {
-                                <img src="@Url.Content("~/" + bonsai.ImageOld)" alt="Product Image" alt="@bonsai.BonsaiName" 
-                                class="card-img-top img_show_product"/>
+                          <img src="@Url.Content("~/" + bonsai.ImageOld)" alt="@bonsai.BonsaiName" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
                             }
                             else
                             {
-                                <img src="https://w7.pngwing.com/pngs/819/548/png-transparent-photo-image-landscape-icon-images-thumbnail.png" alt="@bonsai.BonsaiName"
-                                class="card-img-top img_show_product"/>
+                          <img src="~/Data/noimage.png" alt="@bonsai.BonsaiName" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
                             }
-                             <!-- Hiển thị khi hover -->
-                            <div class="hover-info">
-                                <p>Tuổi: @bonsai.YearOld năm</p>
-                                <p>Số lượng: Còn @bonsai.Quantity cây</p>
-                                <button class="btn btn-success w-100 mt-2">Thêm vào giỏ hàng</button>
-                            </div>       
-                        </div>
-
-                        <div class="card-body">
-                            <!-- Hiển thị mặc định -->
-                            <div class="default-info">
-                                <h5 class="card-title">@bonsai.BonsaiName</h5>
-                                <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
-                                <p class="card-text text-muted">@Html.Raw(bonsai.Description)</p>
-                            </div>          
-                        </div>
+                    <!-- Hover Info -->
+                    <div class="hover-overlay position-absolute top-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-50 text-white opacity-0">
+                      <p class="mb-2">Tuổi: @bonsai.YearOld năm</p>
+                      <p class="mb-2">Số lượng: Còn @bonsai.Quantity cây</p>
+                      <button class="btn btn-success">Thêm vào giỏ hàng</button>
                     </div>
+                  </div>
+                  <div class="card-body text-center">
+                    <!-- Default Info -->
+                    <h5 class="card-title text-truncate">@bonsai.BonsaiName</h5>
+                    <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
+                    <p class="card-tex">@Html.Raw(bonsai.Description)</p>
+                  </div>
                 </div>
+              </div>
             }
-
         }
         else
         {
-                <div>@ViewData["Error"]</div>
+        <div>@ViewData["Error"]</div>
         }
     </div>
-
+</div>
 
 
     @* Phân trang *@

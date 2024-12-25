@@ -54,6 +54,8 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 });
             }
 
+            //var bonsaiList = bonsaiList.OrderBy(x => x.Style).ToList();
+
             if (!string.IsNullOrEmpty(search_by) && !string.IsNullOrEmpty(search))
             {
                 var propertyInfo = typeof(BonsaiDTO).GetProperty(search_by, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
