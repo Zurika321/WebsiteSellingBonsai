@@ -5,7 +5,7 @@
 }
 <!DOCTYPE html>
 <html lang="en">
- <!--begin::Head-->
+<!--begin::Head-->
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -114,7 +114,7 @@
                     </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
                     <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="@Url.Content("~/" +userInfo?.Avatar)" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">@userInfo?.Displayname</span> </a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="@Url.Content("~/" +userInfo?.Avatar ?? "Data/usernoimage.png")" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">@userInfo?.Displayname</span> </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
                             <li class="user-header text-bg-primary">
@@ -144,8 +144,17 @@
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <!--begin::Sidebar Menu-->
+                    @{
+                        var link = "Index";
+                    }
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
+                        <li class="nav-item rounded" style="background-color: @(link == "Index" ? "rgb(25, 135, 84)" : "white")">
+                            <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon bi bi-circle-fill" style="@(link == "Index" ? "color: white" : "")"></i>
+                                <p style="@(link == "Index" ? "color: white" : "")">Tổng quan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item rounded">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
@@ -180,7 +189,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item rounded">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
@@ -209,7 +218,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item rounded">
                             <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
                                 <i class="nav-icon bi bi-circle-fill"></i>
                                 <p>Banner</p>

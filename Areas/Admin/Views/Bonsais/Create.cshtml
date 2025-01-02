@@ -26,7 +26,7 @@
             <input asp-for="ImageOld" type="hidden" value=""/>
             <div class="form-group">
                 <label asp-for="BonsaiName" class="control-label"></label>
-                <input asp-for="BonsaiName" class="form-control" />
+                <input asp-for="BonsaiName" minlength="1" maxlength="20" class="form-control" />
                 <span asp-validation-for="BonsaiName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,22 +38,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <textarea asp-for="Description" maxlength="500" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FengShuiMeaning" class="control-label"></label>
-                <textarea asp-for="FengShuiMeaning" class="form-control" /></textarea>
+                <textarea asp-for="FengShuiMeaning" maxlength="500" class="form-control" /></textarea>
                 <span asp-validation-for="FengShuiMeaning" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="Size" class="control-label"></label>
-                <input asp-for="Size" class="form-control" />
+                <input asp-for="Size" min="10" max="200" class="form-control" />
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" min="0" max="10000" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -63,17 +63,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="YearOld" class="control-label"></label>
-                <input asp-for="YearOld" class="form-control" />
+                <input asp-for="YearOld" min="1" max="100" class="form-control" />
                 <span asp-validation-for="YearOld" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MinLife" class="control-label"></label>
-                <input asp-for="MinLife" class="form-control" />
+                <input asp-for="MinLife" min="0" max="200" class="form-control" />
                 <span asp-validation-for="MinLife" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaxLife" class="control-label"></label>
-                <input asp-for="MaxLife" class="form-control" />
+                <input asp-for="MaxLife" min="0" max="200" class="form-control" />
                 <span asp-validation-for="MaxLife" class="text-danger"></span>
             </div>
             <div class="form-group">
