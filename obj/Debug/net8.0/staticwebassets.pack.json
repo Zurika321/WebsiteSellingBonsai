@@ -25,20 +25,8 @@
       "PackagePath": "staticwebassets\\Data\\Product\\giphy_20241223104523.gif"
     },
     {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud.jpg",
-      "PackagePath": "staticwebassets\\Data\\banner\\backgroud.jpg"
-    },
-    {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud2.jpg",
-      "PackagePath": "staticwebassets\\Data\\banner\\backgroud2.jpg"
-    },
-    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud2_20241223145843.jpg",
       "PackagePath": "staticwebassets\\Data\\banner\\backgroud2_20241223145843.jpg"
-    },
-    {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud3.jpg",
-      "PackagePath": "staticwebassets\\Data\\banner\\backgroud3.jpg"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud3_20241223145853.jpg",
@@ -211,6 +199,10 @@
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\admin\\assets\\img\\user8-128x128.jpg",
       "PackagePath": "staticwebassets\\admin\\assets\\img\\user8-128x128.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\admin\\css\\Admin.css",
+      "PackagePath": "staticwebassets\\admin\\css\\Admin.css"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\admin\\css\\adminlte.css",

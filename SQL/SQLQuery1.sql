@@ -215,7 +215,14 @@ JOIN
     ImageURL NVARCHAR(1024)
 );
 
+ CREATE TABLE Features (
+    FEA_ID INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255),
+    ImageURL NVARCHAR(1024),
+    Description NVARCHAR(1024),
+);
 
+DROP TABLE Features;
 DROP TABLE Bonsais;
 DROP TABLE GeneralMeanings;
 DROP TABLE Banners;
@@ -229,6 +236,7 @@ DROP TABLE Reviews;
 DROP TABLE AdminUsers;
 DROP VIEW BonsaiPhanLoai;
 
+SELECT *FROM Features;
 SELECT *FROM GeneralMeanings;
 SELECT *FROM Banners;
 SELECT *FROM Styles;

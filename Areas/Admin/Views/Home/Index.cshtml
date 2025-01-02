@@ -1,3 +1,199 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+<div>
+    <!-- Top Bar -->
+
+    <!-- Overview Cards -->
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h6>Tổng đơn hàng hôm nay</h6>
+                <h3>12,345</h3>
+                <small class="text-success">+8% so với hôm qua</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h6>Doang thu hôm nay</h6>
+                <h3>2,345 vnđ</h3>
+                <small class="text-success">+5% so với hôm qua</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h6>Khách mới hôm nay</h6>
+                <h3>6,789</h3>
+                <small class="text-danger">-2% so với hôm qua</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h6>Khuyến mãi đang hoạt động</h6>
+                <h3>0</h3>
+                <small class="text-warning">Đang hoạt động</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-4 mt-4">
+        <!-- Orders Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <h6>Orders Overview</h6>
+                <canvas id="ordersChart"></canvas>
+            </div>
+        </div>
+        <!-- Products Chart -->
+        <div class="col-md-6">
+            <h3 class="my-4">Biểu Đồ Doanh Thu</h3>
+
+            <!-- Thời gian lựa chọn -->
+            <div class="dropdown">
+                <select id="timeSelect" class="form-select">
+                    <option value="today">Ngày Hôm Nay</option>
+                    <option value="thisWeek">Tuần Này</option>
+                    <option value="thisMonth">Tháng Này</option>
+                    <option value="thisYear">Năm Này</option>
+                </select>
+            </div>
+
+            <!-- Biểu đồ đường -->
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        <!-- Customers Chart -->
+        <div class="col-md-6 mt-4">
+            <div class="chart-container">
+                <h6>Customers Growth</h6>
+                <canvas id="customersChart"></canvas>
+            </div>
+        </div>
+        <!-- Promotions Chart -->
+        <div class="col-md-6 mt-4">
+            <div class="chart-container">
+                <h6>Promotion Analysis</h6>
+                <canvas id="promotionsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+       @section Header {
+    @{
+                <link href="~/admin/css/Admin.css" rel="stylesheet" />
+
+    }
+}
+@section Scripts {
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Sidebar toggle logic
+        const sidebar = document.getElementById("sidebar");
+        const mainContent = document.querySelector("main");
+
+        // Orders Chart
+        new Chart(document.getElementById("ordersChart").getContext("2d"), {
+            type: "bar",
+            data: {
+                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                datasets: [
+                    {
+                        label: "Orders",
+                        data: [30, 45, 50, 60, 80, 75, 90],
+                        backgroundColor: "rgba(54, 162, 235, 0.5)",
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        borderWidth: 1,
+                    },
+                ],
+            },
+        });
+
+            // Revenue Chart (Line chart)
+            const ctx = document.getElementById("revenueChart").getContext("2d");
+
+            // Dữ liệu biểu đồ mặc định
+            let revenueData = {
+            today: [150, 120, 100, 180, 200],
+            thisWeek: [1000, 1200, 1500, 1300, 1100, 1400, 1800],
+            thisMonth: [15000, 18000, 22000, 20000, 21000, 25000, 28000, 30000, 35000, 33000, 32000, 28000],
+            thisYear: [150000, 170000, 200000, 190000, 220000, 210000, 250000, 260000, 270000, 280000, 300000, 310000]
+            };
+
+            let labels = {
+            today: ['9am', '10am', '11am', '12pm', '1pm'], // Các mốc thời gian trong ngày
+            thisWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], // Các mốc thời gian trong tuần
+            thisMonth: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Các mốc thời gian trong tháng
+            thisYear: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] // Các mốc thời gian trong năm
+            };
+
+            let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels.today, // Mặc định là "Ngày hôm nay"
+                datasets: [{
+                label: 'Doanh Thu',
+                data: revenueData.today,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true,
+                tension: 0.4
+                }]
+            }
+            });
+
+            // Lắng nghe thay đổi lựa chọn thời gian
+            document.getElementById("timeSelect").addEventListener("change", function(e) {
+            let selectedOption = e.target.value;
+            let selectedData = revenueData[selectedOption];
+            let selectedLabels = labels[selectedOption];
+
+            chart.data.labels = selectedLabels;
+            chart.data.datasets[0].data = selectedData;
+            chart.update();
+            });
+
+        // Customers Chart
+        new Chart(document.getElementById("customersChart").getContext("2d"), {
+            type: "doughnut",
+            data: {
+                labels: ["New", "Returning", "Churned"],
+                datasets: [
+                    {
+                        label: "Customers",
+                        data: [50, 35, 15],
+                        backgroundColor: [
+                            "rgba(255, 99, 132, 0.5)",
+                            "rgba(54, 162, 235, 0.5)",
+                            "rgba(255, 206, 86, 0.5)",
+                        ],
+                    },
+                ],
+            },
+        });
+
+        // Promotions Chart
+        new Chart(document.getElementById("promotionsChart").getContext("2d"), {
+            type: "pie",
+            data: {
+                labels: ["Discounts", "Coupons", "Offers"],
+                datasets: [
+                    {
+                        label: "Promotions",
+                        data: [40, 30, 30],
+                        backgroundColor: [
+                            "rgba(153, 102, 255, 0.5)",
+                            "rgba(255, 159, 64, 0.5)",
+                            "rgba(255, 205, 86, 0.5)",
+                        ],
+                    },
+                ],
+            },
+        });
+    </script>
+}
