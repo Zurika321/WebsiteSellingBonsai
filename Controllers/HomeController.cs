@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NuGet.Protocol.Model;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using WebsiteSellingBonsaiAPI.DTOS;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
@@ -13,12 +14,12 @@ namespace WebsiteSellingBonsai.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ProcessingServices _processingServices;
+        private readonly APIServices _apiServices;
 
         // Constructor sửa lại tên hàm
-        public HomeController(ILogger<HomeController> logger, ProcessingServices processingServices)
+        public HomeController(ILogger<HomeController> logger, APIServices processingServices)
         {
-            _processingServices = processingServices;
+            _apiServices = processingServices;
             _logger = logger;
         }
 
@@ -26,15 +27,20 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string search, int? typeid, int? styleid, int? GeneralMeaningId, int? page, string sortby, string typesort)
         {
+            //var deleteimage = await _apiServices.DeleteImage("Data/banner/backgroud2_20241223145843.jpg");
+            //if (deleteimage != "")
+            //{
+            //    ViewData["Error"] = deleteimage;
+            //}
             if (page == null) page = 1;
             if (string.IsNullOrEmpty(sortby)) sortby = "Id";
             if (string.IsNullOrEmpty(typesort)) typesort = "low";
 
-            var (bonsais, errorbonsai) = await _processingServices.FetchDataApiGetList<BonsaiDTO>("https://localhost:44351/api/bonsaisAPI");
-            var (banners, errorbanner) = await _processingServices.FetchDataApiGetList<BannerDTO>("https://localhost:44351/api/bannersAPI");
+            var (bonsais, thongbaobonsai) = await _apiServices.FetchDataApiGetList<BonsaiDTO>("bonsaisAPI");
+            var (banners, thongbaobanner) = await _apiServices.FetchDataApiGetList<BannerDTO>("bannersAPI");
 
-            var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("https://localhost:44351/api/PhanLoaiBonsaiAPI");
-            if (phanloai != null)
+            var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
+            if (phanloai != default)
             {
                 ViewData["GeneralMeaningList"] = new SelectList(phanloai.GeneralMeanings, "Id", "Meaning");
                 ViewData["StyleList"] = new SelectList(phanloai.Styles, "Id", "Name");
@@ -42,12 +48,7 @@ namespace WebsiteSellingBonsai.Controllers
             }
             else
             {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorphanloai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaophanloai);
             }
 
             ViewData["Search"] = search;
@@ -60,7 +61,7 @@ namespace WebsiteSellingBonsai.Controllers
             const int pageSize = 12;
             
             
-            if (bonsais != null)
+            if (bonsais != default)
             {
                 if (typeid.HasValue) bonsais = bonsais.Where(b => b.TypeId == typeid.Value).ToList();
                 if (styleid.HasValue) bonsais = bonsais.Where(b => b.StyleId == styleid.Value).ToList();
@@ -98,15 +99,10 @@ namespace WebsiteSellingBonsai.Controllers
                     }
                 }
 
-                if (errorbanner != "")
+                if (banners == default)
                 {
                     ViewData["Banners"] = new BannerDTO();
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                    {
-                        Message = errorbanner,
-                        MessageType = "Danger",
-                        DisplayTime = 5
-                    });
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaobanner);
                 }
                 else
                 {
@@ -119,13 +115,8 @@ namespace WebsiteSellingBonsai.Controllers
 
                 return View(pagedBonsais);
             }
-            ViewData["Error"] = errorbonsai;
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-            {
-                Message = errorbonsai,
-                MessageType = "Warning",
-                DisplayTime = 5
-            });
+            ViewData["Error"] = thongbaobonsai.Message;
+            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaobonsai);
             ViewData["TotalPages"] = 1;
             ViewData["CurrentPage"] = 1;
             ViewData["totalBonsais"] = 0;

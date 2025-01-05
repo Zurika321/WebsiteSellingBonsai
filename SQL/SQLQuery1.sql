@@ -119,14 +119,14 @@ VALUES
 
 CREATE TABLE Carts (
     CART_ID INT PRIMARY KEY IDENTITY(1,1),
-    USE_ID INT,
+    USE_ID NVARCHAR(450), -- Chỉnh lại kiểu dữ liệu cho phù hợp với Id trong AspNetUsers
 
     CreatedDate DATETIME DEFAULT GETDATE(),
     CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
-    UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
 
-    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
+    FOREIGN KEY (USE_ID) REFERENCES AspNetUsers(Id) -- Liên kết với bảng AspNetUsers
 );
 
 CREATE TABLE CartDetails (
@@ -141,20 +141,21 @@ CREATE TABLE CartDetails (
     FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
 
-	CREATE TABLE Orders (
-		ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
-		USE_ID INT,
-		Paymentmethod NVARCHAR(100),
-		Status NVARCHAR(24),
-		Total DECIMAL,
+CREATE TABLE Orders (
+    ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
+    USE_ID NVARCHAR(450), -- Chỉnh lại kiểu dữ liệu cho phù hợp với Id trong AspNetUsers
+    Paymentmethod NVARCHAR(100),
+    Status NVARCHAR(24),
+	CancelReason NVARCHAR(2048),
+    Total DECIMAL,
 
-		CreatedDate DATETIME DEFAULT GETDATE(),
-		CreatedBy NVARCHAR(50) DEFAULT 'Admin',
-		UpdatedDate DATETIME DEFAULT GETDATE(),
-		UpdatedBy NVARCHAR(50) DEFAULT 'Admin'
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
+    UpdatedDate DATETIME DEFAULT GETDATE(),
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
 
-		FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
-	);
+    FOREIGN KEY (USE_ID) REFERENCES AspNetUsers(Id) -- Liên kết với bảng AspNetUsers
+);
 
 CREATE TABLE OrderDetails (
     ORDER_D_ID INT PRIMARY KEY IDENTITY(1,1),
@@ -171,19 +172,20 @@ CREATE TABLE OrderDetails (
 CREATE TABLE Reviews (
     REVIEW_ID INT PRIMARY KEY IDENTITY(1,1),
     BONSAI_ID INT,
-    USE_ID INT,
+    USE_ID NVARCHAR(450), -- Chỉnh lại kiểu dữ liệu cho phù hợp với Id trong AspNetUsers (thường là NVARCHAR(450))
     Rate FLOAT, 
-	Comment NVARCHAR(2048),
+    Comment NVARCHAR(2048),
     
     CreatedDate DATETIME DEFAULT GETDATE(),
     CreatedBy NVARCHAR(50) DEFAULT 'Admin',
     UpdatedDate DATETIME DEFAULT GETDATE(),
     UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
     
-    FOREIGN KEY (USE_ID) REFERENCES AdminUsers(USE_ID),
+    FOREIGN KEY (USE_ID) REFERENCES AspNetUsers(Id), -- Liên kết với bảng AspNetUsers
     FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
 
+/*
 CREATE VIEW BonsaiPhanLoai AS
 SELECT 
     b.Id AS BonsaiId, 
@@ -207,7 +209,7 @@ JOIN
 JOIN 
     GeneralMeanings g ON b.GeneralMeaningId = g.Id
 JOIN 
-    Styles s ON b.StyleId = s.Id;
+    Styles s ON b.StyleId = s.Id;*/
 
  CREATE TABLE Banners (
     BAN_ID INT PRIMARY KEY IDENTITY(1,1),
@@ -222,19 +224,19 @@ JOIN
     Description NVARCHAR(1024),
 );
 
-DROP TABLE Features;
-DROP TABLE Bonsais;
-DROP TABLE GeneralMeanings;
-DROP TABLE Banners;
-DROP TABLE Styles;
-DROP TABLE Types;
-DROP TABLE Carts;
-DROP TABLE CartDetails;
-DROP TABLE Orders;
-DROP TABLE OrderDetails;
-DROP TABLE Reviews;
-DROP TABLE AdminUsers;
-DROP VIEW BonsaiPhanLoai;
+DROP TABLE OrderDetails;     --1
+DROP TABLE Orders;           --2
+DROP TABLE CartDetails;      --3
+DROP TABLE Carts;            --4
+DROP TABLE GeneralMeanings;  --5
+DROP TABLE Reviews;          --6
+DROP TABLE Features;         --7
+DROP VIEW BonsaiPhanLoai;    --8
+DROP TABLE Bonsais;          --9
+DROP TABLE Banners;          --10
+DROP TABLE Styles;           --11
+DROP TABLE Types;            --12
+DROP TABLE AdminUsers;       --13
 
 SELECT *FROM Features;
 SELECT *FROM GeneralMeanings;

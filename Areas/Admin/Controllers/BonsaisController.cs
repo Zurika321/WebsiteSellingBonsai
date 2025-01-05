@@ -25,33 +25,21 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
     [Area("Admin")]
     public class BonsaisController : Controller
     {
-        //private readonly HttpClient _httpClient;
-        private readonly ProcessingServices _processingServices;
+        private readonly APIServices _apiServices;
 
-        public BonsaisController(/*IHttpClientFactory httpClientFactory, */ProcessingServices processingServices)
+        public BonsaisController(APIServices processingServices)
         {
-            //_httpClient = httpClientFactory.CreateClient();
-            //if (_httpClient.DefaultRequestHeaders.Contains("WebsiteSellingBonsai"))
-            //{
-            //    _httpClient.DefaultRequestHeaders.Remove("WebsiteSellingBonsai");
-            //}
-            //_httpClient.DefaultRequestHeaders.Add("WebsiteSellingBonsai", "kjasdfh32112");
-            _processingServices = processingServices;
+            _apiServices = processingServices;
         }
 
         // GET: Admin/Bonsais
         public async Task<IActionResult> Index(string search_by,string search)
         {
-            var (bonsaiList, errorbonsai) = await _processingServices.FetchDataApiGetList<BonsaiDTO>("bonsaisAPI");
-            if (errorbonsai != "")
+            var (bonsaiList, thongbao) = await _apiServices.FetchDataApiGetList<BonsaiDTO>("bonsaisAPI");
+            if (bonsaiList == default)
             {
                 bonsaiList = new List<BonsaiDTO>();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorbonsai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
             }
 
             //var bonsaiList = bonsaiList.OrderBy(x => x.Style).ToList();
@@ -89,16 +77,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var (bonsai, errorbonsai) = await _processingServices.FetchDataApiGet<BonsaiDTO>($"bonsaisAPI/{id}");
-            if (errorbonsai != "")
+            var (bonsai, thongbao) = await _apiServices.FetchDataApiGet<BonsaiDTO>($"bonsaisAPI/{id}");
+            if (bonsai == default)
             {
                 bonsai = new BonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorbonsai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
             }
 
             ViewData["id"] = id;
@@ -109,16 +92,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
-            if (errorphanloai != "")
+            var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
+            if (phanloai == default)
             {
                 phanloai = new PhanLoaiBonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorphanloai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaophanloai);
             }
             else
             {
@@ -135,9 +113,9 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var AvatarPath = await _processingServices.ProcessImage(bonsai.Image, bonsai.ImageOld, "Product");
+                var AvatarPath = await _apiServices.ProcessImage(bonsai.Image, bonsai.ImageOld, "Product");
                 
-                var userInfo = HttpContext.Session.Get<AdminUser>("userInfo");
+                var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
 
                 var bonsaiEntity = new Bonsai
                 {
@@ -154,32 +132,23 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     TypeId = bonsai.TypeId,
                     StyleId = bonsai.StyleId,
                     GeneralMeaningId = bonsai.GeneralMeaningId,
-                    CreatedBy = userInfo.Username,
+                    CreatedBy = userInfo.UserName,
                     CreatedDate = DateTime.Now,
-                    UpdatedBy = userInfo.Username,
+                    UpdatedBy = userInfo.UserName,
                     UpdatedDate = DateTime.Now,
                 };
 
-                var (newbonsai , errornewbonsai) = await _processingServices.FetchDataApiPost<Bonsai>("BonsaisAPI",bonsaiEntity);
+                var  (isSucces , thongbao) = await _apiServices.FetchDataApiPost<Bonsai>("BonsaisAPI",bonsaiEntity);
 
-                if (errornewbonsai == "")
+                if (isSucces)
                 {
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                    {
-                        Message = $"Đã tạo thành công {bonsaiEntity.BonsaiName}",
-                        MessageType = "Primary",
-                        DisplayTime = 5
-                    });
+                    thongbao.Message = $"Đã tạo thành công {bonsaiEntity.BonsaiName}";
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                    {
-                        Message = errornewbonsai,
-                        MessageType = "Danger",
-                        DisplayTime = 5
-                    });
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
                     ViewBag.ErrorMessage = "Có lỗi xảy ra khi gửi dữ liệu tới API.";
                 }
             }
@@ -188,16 +157,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 ViewBag.ErrorMessage = "Lỗi sai định dạng !ModelState.IsValid";
             }
 
-            var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
-            if (errorphanloai != "")
+            var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
+            if (phanloai == default)
             {
                 phanloai = new PhanLoaiBonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorphanloai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaophanloai);
             }
             else
             {
@@ -217,27 +181,17 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var (bonsai, errorbonsai) = await _processingServices.FetchDataApiGet<BonsaiDTO>($"BonsaisAPI/{id}");
-            if (errorbonsai != "")
+            var (bonsai, thongbao) = await _apiServices.FetchDataApiGet<BonsaiDTO>($"BonsaisAPI/{id}");
+            if (bonsai == default)
             {
                 bonsai = new BonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorbonsai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
             }
-            var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
-            if (errorphanloai != "")
+            var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
+            if (phanloai == default)
             {
                 phanloai = new PhanLoaiBonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorphanloai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaophanloai);
             }
             else
             {
@@ -264,9 +218,9 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var AvatarPath = await _processingServices.ProcessImage(bonsai.Image,bonsai.ImageOld,"Product");
+                var AvatarPath = await _apiServices.ProcessImage(bonsai.Image,bonsai.ImageOld,"Product");
 
-                var userInfo = HttpContext.Session.Get<AdminUser>("userInfo");
+                var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
 
                 var bonsaiEntity = new Bonsai
                 {
@@ -286,31 +240,22 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     GeneralMeaningId = bonsai.GeneralMeaningId,
                     CreatedBy = bonsai.CreatedBy,
                     CreatedDate = bonsai.CreatedDate,
-                    UpdatedBy = userInfo.Username,
+                    UpdatedBy = userInfo.UserName,
                     UpdatedDate = DateTime.Now,
                 };
 
                 // Gửi tới API Controller
-                var (newbonsai, errornewbonsai) = await _processingServices.FetchDataApiPut<Bonsai>($"BonsaisAPI/{id}", bonsaiEntity);
+                var (IsSucces, thongbao) = await _apiServices.FetchDataApiPut<Bonsai>($"BonsaisAPI/{id}", bonsaiEntity);
 
-                if (errornewbonsai == "")
+                if (IsSucces)
                 {
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                    {
-                        Message = $"Đã cập nhật thành công {bonsaiEntity.BonsaiName}",
-                        MessageType = "Primary",
-                        DisplayTime = 5
-                    });
+                    thongbao.Message = $"Đã cập nhật thành công {bonsaiEntity.BonsaiName}";
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                    {
-                        Message = errornewbonsai,
-                        MessageType = "Danger",
-                        DisplayTime = 5
-                    });
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
                     ViewBag.ErrorMessage = "Có lỗi xảy ra khi gửi dữ liệu tới API.";
                 }
             }
@@ -318,16 +263,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 ViewBag.ErrorMessage = "Sai kiểu dữ liệu";
             }
-            var (phanloai, errorphanloai) = await _processingServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
-            if (errorphanloai != "")
+            var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
+            if (phanloai == default)
             {
                 phanloai = new PhanLoaiBonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorphanloai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaophanloai);
             }
             else
             {
@@ -345,16 +285,12 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var (bonsai, errorbonsai) = await _processingServices.FetchDataApiGet<BonsaiDTO>($"BonsaisAPI/{id}");
-            if (errorbonsai != "")
+            var (bonsai, thongbao) = await _apiServices.FetchDataApiGet<BonsaiDTO>($"BonsaisAPI/{id}");
+            if (bonsai == default)
             {
                 bonsai = new BonsaiDTO();
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = errorbonsai,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
+                return View();
             }
             ViewData["id"] = id;
             return View(bonsai);
@@ -363,27 +299,18 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         // POST: Admin/Bonsais/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,string ImageOld)
         {
-            var (result, error) = await _processingServices.FetchDataApiDelete($"BonsaisAPI/{id}");
+            var (result, thongbao) = await _apiServices.FetchDataApiDelete($"BonsaisAPI/{id}", ImageOld);
             
             if (result)
             {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = $"Đã xóa thành công Bonsai với ID {id}",
-                    MessageType = "Primary",
-                    DisplayTime = 5
-                });
+                thongbao.Message = thongbao.Message + $" Bonsai với ID {id}";
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
             }
             else
             {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
-                {
-                    Message = error,
-                    MessageType = "Danger",
-                    DisplayTime = 5
-                });
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
             }
             return RedirectToAction(nameof(Index));
         }

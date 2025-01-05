@@ -86,6 +86,9 @@ font-size: 0.875rem;
 </section>
 
     <h2>Cây Bonsais</h2> 
+    @if(ViewData["image"] != null){
+        @ViewData["image"]
+    }
     <a asp-action="Index" asp-area="Admin" asp-controller="Home">admin</a>
     <a asp-area=""></a>
     <p id="output"></p>

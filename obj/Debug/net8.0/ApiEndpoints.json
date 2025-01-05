@@ -141,6 +141,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AuthenticateController",
+    "Method": "GetUserInfo",
+    "RelativePath": "api/Authenticate/userinfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.BannersAPIController",
     "Method": "Getbanners",
     "RelativePath": "api/BannersAPI",
