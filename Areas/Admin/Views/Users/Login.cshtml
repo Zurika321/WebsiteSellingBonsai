@@ -1,5 +1,5 @@
-﻿@using WebsiteSellingBonsaiAPI.DTOS
-@model LoginDTO
+﻿@using WebsiteSellingBonsaiAPI.DTOS.User
+@model LoginModel
 
 @{
     ViewData["Title"] = "Login";
@@ -42,7 +42,7 @@
                         <div class="input-group mb-3">
                           <div class="form-floating">
                             @* <label asp-for="Email" class="control-label"></label>      *@     
-                            <input asp-for="Password" class="form-control" value="" placeholder="" id="loginPassword"/>
+                            <input asp-for="Password" class="form-control" value="" placeholder="" id="loginPassword" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                             <label for="loginPassword">Password</label>
                           </div>

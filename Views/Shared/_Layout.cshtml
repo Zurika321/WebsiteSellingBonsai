@@ -2,7 +2,7 @@
 @using WebsiteSellingBonsaiAPI.Models
 @using WebsiteSellingBonsaiAPI.DTOS
 @{
-    var userInfo = Context.Session.Get<AdminUser>("userInfo");
+    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +122,7 @@
                         class="img-fluid rounded-circle" 
                         alt="User Avatar" 
                         style="width: 30px; height: 30px; object-fit: cover;" />
-                        <span>@userInfo.Username</span>
+                        <span>@userInfo?.UserName</span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
                         <li><a class="dropdown-item" href="#">Thông tin</a></li>

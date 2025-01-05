@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebsiteSellingBonsai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae8d728f54d39dd63e8ac5659657480531fcc741")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8cef170b17065785bffb9f120f5d73bffdc7bc6")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebsiteSellingBonsai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebsiteSellingBonsai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,5 @@
-﻿@using WebsiteSellingBonsaiAPI.DTOS
-@model LoginDTO
+﻿@using WebsiteSellingBonsaiAPI.DTOS.User
+@model RegisterModel
 
 @{
     ViewData["Title"] = "Sigin";
@@ -29,17 +29,27 @@
                      <p class="login-box-msg text-danger">@ViewData["Message"]</p>
                 }
                 <form asp-action="Sigin" method="post">
-                        <input asp-for="RememberMe" class="form-check-input" type="hidden" value="false" />
                         <div class="input-group mb-3">
                           <div class="form-floating">
                             @* <label asp-for="Username" class="control-label"></label>      *@     
-                            <input asp-for="Username" class="form-control" value="" placeholder="" id="Username"/>
+                            <input asp-for="Username" class="form-control" value="" placeholder="" id="loginUsername" />
                             <span asp-validation-for="Username" class="text-danger"></span>
                             <label for="loginUsername">Username</label>
                           </div>
                           <div class="input-group-text">
                             <i class="fa-light fa-user"></i>
                           </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                @* <label asp-for="Email" class="control-label"></label>      *@     
+                                <input asp-for="Email" class="form-control" value="" placeholder="" id="loginEmail" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            <label for="loginEmail">Email</label>
+                            </div>
+                            <div class="input-group-text">
+                                <i class="fa-light fa-user"></i>
+                            </div>
                         </div>
                         <div class="input-group mb-3">
                           <div class="form-floating">

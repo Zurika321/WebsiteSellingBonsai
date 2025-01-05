@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebsiteSellingBonsai.Middleware;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
 
@@ -26,8 +27,20 @@ namespace WebsiteSellingMiniBonsai
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Cấu hình Identity
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOrUser", policy =>
+                     policy.RequireAssertion(context =>
+                         context.User.IsInRole("Admin") ||
+                         context.User.IsInRole("User")
+                     )
+                );
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+            });
+
+            // Thêm dịch vụ Identity để quản lý người dùng và vai trò
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -53,6 +66,15 @@ namespace WebsiteSellingMiniBonsai
                 };
             });
 
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserIdClaimType = "sub";
+            });
+
+
+            // Đăng ký AuthService làm dịch vụ
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<APIServices>();
 
             builder.Services.AddCors(options =>
             {
@@ -66,15 +88,15 @@ namespace WebsiteSellingMiniBonsai
                     });
             });
 
-            builder.Services.AddScoped<ProcessingServices>();
+            
             builder.Services.AddHttpClient();
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(1); // Th?i gian h?t h?n session
-                options.Cookie.HttpOnly = true; // ??m b?o cookie ch? có th? truy c?p qua HTTP
-                options.Cookie.IsEssential = true; // ??m b?o cookie ???c s? d?ng cho session
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
             builder.Services.AddControllers().AddJsonOptions(opts =>
@@ -94,6 +116,8 @@ namespace WebsiteSellingMiniBonsai
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
@@ -103,7 +127,7 @@ namespace WebsiteSellingMiniBonsai
 
             app.UseRouting();
             //app.UseMiddleware<ApiKeyMiddleware>();
-            //app.UseMiddleware<UserRoleMiddleware>();
+            app.UseMiddleware<UserRoleMiddleware>();
 
             // Sử dụng Authentication và Authorization
             app.UseAuthentication();

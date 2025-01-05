@@ -1,31 +1,65 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<style>
+    .order-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
+        .order-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+            .order-list li:last-child {
+                border-bottom: none;
+            }
+
+            .order-list li:hover {
+                background-color: #f0f0f0;
+            }
+
+            .order-list li span {
+                font-size: 16px;
+                color: #333;
+            }
+
+            .order-list li .count {
+                font-weight: bold;
+                color: #4CAF50;
+            }
+</style>
 <div>
     <!-- Top Bar -->
 
     <!-- Overview Cards -->
-    <div class="row g-4">
+    <div class="row g-4 mt-4">
         <div class="col-md-3">
             <div class="card text-center p-3">
                 <h6>Tổng đơn hàng hôm nay</h6>
-                <h3>12,345</h3>
-                <small class="text-success">+8% so với hôm qua</small>
+                <h3>0</h3>
+                <small class="text-success">+0% so với hôm qua</small>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card text-center p-3">
                 <h6>Doang thu hôm nay</h6>
-                <h3>2,345 vnđ</h3>
-                <small class="text-success">+5% so với hôm qua</small>
+                <h3>0.000 vnđ</h3>
+                <small class="text-success">0% so với hôm qua</small>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card text-center p-3">
                 <h6>Khách mới hôm nay</h6>
-                <h3>6,789</h3>
-                <small class="text-danger">-2% so với hôm qua</small>
+                <h3>0</h3>
+                <small class="text-danger">0% so với hôm qua</small>
             </div>
         </div>
         <div class="col-md-3">
@@ -39,6 +73,45 @@
 
     <!-- Charts -->
     <div class="row g-4 mt-4">
+        @* Danh sách order *@
+        <div class="col-md-6 mt-4">
+            <div class="chart-container">
+                <h6>Đơn hàng hôm nay</h6>
+                <ul class="order-list">
+                    <li>
+                        <span>Tổng đơn cần xác nhận</span>
+                        <span class="count">120</span>
+                    </li>
+                    <li>
+                        <span>Đơn hàng đang được giao</span>
+                        <span class="count">30</span>
+                    </li>
+                    <li>
+                        <span>Đơn hàng hoàn thành</span>
+                        <span class="count">85</span>
+					</li>
+					<li>
+						<span>Đơn hàng bị hủy</span>
+						<span class="count">5</span>
+					</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Products Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <h6>Biểu Đồ Doanh Thu</h6>
+                <div class="dropdown">
+                    <select id="timeSelect" class="form-select">
+                        <option value="today">Ngày Hôm Nay</option>
+                        <option value="thisWeek">Tuần Này</option>
+                        <option value="thisMonth">Tháng Này</option>
+                        <option value="thisYear">Năm Này</option>
+                    </select>
+                </div>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
         <!-- Orders Chart -->
         <div class="col-md-6">
             <div class="chart-container">
@@ -46,37 +119,11 @@
                 <canvas id="ordersChart"></canvas>
             </div>
         </div>
-        <!-- Products Chart -->
-        <div class="col-md-6">
-            <h3 class="my-4">Biểu Đồ Doanh Thu</h3>
-
-            <!-- Thời gian lựa chọn -->
-            <div class="dropdown">
-                <select id="timeSelect" class="form-select">
-                    <option value="today">Ngày Hôm Nay</option>
-                    <option value="thisWeek">Tuần Này</option>
-                    <option value="thisMonth">Tháng Này</option>
-                    <option value="thisYear">Năm Này</option>
-                </select>
-            </div>
-
-            <!-- Biểu đồ đường -->
-            <div class="chart-container">
-                <canvas id="revenueChart"></canvas>
-            </div>
-        </div>
         <!-- Customers Chart -->
         <div class="col-md-6 mt-4">
             <div class="chart-container">
                 <h6>Customers Growth</h6>
                 <canvas id="customersChart"></canvas>
-            </div>
-        </div>
-        <!-- Promotions Chart -->
-        <div class="col-md-6 mt-4">
-            <div class="chart-container">
-                <h6>Promotion Analysis</h6>
-                <canvas id="promotionsChart"></canvas>
             </div>
         </div>
     </div>
@@ -171,25 +218,6 @@
                             "rgba(255, 99, 132, 0.5)",
                             "rgba(54, 162, 235, 0.5)",
                             "rgba(255, 206, 86, 0.5)",
-                        ],
-                    },
-                ],
-            },
-        });
-
-        // Promotions Chart
-        new Chart(document.getElementById("promotionsChart").getContext("2d"), {
-            type: "pie",
-            data: {
-                labels: ["Discounts", "Coupons", "Offers"],
-                datasets: [
-                    {
-                        label: "Promotions",
-                        data: [40, 30, 30],
-                        backgroundColor: [
-                            "rgba(153, 102, 255, 0.5)",
-                            "rgba(255, 159, 64, 0.5)",
-                            "rgba(255, 205, 86, 0.5)",
                         ],
                     },
                 ],
