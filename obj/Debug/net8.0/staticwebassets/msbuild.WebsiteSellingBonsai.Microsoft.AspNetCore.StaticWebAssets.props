@@ -39342,8 +39342,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>o3kjn8kw3s</Fingerprint>
-      <Integrity>fDzXGQzeOmy2ekadEESjH1ybMiBUBMnQq9B6etF3xw4=</Integrity>
+      <Fingerprint>ma89qtm1fm</Fingerprint>
+      <Integrity>wt85b9LL4bbph4EJE6o0BCuLlg5Hg84a+z2jvX9ch1U=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\alert\ThongBao.js'))</OriginalItemSpec>
@@ -39383,24 +39383,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</OriginalItemSpec>
-    </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\banner\backgroud2_20241223145843.jpg'))">
-      <SourceType>Package</SourceType>
-      <SourceId>WebsiteSellingBonsai</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/WebsiteSellingBonsai</BasePath>
-      <RelativePath>Data/banner/backgroud2_20241223145843.jpg</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>gvvk7glung</Fingerprint>
-      <Integrity>pKrU67+Ogc3iwiysjuMETtKogWDj+fkDWCZNDj3ecXY=</Integrity>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\banner\backgroud2_20241223145843.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\banner\backgroud3_20241223145853.jpg'))">
       <SourceType>Package</SourceType>
@@ -39600,6 +39582,150 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\canh_20241223124850_20241223151858.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay hoa do quyen_20250102164534.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/cay hoa do quyen_20250102164534.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>rmfr1y908v</Fingerprint>
+      <Integrity>44CiWzjizlgolbvc9uJu7nVqE7gcK3JIHuwyIaEL3a4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay hoa do quyen_20250102164534.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay nguyet que_20250102164400.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/cay nguyet que_20250102164400.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>s348bxexby</Fingerprint>
+      <Integrity>OAoVG3pu75765M6mHtUM2AKnNIV8N1HNzgZMvddq0Ng=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay nguyet que_20250102164400.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\Cay Phong La Do_20250102164350.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/Cay Phong La Do_20250102164350.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>6spfgsdg4n</Fingerprint>
+      <Integrity>RgAXx2C+wmVsVwAOqO4hfN+dKLpXdTOJ58yXyqSNsOc=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\Cay Phong La Do_20250102164350.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay sung canh_20250102164544.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/cay sung canh_20250102164544.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>x9e4hopf75</Fingerprint>
+      <Integrity>u31wpkydZOHRZw7fl6OVq5qf61/4v2xLkQzzEkkNXpo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay sung canh_20250102164544.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\Cay Tùng_20250102164315_20250103232742.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/Cay Tùng_20250102164315_20250103232742.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>85mmzvh27y</Fingerprint>
+      <Integrity>nIg28Lr6e/43fnI8auUuLLgTRkURd4QKOZmOlLMp4dI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\Cay Tùng_20250102164315_20250103232742.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay-da-canh_20250102164718.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/cay-da-canh_20250102164718.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>a3fa0rg98w</Fingerprint>
+      <Integrity>5vafQrQhbxc2BYLkoOlthsD8wZxm4kmRh0wvMAH5dFs=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay-da-canh_20250102164718.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay-hoa-giay_20250102164408.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/cay-hoa-giay_20250102164408.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>cmldtf5ek0</Fingerprint>
+      <Integrity>TKhI7X2tckeHvY5mmUDCROi+KHoKO//+9HZM7rz46uM=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\cay-hoa-giay_20250102164408.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\caykhe_20250102164854.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/caykhe_20250102164854.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>e6agr7mow3</Fingerprint>
+      <Integrity>hm7Xkl27Fesu7vLRy1uqk0hhFiu0s74ajntVbHfZHJw=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\caykhe_20250102164854.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\conifer-dawn-daylight-evergreen-167698_20241220210710.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>WebsiteSellingBonsai</SourceId>
@@ -39635,6 +39761,60 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\giphy_20241223104523.gif'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\hoa-mau-don-do_20250102164454.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/hoa-mau-don-do_20250102164454.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>36w1y9dyor</Fingerprint>
+      <Integrity>G89USUtIf2FdMjvHr4dvPdyA5ei4y7m4Y+YkcqLJoDI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\hoa-mau-don-do_20250102164454.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>k3wgudp5xf</Fingerprint>
+      <Integrity>gPcLxjG+tn3h+dNCw1t2s9ainflK9FBpno5L/5DjPpU=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\usernoimage_20250103222954.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/usernoimage_20250103222954.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lp2e5ue6sp</Fingerprint>
+      <Integrity>xz1OOD5XGh2ouaCBNQZNeILQMjohS9Qgi1firp4beAk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\usernoimage_20250103222954.png'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\usernoimage.png'))">
       <SourceType>Package</SourceType>

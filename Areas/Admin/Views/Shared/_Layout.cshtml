@@ -1,7 +1,7 @@
 ﻿@using WebsiteSellingBonsaiAPI.Utils
 @using WebsiteSellingBonsaiAPI.Models
 @{
-    var userInfo = Context.Session.Get<AdminUser>("userInfo");
+    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -114,14 +114,14 @@
                     </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
                     <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="@Url.Content("~/" +userInfo?.Avatar ?? "Data/usernoimage.png")" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">@userInfo?.Displayname</span> </a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="@Url.Content("~/" +userInfo?.Avatar ?? "Data/usernoimage.png")" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">@userInfo?.UserName</span> </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
                             <li class="user-header text-bg-primary">
                                 <img src="@Url.Content("~/" +userInfo?.Avatar)" class="rounded-circle shadow" alt="User Image">
                                 <p>
-                                    @userInfo?.Displayname - @userInfo?.Role
-                                    <small>Member since Nov. 2023</small>
+                                    @userInfo?.UserName
+                                    <small>@userInfo?.CreatedDate</small>
                                 </p>
                             </li> <!--end::User Image--> <!--begin::Menu Body-->
                             <li class="user-body">
@@ -144,56 +144,18 @@
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <!--begin::Sidebar Menu-->
-                    @{
-                        var link = "Index";
-                    }
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item rounded" style="background-color: @(link == "Index" ? "rgb(25, 135, 84)" : "white")">
-                            <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="nav-link">
-                                <i class="nav-icon bi bi-circle-fill" style="@(link == "Index" ? "color: white" : "")"></i>
-                                <p style="@(link == "Index" ? "color: white" : "")">Tổng quan</p>
-                            </a>
-                        </li>
                         <li class="nav-item rounded">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>
-                                    Table Products
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
+                            <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon bi bi-circle-fill"></i>
+                                <p>Tổng quan</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-area="Admin" asp-controller="Bonsais" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Bonsais</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Types"class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Types</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Styles" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Styles</p>
-                                    </a>
-                                </li>
-                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="GeneralMeanings" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>GeneralMeanings</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item rounded">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
-                                    Product
+                                    Đơn hàng
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -201,30 +163,106 @@
                                 <li class="nav-item">
                                     <a href="../widgets/small-box.html" class="nav-link">
                                         <i class="nav-icon bi bi-circle"></i>
-                                        <p>Small Box</p>
+                                        <p>Đơn hàng cần xác nhận</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../widgets/info-box.html" class="nav-link">
                                         <i class="nav-icon bi bi-circle"></i>
-                                        <p>info Box</p>
+                                        <p>Đơn hàng đang giao</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../widgets/cards.html" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Đơn hàng đã hoàn thành</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../widgets/cards.html" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Đơn hàng bị hủy</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item rounded">
+                            <a asp-action="Index" asp-controller="Bonsais" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon bi bi-circle-fill"></i>
+                                <p>Sản phẩm</p>
+                            </a>
+						</li>
+						<li class="nav-item rounded">
+							<a href="#" class="nav-link">
+								<i class="nav-icon bi bi-speedometer"></i>
+								<p>
+									Phân loại
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a asp-action="Index" asp-controller="Types" class="nav-link">
+										<i class="nav-icon bi bi-circle"></i>
+										<p>Types</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-action="Index" asp-controller="Styles" class="nav-link">
+										<i class="nav-icon bi bi-circle"></i>
+										<p>Styles</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-action="Index" asp-controller="GeneralMeanings" class="nav-link">
+										<i class="nav-icon bi bi-circle"></i>
+										<p>GeneralMeanings</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+                        <li class="nav-item rounded">
+                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon bi bi-circle-fill"></i>
+                                <p>Khách hàng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item rounded">
+                            <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon bi bi-circle-fill"></i>
+                                <p>Danh sách yêu thích</p>
+                            </a>
+                        </li>
+                        <li class="nav-item rounded">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <p>
+                                    Cài đặt
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Banner</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Feature</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Cards</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item rounded">
-                            <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
-                                <i class="nav-icon bi bi-circle-fill"></i>
-                                <p>Banner</p>
-                            </a>
-                        </li>
-                        <li class="nav-header">LABELS</li>
+                        @* <li class="nav-header">LABELS</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-circle text-danger"></i>
@@ -243,7 +281,8 @@
                                 <p>Informational</p>
                             </a>
                         </li>
-                    </ul> <!--end::Sidebar Menu-->
+                    </ul>  *@
+                    <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
         </aside> <!--end::Sidebar--> <!--begin::App Main-->
