@@ -238,11 +238,8 @@ DROP TABLE Styles;           --11
 DROP TABLE Types;            --12
 DROP TABLE AdminUsers;       --13
 
-SELECT *FROM Features;
-SELECT *FROM GeneralMeanings;
 SELECT *FROM Banners;
-SELECT *FROM Styles;
-SELECT *FROM Types;
+SELECT *FROM Features;
 SELECT *FROM Carts;
 SELECT *FROM CartDetails;
 SELECT *FROM Orders;
@@ -251,3 +248,6 @@ SELECT *FROM Reviews;
 SELECT *FROM AdminUsers;
 Select * FROM Bonsais
 Select * FROM BonsaiPhanLoai
+SELECT *FROM GeneralMeanings;
+SELECT *FROM Styles;
+SELECT *FROM Types;
