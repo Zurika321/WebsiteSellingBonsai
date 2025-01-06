@@ -478,6 +478,131 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "GetCarts",
+    "RelativePath": "api/CartsAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebsiteSellingBonsaiAPI.Models.Cart, WebsiteSellingBonsaiAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "PostCart",
+    "RelativePath": "api/CartsAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cart",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Cart",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Cart",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "PutCart",
+    "RelativePath": "api/CartsAPI/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "cart",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Cart",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "DeleteCart",
+    "RelativePath": "api/CartsAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "GetCart",
+    "RelativePath": "api/CartsAPI/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Cart",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "AddBonsai",
+    "RelativePath": "api/CartsAPI/addbonsai",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.Addcart",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.GeneralMeaningsAPIController",
     "Method": "GetGeneralMeaning",
     "RelativePath": "api/GeneralMeaningsAPI",
