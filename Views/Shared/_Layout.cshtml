@@ -126,7 +126,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
                         <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                        <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
+                        </li>
                         <li>
                             <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
                                 <button type="submit" class="dropdown-item">Đăng xuất</button>
@@ -161,7 +163,9 @@
                     {
 
                         <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a></li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
+                        </li>
                         <li>
                             <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
                                 <button type="submit" class="dropdown-item">Đăng xuất</button>

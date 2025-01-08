@@ -9,6 +9,7 @@ using WebsiteSellingBonsaiAPI.DTOS;
 using Azure;
 using WebsiteSellingBonsaiAPI.DTOS.User;
 using System.Net.Http.Headers;
+using NuGet.Common;
 
 namespace WebsiteSellingBonsai.Middleware
 {
@@ -45,6 +46,21 @@ namespace WebsiteSellingBonsai.Middleware
 
                     }
                 }
+
+                //var tokenBytes = context.Session.Get("AuthToken");
+                //if (tokenBytes != null)
+                //{
+                //    var token2 = System.Text.Encoding.UTF8.GetString(tokenBytes);
+                //    if (!string.IsNullOrEmpty(token2))
+                //    {
+                //        context.Session.Set("ThongBao", new ThongBao
+                //        {
+                //            Message = token2,
+                //            MessageType = TypeThongBao.Success,
+                //            DisplayTime = 5,
+                //        });
+                //    }
+                //}
             }
             //var userInfo = context.Session.Get<ApplicationUser>("userInfo");
 
