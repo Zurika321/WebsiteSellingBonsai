@@ -5,85 +5,100 @@
 
 @model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO>
 
-    <style>
-.card {
-background-color: #f9fdf9; /* Màu nền nhạt, hợp với cây cảnh */
-transition: transform 0.3s ease, border-color 0.3s ease;
-}
+<style>
+    .card {
+    background-color: #f9fdf9; /* Màu nền nhạt, hợp với cây cảnh */
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    }
 
-.card:hover {
-transform: scale(1.05);
-border-color: #218838;
-}
-.product-card {
-position: relative;
-}
+    .card:hover {
+    transform: scale(1.05);
+    border-color: #218838;
+    }
+    .product-card {
+    position: relative;
+    }
 
-.product-card .hover-overlay {
-opacity: 0;
-}
+    .product-card .hover-overlay {
+    opacity: 0;
+    }
 
-.product-card:hover .hover-overlay {
-opacity: 1;
-}
+    .product-card:hover .hover-overlay {
+    opacity: 1;
+    }
+    .cartt{
+        right: -100px;
+        transition: all .5s ease;
+        position: absolute;
+        background-color: rgb(255,255,255,0.01);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: right;
+        align-items: center
+    }
+    .product-card:hover .cartt {
+        right: 10px;
+    }
+    .card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    }
 
-.card-title {
-font-size: 1rem;
-font-weight: bold;
-margin-bottom: 0.5rem;
-}
+    .card-text {
+    font-size: 0.875rem;
+    }
 
-.card-text {
-font-size: 0.875rem;
-}
-    </style>
+</style>
 <div class="container">
     <section id="featured-products" class="py-5 bg-light">
-  <div class="container">
-    <div class="text-center mb-4">
-      <h2 class="fw-bold text-success">Sản Phẩm Nổi Bật</h2>
-      <p class="text-muted">Khám phá những mẫu bonsai đẹp nhất chúng tôi cung cấp</p>
-    </div>
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-success">Sản Phẩm Nổi Bật</h2>
+                <p class="text-muted">Khám phá những mẫu bonsai đẹp nhất chúng tôi cung cấp</p>
+            </div>
 
-    <div class="row g-4">
-      <!-- Product Card 1 -->
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 1" style="object-fit: cover; height: 200px;">
-          <div class="card-body">
-            <h5 class="card-title text-success">Bonsai Nhật Bản</h5>
-            <p class="card-text text-muted">Phong cách tinh tế, mang lại không gian thiền định.</p>
-            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-          </div>
-        </div>
-      </div>
+            <div class="row g-4">
+                <!-- Product Card 1 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 1" style="object-fit: cover; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Bonsai Nhật Bản</h5>
+                            <p class="card-text text-muted">Phong cách tinh tế, mang lại không gian thiền định.</p>
+                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+                        </div>
+                    </div>
+                </div>
 
-      <!-- Product Card 2 -->
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 2" style="object-fit: cover; height: 200px;">
-          <div class="card-body">
-            <h5 class="card-title text-success">Bonsai Nghệ Thuật</h5>
-            <p class="card-text text-muted">Tác phẩm nghệ thuật sống động từ thiên nhiên.</p>
-            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-          </div>
-        </div>
-      </div>
+                <!-- Product Card 2 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 2" style="object-fit: cover; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Bonsai Nghệ Thuật</h5>
+                            <p class="card-text text-muted">Tác phẩm nghệ thuật sống động từ thiên nhiên.</p>
+                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+                        </div>
+                    </div>
+                </div>
 
-      <!-- Product Card 3 -->
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 3" style="object-fit: cover; height: 200px;">
-          <div class="card-body">
-            <h5 class="card-title text-success">Bonsai Phong Thủy</h5>
-            <p class="card-text text-muted">Mang lại may mắn và tài lộc cho gia chủ.</p>
-            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-          </div>
+                <!-- Product Card 3 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 3" style="object-fit: cover; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Bonsai Phong Thủy</h5>
+                            <p class="card-text text-muted">Mang lại may mắn và tài lộc cho gia chủ.</p>
+                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
+
 
     <h2>Cây Bonsais</h2> 
     @if(ViewData["image"] != null){
@@ -175,6 +190,14 @@ font-size: 0.875rem;
 @* Phần product *@
 <div class="container">
    <div class="row">
+       @{
+            var scheme = Context.Request.Scheme; // http hoặc https
+            var host = Context.Request.Host; // Tên miền và cổng
+            var path = Context.Request.Path; // Đường dẫn
+            var queryString = Context.Request.QueryString; // Chuỗi truy vấn
+
+            var url = $"{scheme}://{host}{path}{queryString}";
+       }
         @if (Model != null && Model.Any())
         {
             @foreach (var bonsai in Model)
@@ -196,6 +219,25 @@ font-size: 0.875rem;
                       <p class="mb-2">Số lượng: Còn @bonsai.Quantity cây</p>
                       <button class="btn btn-success">Thêm vào giỏ hàng</button>
                     </div>
+                  </div>
+                  <div style="" class="cartt">
+						<div>
+							@* <form asp-action="Yeuthich" asp-controller="Yeuthich" method="post"> *@
+								<input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+								<button class="btn btn-outline-danger rounded-circle my-1" type="submit"><i class="fa-light fa-heart"></i></button>
+							@* </form> *@
+						    <form asp-action="AddCart" asp-controller="Cart" method="post">
+							    <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+							    <input type="hidden" name="quantity" value="1" />
+                                <input type="hidden" name="redirectUrl" value="@url" />
+                                <button class="btn btn-outline-primary rounded-circle my-1" type="submit"><i class="fa-light fa-cart-shopping"></i></button>
+						    </form>
+                            @* <form asp-action="" asp-controller="" method="post"> *@
+                                <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></button>
+                            @* </form> *@
+                      </div>
                   </div>
                   <div class="card-body text-center">
                     <!-- Default Info -->

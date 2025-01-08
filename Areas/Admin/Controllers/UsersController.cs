@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebsiteSellingBonsaiAPI.DTOS;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,10 @@ using Microsoft.AspNetCore.Http;
 using WebsiteSellingBonsaiAPI.DTOS.User;
 using System.Net.Http;
 using Azure;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using NuGet.Common;
+using WebsiteSellingBonsaiAPI.Utils;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
@@ -22,13 +27,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
     {
         private readonly MiniBonsaiDBAPI _context;
         private readonly APIServices _apiServices;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UsersController(MiniBonsaiDBAPI context, APIServices apiServices, UserManager<ApplicationUser> userManager)
+        public UsersController(MiniBonsaiDBAPI context, APIServices apiServices)
         {
             _context = context;
             _apiServices = apiServices;
-            _userManager = userManager;
         }
 
         // GET: Admin/AdminUsers
@@ -62,43 +65,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             return View(adminUser);
         }
 
-        // GET: Admin/AdminUsers/Create
-        public IActionResult Sigin()
-        {
-            return View();
-        }
-
-        // POST: Admin/AdminUsers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Sigin(RegisterModel sigin)
-        {
-            if (ModelState.IsValid)
-            {
-                if (sigin.Password != sigin.ComfrimPassword)
-                {
-                    ViewData["Message"] = "Password and confirm password do not match!";
-                    sigin.Password = "";
-                    sigin.ComfrimPassword = "";
-                    return View(sigin);
-                }
-                var (success, thongBao) = await _apiServices.Register(sigin);
-
-                if (success) {
-                    return RedirectToAction(nameof(Login));
-                }
-                else
-                {
-                    ViewData["Message"] = thongBao.Message;
-                    return View();
-                }
-            }
-            ViewData["Message"] = "Please enter full information!";
-            return View();
-        }
-
         // GET: Admin/AdminUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -115,9 +81,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             return View(adminUser);
         }
 
-        // POST: Admin/AdminUsers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("USE_ID,Username,Password,Displayname,Email,Phone")] AdminUser adminUser)
@@ -187,6 +150,39 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         {
             return _context.AdminUser.Any(e => e.USE_ID == id);
         }
+
+        public IActionResult Sigin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sigin(RegisterModel sigin)
+        {
+            if (ModelState.IsValid)
+            {
+                if (sigin.Password != sigin.ComfrimPassword)
+                {
+                    ViewData["Message"] = "mật khẩu và mật khẩu xác nhận không khớp";
+                    sigin.Password = "";
+                    sigin.ComfrimPassword = "";
+                    return View(sigin);
+                }
+                var (success, thongBao) = await _apiServices.Register(sigin);
+
+                if (success)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
+                else
+                {
+                    ViewData["Message"] = thongBao.Message;
+                    return View();
+                }
+            }
+            ViewData["Message"] = "Vui lòng điền đầy đủ.";
+            return View();
+        }
         // GET: Admin/Users/Login
         [HttpGet]
         public async Task<ActionResult> Login()
@@ -210,7 +206,6 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel login)
         {
             var (success, thongBao, token) = await _apiServices.Login(login);
@@ -229,29 +224,29 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     });
                     thongBao.Message = "Đăng nhập thành công! & Đã tạo cookie cho lần đăng nhập sau";
                 }
-
-                // Lưu thông tin người dùng vào session
-                //var user = await _userManager.FindByNameAsync(login.Username);
-                //HttpContext.Session.Set("AuthToken", token);
-                //HttpContext.Session.Set<ApplicationUser>("userInfo", user);
-
-                // Lưu thông báo vào TempData
                 TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
-
-                // Điều hướng người dùng đến trang phù hợp
-                //if (user.Role == "Admin")
-                //{
-                //    return RedirectToAction("Index", "Home", new { area = "Admin" });
-                //}
-
                 return Redirect("/");
             }
             else
             {
                 ViewData["Message"] = thongBao.Message;
             }
-
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmail comfrim)
+        {
+            if (comfrim != null && string.IsNullOrEmpty(comfrim.userId) || string.IsNullOrEmpty(comfrim.token))
+            {
+                return BadRequest("Invalid user ID or token.");
+            }
+
+            var (success, thongBao) = await _apiServices.FetchDataApiPost<ConfirmEmail>("Authenticate/ConfirmEmail" ,comfrim);
+
+            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
+            if (success) return RedirectToAction("Login", "Users", new { area = "Admin" });
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

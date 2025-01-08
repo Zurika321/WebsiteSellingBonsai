@@ -2193,6 +2193,9 @@ wwwroot\Data\banner\canh_20241223124850.png
 wwwroot\Data\banner\giphy_20241223123328.gif
 wwwroot\Data\banner\giphy_20241223125312.gif
 wwwroot\Data\banner\giphy_20241223134721.gif
+wwwroot\Data\banner\hoang1_20250106092025.jpg
+wwwroot\Data\banner\hoang2_20250106092035.jpg
+wwwroot\Data\logo\logo.jpg
 wwwroot\Data\noimage.png
 wwwroot\Data\Product\canh_20241219165458.png
 wwwroot\Data\Product\canh_20241223072740.png

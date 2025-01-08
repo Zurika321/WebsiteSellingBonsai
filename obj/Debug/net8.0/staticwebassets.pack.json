@@ -97,6 +97,18 @@
       "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223134721.gif"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\hoang1_20250106092025.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\hoang1_20250106092025.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\hoang2_20250106092035.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\hoang2_20250106092035.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\logo\\logo.jpg",
+      "PackagePath": "staticwebassets\\Data\\logo\\logo.jpg"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\noimage.png",
       "PackagePath": "staticwebassets\\Data\\noimage.png"
     },
