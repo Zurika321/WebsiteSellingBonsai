@@ -1,5 +1,134 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model WebsiteSellingBonsaiAPI.Models.Cart
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (Model.CartDetails == null || !Model.CartDetails.Any())
+{
+    <div class="d-flex justify-content-center align-items-center" style="height: 500px; width: 100%">
+        <p>Giỏ hàng của bạn đang trống.</p>
+    </div>
+}
+else
+{
+    <div id="update_quantity" popover>
+        <form asp-action="update_quantity">
+            <p>Cập nhật số lượng sản phầm <span id="productname"></span></p>
+            <input type="number" name="quantity" min="1" max="10" />
+            <input type="hidden" name="CART_D_ID" />
+            <button type="submit" class="btn btn-danger">Cập nhật</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartDetails)
+            {
+                <tr>
+                    <td><input class="checkboxproduct" type="checkbox" data-total="@(item.Quantity * item.Price)" data-id="@item.CART_D_ID" /></td>
+                    <td>@item.Bonsai.BonsaiName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price.ToString("F3") vnđ</td>
+                    <td>@((item.Quantity * item.Price).ToString("F3")) vnđ</td>
+                    <td class="d-flex">
+                        <button class="order" data-id="@item.CART_D_ID" data-product="@item.Bonsai.BonsaiName">
+                            Đặt hàng
+                        </button>
+                        <button class="btn_up_quantity mx-2" data-id="@item.CART_D_ID" data-product="@item.Bonsai.BonsaiName" data-quantity="@item.Quantity" popovertarget="update_quantity">
+                            Cập nhật số lượng
+                        </button>
+                        <form asp-action="RemoveFromCart">
+                            <input type="hidden" name="CART_D_ID" value="@item.CART_D_ID" />
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr style="height: 100px"></tr>
+            <tr>
+                <td><span id="all_id"></span></td>
+                <td colspan="3">Tổng cộng:</td>
+                <td>
+                    <span id="totalall">0.000 vnđ</span>
+                </td>
+                <td>
+                    <button id="order2">
+                        Đặt hàng
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+
+@* <form asp-action="" asp-controller="">
+    <input name="ListOrder" value="" />
+</form>
+ *@
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnUpQuantity = document.querySelectorAll('.btn_up_quantity');
+
+            btnUpQuantity.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    const cartDId = button.getAttribute('data-id');
+                    const productName = button.getAttribute('data-product');
+                    const quantity = button.getAttribute('data-quantity');
+
+                    const cartDIdInput = document.querySelector('input[name="CART_D_ID"]');
+                    cartDIdInput.value = cartDId;
+
+                    const quantityinput = document.querySelector('input[name="quantity"]');
+                    quantityinput.value = quantity;
+
+                    const productNameSpan = document.getElementById('productname');
+                    productNameSpan.textContent = productName;
+                });
+            });
+        });
+                document.addEventListener('DOMContentLoaded', function() {
+            // Lấy tất cả các checkbox có class 'checkboxproduct'
+            const checkboxes = document.querySelectorAll('.checkboxproduct');
+
+            // Lắng nghe sự kiện 'click' trên mỗi checkbox
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function() {
+                    // Gọi hàm tính tổng khi có sự kiện click
+                    Totalproduct();
+                });
+            });
+        });
+
+        function Totalproduct() {
+            let total = 0;
+            let all_id = [];
+
+            // Lặp qua tất cả các checkbox để tính tổng và lấy id
+            document.querySelectorAll('.checkboxproduct').forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    // Lấy giá trị data-total và data-id
+                    total += parseFloat(checkbox.getAttribute('data-total'));
+                    all_id.push(checkbox.getAttribute('data-id'));
+                }
+            });
+
+            // Hiển thị tổng vào phần tử có id 'totalall'
+            document.getElementById('totalall').textContent = total.toFixed(3) + ' vnđ';
+
+            // Hiển thị tất cả các id vào phần tử có id 'all_id'
+            document.getElementById('all_id').textContent = all_id.join('_');
+        }
+    </script>
+    
 }

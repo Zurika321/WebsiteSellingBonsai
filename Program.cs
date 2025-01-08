@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Http.Headers;
 using System.Text;
 using WebsiteSellingBonsai.Middleware;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.DTOS.User;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
@@ -26,18 +29,6 @@ namespace WebsiteSellingMiniBonsai
             // Đăng ký DbContext cho Identity
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminOrUser", policy =>
-                     policy.RequireAssertion(context =>
-                         context.User.IsInRole("Admin") ||
-                         context.User.IsInRole("User")
-                     )
-                );
-                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
-            });
 
             // Thêm dịch vụ Identity để quản lý người dùng và vai trò
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -66,6 +57,18 @@ namespace WebsiteSellingMiniBonsai
                 };
             });
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy(UserRoles.AdminOrUser, policy =>
+                     policy.RequireAssertion(context =>
+                         context.User.IsInRole(UserRoles.Admin) ||
+                         context.User.IsInRole(UserRoles.User)
+                     )
+                );
+                options.AddPolicy(UserRoles.User, policy => policy.RequireRole(UserRoles.User));
+                options.AddPolicy(UserRoles.Admin, policy => policy.RequireRole(UserRoles.Admin));
+            });
+
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.UserIdClaimType = "sub";
@@ -73,8 +76,13 @@ namespace WebsiteSellingMiniBonsai
 
 
             // Đăng ký AuthService làm dịch vụ
+            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<EmailSender>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<APIServices>();
+            //builder.Services.AddTransient<IEmailSender, EmailSender>();
+            //builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             builder.Services.AddCors(options =>
             {
@@ -88,8 +96,11 @@ namespace WebsiteSellingMiniBonsai
                     });
             });
 
-            
             builder.Services.AddHttpClient();
+            //builder.Services.AddHttpClient("MyClient", client =>
+            //{
+            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "your_token");
+            //});
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>

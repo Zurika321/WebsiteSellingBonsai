@@ -33,8 +33,7 @@ function thong_bao_chung(thong_bao, x, className) {
 
     // Tạo div thông báo
     let div = document.createElement("div");
-    //div.classList.add("thong_bao_chung", "text-light", "alert", "alert-" + className.toLowerCase());
-    div.classList.add("thong_bao_chung", "text-light", "alert", "alert-success");
+    div.classList.add("thong_bao_chung", "text-light", "alert", "alert-" + className.toLowerCase());
     div.innerHTML = Icon[className.trim()] + " " + thong_bao;
 
     // Tạo nút xóa thông báo
