@@ -1,0 +1,74 @@
+﻿@model WebsiteSellingBonsaiAPI.Models.Order
+@using WebsiteSellingBonsaiAPI.DTOS.Constants
+<h2>Chi tiết đơn hàng</h2>
+
+<div>
+    <p><strong>Người mua hàng:</strong> @Model.CreatedBy</p>
+    <p><strong>Địa chỉ giao hàng:</strong> @Model.Address</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod</p>
+	<p><strong>Tổng tiền:</strong> @Model.Total.ToString("F3") vnđ</p>
+</div>
+
+<h3>Chi tiết sản phẩm</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.OrderDetails == null)
+        {
+            <h3>KO có OrderDetails</h3>
+        }
+        else
+        {
+            foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@detail.Bonsai.BonsaiName</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.Price.ToString("F3")</td>
+                    <td>@((detail.Quantity * detail.Price).ToString("F3")) vnđ</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr style="height:100px"></tr>
+        <tr>
+            <td>
+                @if (Model.Status != StatusOrder.Order_Completed || Model.Status != StatusOrder.Order_Cancelled)
+                {
+                    <button class="btn btn-outline-light text-danger" popovertarget="FormCancelOrder">
+                        Hủy đơn hàng
+                    </button>
+                }
+            </td>
+            <td></td>
+            <td></td>
+			<td><a asp-action="Index"><button type="submit" class="btn btn-outline-primary">Quay lại</button></a></td>
+        </tr>
+    </tfoot>
+</table>
+
+<div id="FormCancelOrder" popover>
+    <form asp-action="CancelOrder" method="post">
+        <h3>Vui lòng chọn lý do hủy</h3>
+        <input type="hidden" name="ORDER_ID" value="@Model.ORDER_ID" />
+
+        <select name="cancelReason" class="form-control" required>
+            <option value="" disabled selected>-- Chọn lý do hủy --</option>
+            <option value="Hàng giao quá chậm">Hàng giao quá chậm</option>
+            <option value="Đặt mua với số lượng khác">Đặt mua với số lượng khác</option>
+            <option value="Tìm thấy sản phẩm khác ưng ý hơn">Tìm thấy sản phẩm khác ưng ý hơn</option>
+            <option value="Mua thêm sản phẩm khác">Mua thêm sản phẩm khác</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary mt-2">Xác nhận hủy</button>
+    </form>
+</div>
