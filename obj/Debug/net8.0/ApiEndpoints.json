@@ -110,6 +110,22 @@
   },
   {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AuthenticateController",
+    "Method": "ConfirmEmail",
+    "RelativePath": "api/Authenticate/ConfirmEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comfrim",
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.User.ConfirmEmail",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.AuthenticateController",
     "Method": "Login",
     "RelativePath": "api/Authenticate/Login",
     "HttpMethod": "POST",
@@ -495,18 +511,28 @@
   },
   {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
-    "Method": "GetCart",
-    "RelativePath": "api/CartsAPI/{userId}",
-    "HttpMethod": "GET",
+    "Method": "AddBonsai",
+    "RelativePath": "api/CartsAPI/AddBonsai",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.String",
+        "Name": "request",
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.Carts.Addcart",
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
+    "Method": "GetCart",
+    "RelativePath": "api/CartsAPI/GetCart",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "WebsiteSellingBonsaiAPI.Models.Cart",
@@ -521,22 +547,6 @@
   },
   {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
-    "Method": "AddBonsai",
-    "RelativePath": "api/CartsAPI/AddBonsai",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "WebsiteSellingBonsaiAPI.DTOS.Cart.Addcart",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.CartsAPIController",
     "Method": "update_cart",
     "RelativePath": "api/CartsAPI/update_cart",
     "HttpMethod": "PUT",
@@ -545,7 +555,7 @@
     "Parameters": [
       {
         "Name": "update_cart",
-        "Type": "WebsiteSellingBonsaiAPI.DTOS.Cart.Update_cart",
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.Carts.Update_cart",
         "IsRequired": true
       }
     ],
@@ -715,12 +725,38 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "create_Order",
-        "Type": "WebsiteSellingBonsaiAPI.DTOS.Order.Create_order",
+        "Name": "order",
+        "Type": "WebsiteSellingBonsaiAPI.Models.Order",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.OrdersAPIController",
+    "Method": "CreatePayment",
+    "RelativePath": "api/OrdersAPI/create_payment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "create_Order",
+        "Type": "WebsiteSellingBonsaiAPI.DTOS.Orders.Create_order",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebsiteSellingBonsaiAPI.Models.Order",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebsiteSellingBonsaiAPI.Controllers.OrdersAPIController",

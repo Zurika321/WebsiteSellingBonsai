@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using WebsiteSellingBonsaiAPI.DTOS.Cart;
+using WebsiteSellingBonsaiAPI.DTOS.Carts;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -27,7 +27,11 @@ namespace WebsiteSellingBonsai.Controllers
 
             if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" }); // trang login
 
-            // Tìm giỏ hàng của người dùng, bao gồm cả chi tiết giỏ hàng
+            //var (cart, thongbaopcart) = await _apiServices.FetchDataApiGet<Cart>("CartsAPI/GetCart");
+            //if (cart == default)
+            //    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopcart);
+            //    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopcart);
+
             var cart = await _context.Carts
                 .Include(c => c.CartDetails)
                     .ThenInclude(cd => cd.Bonsai)
@@ -52,6 +56,7 @@ namespace WebsiteSellingBonsai.Controllers
             {
                 cart.CartDetails = new List<CartDetail>();
             }
+
             return View(cart);
         }
 

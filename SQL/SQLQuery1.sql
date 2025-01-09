@@ -145,7 +145,8 @@ CREATE TABLE Orders (
     ORDER_ID INT PRIMARY KEY IDENTITY(1,1),
     USE_ID NVARCHAR(450), -- Chỉnh lại kiểu dữ liệu cho phù hợp với Id trong AspNetUsers
     Paymentmethod NVARCHAR(100),
-    Status NVARCHAR(24),
+    Status NVARCHAR(50),
+	Address NVARCHAR(500),
 	CancelReason NVARCHAR(2048),
     Total DECIMAL,
 
@@ -172,7 +173,7 @@ CREATE TABLE OrderDetails (
 CREATE TABLE Reviews (
     REVIEW_ID INT PRIMARY KEY IDENTITY(1,1),
     BONSAI_ID INT,
-    USE_ID NVARCHAR(450), -- Chỉnh lại kiểu dữ liệu cho phù hợp với Id trong AspNetUsers (thường là NVARCHAR(450))
+    USE_ID NVARCHAR(450),
     Rate FLOAT, 
     Comment NVARCHAR(2048),
     
@@ -222,6 +223,16 @@ JOIN
     Title NVARCHAR(255),
     ImageURL NVARCHAR(1024),
     Description NVARCHAR(1024),
+);
+
+CREATE TABLE Favourites (
+   FAV_ID INT PRIMARY KEY IDENTITY(1,1),
+   BONSAI_ID INT,
+   USE_ID NVARCHAR(450),
+   Fav BIT,
+
+   FOREIGN KEY (USE_ID) REFERENCES AspNetUsers(Id),
+   FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
 
 DROP TABLE OrderDetails;     --1

@@ -41,51 +41,10 @@
                 </button>
             </div>
         </div>
-        @{
-            var options = new List<string> { "BonsaiName", "Description", "FengShuiMeaning", "Price", "Quantity" };
-            var selectedOption = ViewData["search_by"]?.ToString();
-        }
-
-        <form asp-action="Index" method="post" class="row g-2 p-3 border rounded shadow-sm bg-light mt-2">
-            <div class="col-auto border text-center">
-                <label for="searchBy" class="form-label fw-bold">Search By</label>
-                <select id="searchBy" name="search_by" class="form-select">
-                            @foreach (var option in options)
-                            {
-                            <option value="@option">@option</option>
-                            }
-                </select>
-            </div>
-            <div class="col">
-                <input type="text" id="searchInput" name="search" class="form-control" placeholder="Enter keyword..." value="@(ViewData["search"] ?? "")" />
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary d-flex align-items-center">
-                    <i class="bi bi-search me-1"></i> Search
-                </button>
-            </div>
-        </form>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var selectedOption = '@selectedOption';
-                var selectElement = document.getElementById('searchBy');
-
-                if (selectElement && selectedOption){
-                    for (var i = 0; i < selectElement.options.length; i++) {
-                        if (selectElement.options[i].value === selectedOption) {
-                            selectElement.options[i].selected = true;
-                            break;
-                        }
-                    }
-                }
-                
-            });
-        </script>
     </div>
     <div class="card-body">
          <div class="table-responsive ">
-            <table id="tbl" class="table table-bordered table-hover">
+            <table id="myTable" class="table table-bordered table-hover">
                 <div class="bg-light text-center" style="height:50px"></div>
                 <thead>
                     <tr>
@@ -95,17 +54,20 @@
                         <th>
                                         @Html.DisplayNameFor(model => model.BonsaiName)
                         </th>       
-                        <th>
-                                        @Html.DisplayNameFor(model => model.Description)
-                        </th>
-                        <th>
-                                        @Html.DisplayNameFor(model => model.FengShuiMeaning)
-                        </th>
                          <th>
                                         @Html.DisplayNameFor(model => model.Price)
                         </th>
                          <th>
                                          @Html.DisplayNameFor(model => model.Quantity)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.GeneralMeaning.Meaning)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Style)
+                        </th>
+                        <th>
+                                        @Html.DisplayNameFor(model => model.Type)
                         </th>
                         <th></th>
                     </tr>
@@ -133,17 +95,20 @@
                             <td>
                                             @Html.DisplayFor(modelItem => item.BonsaiName)
                             </td>
-                            <td>
-                                            @Html.Raw(item.Description)
-                            </td>
-                            <td>
-                                            @Html.Raw(item.FengShuiMeaning)
-                            </td>
                              <td>
                                             @item.Price.ToString("F3") vnđ
                             </td>
                              <td>
                                             @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                            @Html.Raw(item.GeneralMeaning.Meaning)
+                            </td>
+                            <td>
+                                             @Html.Raw(item.Style.Name)
+                            </td>
+                            <td>
+                                             @Html.Raw(item.Type.Name)
                             </td>
                             <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-sharp-duotone fa-regular fa-pen-to-square" style="color: blue"></i></a>
@@ -156,3 +121,4 @@
             </table>
         </div>
     </div>
+</div>

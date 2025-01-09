@@ -1,5 +1,180 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Đơn hàng";
 }
+
+@* @model IEnumerable<WebsiteSellingBonsaiAPI.Models.Order> *@
+@model WebsiteSellingBonsaiAPI.DTOS.Orders.OrderStatusViewModel
+
+<div class="container my-3">
+    <ul class="nav nav-tabs" id="orderTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="notConfirmedTab" data-bs-toggle="tab" href="#notConfirmed" role="tab" aria-controls="notConfirmed" aria-selected="true">Chưa xác nhận</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="onDeliveryTab" data-bs-toggle="tab" href="#onDelivery" role="tab" aria-controls="onDelivery" aria-selected="false">Đang vận chuyển</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="orderCompletedTab" data-bs-toggle="tab" href="#orderCompleted" role="tab" aria-controls="orderCompleted" aria-selected="false">Đã hoàn thành</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="orderCancelledTab" data-bs-toggle="tab" href="#orderCancelled" role="tab" aria-controls="orderCancelled" aria-selected="false">Đã hủy</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="orderTabsContent">
+        <div class="tab-pane fade show active" id="notConfirmed" role="tabpanel" aria-labelledby="notConfirmedTab">
+            @if (Model.NotConfirmedOrders == null || !Model.NotConfirmedOrders.Any())
+            {
+                <div style="height: 300px; width: 100%;" class="d-flex justify-content-center align-items-center">
+                    <h3>Không có đơn hàng chưa xác nhận nào</h3>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order_Id</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.NotConfirmedOrders)
+                        {
+                            <tr>
+                                <td>@order.ORDER_ID</td>
+                                <td>@order.PaymentMethod</td>
+                                <td>@order.Status</td>
+                                <td>@order.Total.ToString("F3") vnđ</td>
+                                <td class="d-flex">
+                                    <a asp-action="ViewOrder" asp-route-id="@order.ORDER_ID" class="btn btn-outline-success">
+                                        <i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i>Xem chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+					</tbody>
+				</table>
+            }
+        </div>
+        <div class="tab-pane fade" id="onDelivery" role="tabpanel" aria-labelledby="onDeliveryTab">
+            @if (Model.OnDeliveryOrders == null || !Model.OnDeliveryOrders.Any())
+            {
+                <div style="height: 300px; width: 100%;" class="d-flex justify-content-center align-items-center">
+                    <h3>Không có đơn hàng nào đang được giao</h3>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order_Id</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.OnDeliveryOrders)
+                        {
+                            <tr>
+                                <td>@order.ORDER_ID</td>
+                                <td>@order.PaymentMethod</td>
+                                <td>@order.Status</td>
+                                <td>@order.Total.ToString("F3") vnđ</td>
+                                <td class="d-flex">
+                                    <a asp-action="ViewOrder" asp-route-id="@order.ORDER_ID" class="btn btn-outline-success">
+                                        <i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i>Xem chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="tab-pane fade" id="orderCompleted" role="tabpanel" aria-labelledby="orderCompletedTab">
+            @if (Model.OrderCompletedOrders == null || !Model.OrderCompletedOrders.Any())
+            {
+                <div style="height: 300px; width: 100%;" class="d-flex justify-content-center align-items-center">
+                    <h3>Chưa có đơn hàng nào hoàn thành</h3>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order_Id</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.OrderCompletedOrders)
+                        {
+                            <tr>
+                                <td>@order.ORDER_ID</td>
+                                <td>@order.PaymentMethod</td>
+                                <td>@order.Status</td>
+                                <td>@order.Total.ToString("F3") vnđ</td>
+                                <td class="d-flex">
+                                    <a asp-action="ViewOrder" asp-route-id="@order.ORDER_ID" class="btn btn-outline-success">
+                                        <i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i>Xem chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="tab-pane fade" id="orderCancelled" role="tabpanel" aria-labelledby="orderCancelledTab">
+            @if (Model.OrderCancelledOrders == null || !Model.OrderCancelledOrders.Any())
+            {
+                <div style="height: 300px; width: 100%;" class="d-flex justify-content-center align-items-center">
+                    <h3>Chưa có đơn hàng nào bị hủy</h3>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order_Id</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Status</th>
+                            <th>Lý do bị hủy</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.OrderCancelledOrders)
+                        {
+                            <tr>
+                                <td>@order.ORDER_ID</td>
+                                <td>@order.PaymentMethod</td>
+                                <td>@order.Status</td>
+                                <td>@order.CancelReason</td>
+                                <td>@order.Total.ToString("F3") vnđ</td>
+                                <td class="d-flex">
+                                    <a asp-action="ViewOrder" asp-route-id="@order.ORDER_ID" class="btn btn-outline-success">
+                                        <i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i>Xem chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+

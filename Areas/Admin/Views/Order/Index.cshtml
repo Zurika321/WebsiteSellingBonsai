@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Đơn hàng chưa xác nhận";
+}
+
+@model IEnumerable<WebsiteSellingBonsaiAPI.Models.Order>
+
+
+<div class="card card-success card-outline">
+    <div class="card-header">
+        <h2 class="text-center">Đơn hàng cần xác nhận</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive ">
+            <table id="myTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ORDER_ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PaymentMethod)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Total)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedDate)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ORDER_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentMethod)
+                            </td>
+                            <td>
+                                @item.Total.ToString("F3") vnđ
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedDate)
+                            </td>
+                            <td>
+                                <a asp-action="ViewOrder" asp-route-id="@item.ORDER_ID" title="Xem chi tiết"><i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
