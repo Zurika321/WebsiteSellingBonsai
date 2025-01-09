@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using WebsiteSellingBonsaiAPI.DTOS.Cart;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
+using WebsiteSellingBonsaiAPI.DTOS.Orders;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -21,82 +22,98 @@ namespace WebsiteSellingBonsai.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
 
-            if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" }); // trang login
+            if (userInfo == null)
+                return RedirectToAction("Login", "Users", new { area = "Admin" });
 
-            // Tìm giỏ hàng của người dùng, bao gồm cả chi tiết giỏ hàng
+            // Lọc các đơn hàng theo trạng thái
+            var notConfirmedOrders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Bonsai)
+                .Where(o => o.Status == StatusOrder.NotConfirmed && o.USE_ID == userInfo.Id)
+                .ToListAsync();
+
             var cart = await _context.Carts
                 .Include(c => c.CartDetails)
                     .ThenInclude(cd => cd.Bonsai)
                 .FirstOrDefaultAsync(c => c.USE_ID == userInfo.Id);
 
-            if (cart == null)
+            var onDeliveryOrders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Bonsai)
+                .Where(o => o.Status == StatusOrder.On_Delivery && o.USE_ID == userInfo.Id)
+                .ToListAsync();
+
+            var orderCompletedOrders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Bonsai)
+                .Where(o => o.Status == StatusOrder.Order_Completed && o.USE_ID == userInfo.Id)
+                .ToListAsync();
+
+            var orderCancelledOrders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Bonsai)
+                .Where(o => o.Status == StatusOrder.Order_Cancelled && o.USE_ID == userInfo.Id)
+                .ToListAsync();
+
+            // Tạo một đối tượng chứa các danh sách đơn hàng theo trạng thái
+            var model = new OrderStatusViewModel
             {
-                // Nếu giỏ hàng chưa tồn tại, tạo mới
-                cart = new Cart
+                NotConfirmedOrders = notConfirmedOrders,
+                OnDeliveryOrders = onDeliveryOrders,
+                OrderCompletedOrders = orderCompletedOrders,
+                OrderCancelledOrders = orderCancelledOrders
+            };
+
+            return View(model);
+        }
+
+        [HttpGet("Order/ViewOrder/{ORDER_ID}")]
+        public async Task<IActionResult> ViewOrder(int ORDER_ID)
+        {
+            if (ORDER_ID == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+
+            if (userInfo == null)
+                return RedirectToAction("Login", "Users", new { area = "Admin" });
+
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Bonsai)
+                .FirstOrDefaultAsync(o => o.ORDER_ID == ORDER_ID);
+
+            if (order == null)
+            {
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
                 {
-                    USE_ID = userInfo.Id,
-                    CreatedBy = userInfo.UserName,
-                    CreatedDate = DateTime.Now,
-                    UpdatedBy = userInfo.UserName,
-                    UpdatedDate = DateTime.Now,
-                };
-                _context.Carts.Add(cart);
-                await _context.SaveChangesAsync();
-                cart.CartDetails = new List<CartDetail>();
+                    Message = "Đơn hàng không tồn tại",
+                    MessageType = TypeThongBao.Warning,
+                    DisplayTime = 5,
+                });
+
+                return RedirectToAction("Index");
             }
-            if (cart.CartDetails == null)
+
+            if (order.USE_ID != userInfo.Id) 
             {
-                cart.CartDetails = new List<CartDetail>();
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                {
+                    Message = "Đơn hàng không tồn tại",
+                    MessageType = TypeThongBao.Warning,
+                    DisplayTime = 5,
+                });
+
+                return RedirectToAction("Index");
             }
-            return View(cart);
+
+            return View(order);
         }
-
-        [HttpPost, ActionName("AddCart")]
-        public async Task<IActionResult> AddCart(Addcart addcart,string redirectUrl)
-        {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
-            if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
-
-            var (Success, thongbaopostcart) = await _apiServices.FetchDataApiPost<Addcart>("CartsAPI/AddBonsai", addcart);
-            if (!Success) {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            }
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            return Redirect(redirectUrl ?? Url.Action("Index", "Home"));
-        }
-        [HttpPost, ActionName("update_quantity")]
-        public async Task<IActionResult> update_quantity(Update_cart up)
-        {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
-            if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
-
-            var (Success, thongbaopostcart) = await _apiServices.FetchDataApiPut<Update_cart>($"CartsAPI/update_cart", up);
-            if (!Success)
-            {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            }
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            return RedirectToAction("Index", "Cart");
-        }
-
-        [HttpPost, ActionName("RemoveFromCart")]
-        public async Task<IActionResult> RemoveFromCart(int CART_D_ID)
-        {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
-            if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
-
-            var (Success, thongbaopostcart) = await _apiServices.FetchDataApiDelete($"CartsAPI/{CART_D_ID}" , image: null);
-            if (!Success)
-            {
-                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            }
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
-            return RedirectToAction("Index", "Cart");
-        }
- 
     }
 }

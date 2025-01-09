@@ -35,48 +35,64 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.ImageOld)
-			</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
+<div class="card card-success card-outline">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md"><h3 class="card-title">Bonsais</h3></div>
+            <div class="col-md-auto">
+                <button id="btnAdd" type="button" class="btn btn-success">
+                    <a asp-action="Create" class="text-white text-decoration-none"><i class="fa-light fa-add me-1"></i> Add new</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive ">
+            <table class="table" id="myTable">
+                <thead>
+		            <tr>
+			            <th>
+				            @Html.DisplayNameFor(model => model.ImageOld)
+			            </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
             
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr>
             
-            <td>
-                    @if (!string.IsNullOrEmpty(item.ImageOld))
-                    {
-                        <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
-                            <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img1" />
-                            <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img2" />
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
-                            <img src="/Data/noimage.png" alt="Product Image" class="img1" />
-                            <img src="/Data/noimage.png" alt="Product Image" class="img2" />
-                        </div>
-                    }
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Title)
-			</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BAN_ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BAN_ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BAN_ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        <td>
+                                @if (!string.IsNullOrEmpty(item.ImageOld))
+                                {
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
+                                        <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img1" />
+                                        <img src="@Url.Content("~/" + item.ImageOld)" alt="Product Image" class="img2" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageOld)')">
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img1" />
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img2" />
+                                    </div>
+                                }
+			            </td>
+			            <td>
+				            @Html.DisplayFor(modelItem => item.Title)
+			            </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.BAN_ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.BAN_ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.BAN_ID">Delete</a>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

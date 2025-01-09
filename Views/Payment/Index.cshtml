@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+@model WebsiteSellingBonsaiAPI.Models.Order
+
+<h2>Chi tiết đơn hàng</h2>
+
+<div>
+    <p><strong>Người mua hàng:</strong> @Model.CreatedBy</p>
+    <p><strong>Địa chỉ giao hàng:</strong> @Model.Address</p>
+    <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod</p>
+</div>
+
+<h3>Chi tiết sản phẩm</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.OrderDetails == null ){
+            <h3>KO có OrderDetails</h3>
+        }else{
+            foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@detail.Bonsai.BonsaiName</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.Price.ToString("F3")</td>
+                    <td>@((detail.Quantity * detail.Price).ToString("F3")) vnđ</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+		<tr style="height:100px"></tr>
+		<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>Tổng tiền:</strong> @Model.Total.ToString("F3") vnđ <form method="post" asp-action="Create_Order"><button type="submit" class="btn btn-outline-success">Thanh toán</button></form></td>
+        </tr>
+    </tfoot>
+</table>

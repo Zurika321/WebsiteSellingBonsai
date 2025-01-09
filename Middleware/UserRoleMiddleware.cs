@@ -10,17 +10,51 @@ using Azure;
 using WebsiteSellingBonsaiAPI.DTOS.User;
 using System.Net.Http.Headers;
 using NuGet.Common;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebsiteSellingBonsai.Middleware
 {
-	// You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
-	public class UserRoleMiddleware
-	{
-		private readonly RequestDelegate _next;
+    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+    public class UserRoleMiddleware
+    {
+        private readonly RequestDelegate _next;
 
         public UserRoleMiddleware(RequestDelegate next)
-		{
-			_next = next;
+        {
+            _next = next;
+        }
+
+        public bool IsTokenValid(string token)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Convert.FromBase64String("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr"); // Replace with your actual secret key
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "http://localhost:5000",
+                    ValidAudience = "http://localhost:4200",
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+                return true;
+            }
+            catch (SecurityTokenValidationException)
+            {
+                // token ko hợp lệ
+                return false;
+            }
+            catch (Exception)
+            {
+                // ngoại lệ khác
+                return false;
+            }
         }
 
         public async Task InvokeAsync(HttpContext context, IServiceScopeFactory scopeFactory)
@@ -29,39 +63,51 @@ namespace WebsiteSellingBonsai.Middleware
             var login = context.Request.Cookies.Get<LoginModel>("CokieUserWebsiteSellingBonsai");
             if (login != null)
             {
-                var userInfo = context.Session.Get<ApplicationUser>("userInfo");
+                //var token = context.Session.GetString("AuthToken");
+                //if (string.IsNullOrEmpty(token) || !IsTokenValid(token))
+                //{
+                //    using (var scope = scopeFactory.CreateScope())
+                //    {
+                //        var apiServices = scope.ServiceProvider.GetRequiredService<APIServices>();
 
+                //        var (Success, thongbao, newtoken) = await apiServices.Login(login);
+                //        if (!Success)
+                //        {
+                //            context.Session.Set("ThongBao", thongbao);
+                //        }
+                //    }
+                //}
+                var userInfo = context.Session.Get<ApplicationUser>("userInfo");
                 if (userInfo == null)
                 {
                     using (var scope = scopeFactory.CreateScope())
                     {
                         var apiServices = scope.ServiceProvider.GetRequiredService<APIServices>();
 
-                        // Sử dụng apiServices ở đây, ví dụ:
                         var (Success, thongbao, token) = await apiServices.Login(login);
                         if (!Success)
                         {
                             context.Session.Set("ThongBao", thongbao);
                         }
-
                     }
                 }
-
-                //var tokenBytes = context.Session.Get("AuthToken");
-                //if (tokenBytes != null)
-                //{
-                //    var token2 = System.Text.Encoding.UTF8.GetString(tokenBytes);
-                //    if (!string.IsNullOrEmpty(token2))
-                //    {
-                //        context.Session.Set("ThongBao", new ThongBao
-                //        {
-                //            Message = token2,
-                //            MessageType = TypeThongBao.Success,
-                //            DisplayTime = 5,
-                //        });
-                //    }
-                //}
             }
+            await _next(context);
+            //var tokenBytes = context.Session.Get("AuthToken");
+            //if (tokenBytes != null)
+            //{
+            //    var token2 = System.Text.Encoding.UTF8.GetString(tokenBytes);
+            //    if (!string.IsNullOrEmpty(token2))
+            //    {
+            //        context.Session.Set("ThongBao", new ThongBao
+            //        {
+            //            Message = token2,
+            //            MessageType = TypeThongBao.Success,
+            //            DisplayTime = 5,
+            //        });
+            //    }
+            //}
+            //}
             //var userInfo = context.Session.Get<ApplicationUser>("userInfo");
 
             //if (!context.Request.Path.StartsWithSegments("/api"))
@@ -117,8 +163,6 @@ namespace WebsiteSellingBonsai.Middleware
             //        }
             //    }
             //}
-
-            await _next(context);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 <h2>Giỏ hàng của bạn</h2>
 
-@if (Model.CartDetails == null || !Model.CartDetails.Any())
+@if (Model == null||Model.CartDetails == null || !Model.CartDetails.Any())
 {
     <div class="d-flex justify-content-center align-items-center" style="height: 500px; width: 100%">
         <p>Giỏ hàng của bạn đang trống.</p>
@@ -12,10 +12,13 @@ else
 {
     <div id="update_quantity" popover>
         <form asp-action="update_quantity">
-            <p>Cập nhật số lượng sản phầm <span id="productname"></span></p>
-            <input type="number" name="quantity" min="1" max="10" />
+            <h3 class="text-center">Cập nhật số lượng: <span id="productname"></span></h3>
+			<p>(Số lượng tối đa là 10 sản phẩm nếu muốn mua nhiều hơn có thể liên hệ. <a href="#">Liên hệ</a>)</p>
             <input type="hidden" name="CART_D_ID" />
-            <button type="submit" class="btn btn-danger">Cập nhật</button>
+			<div class="row container">
+                <input type="number" name="quantity" min="1" max="10" class="col"/>
+                <button type="submit" class="btn btn-danger col col-auto">Cập nhật</button>
+            </div>
         </form>
     </div>
     <table class="table">
@@ -23,7 +26,8 @@ else
             <tr>
                 <th></th>
                 <th>Sản phẩm</th>
-                <th>Số lượng</th>
+                <th>Số lượng trong giỏ</th>
+                <th>Số lượng trong cửa hàng</th>
                 <th>Giá</th>
                 <th>Tổng</th>
                 <th></th>
@@ -33,21 +37,22 @@ else
             @foreach (var item in Model.CartDetails)
             {
                 <tr>
-                    <td><input class="checkboxproduct" type="checkbox" data-total="@(item.Quantity * item.Price)" data-id="@item.CART_D_ID" /></td>
+                    <td><input class="checkboxproduct" type="checkbox" data-total="@(item.Quantity * item.Price)" data-id="@item.BONSAI_ID" data-quantity="@item.Quantity" data-name="@item.Bonsai.BonsaiName" /></td>
                     <td>@item.Bonsai.BonsaiName</td>
-                    <td>@item.Quantity</td>
+                    <td style="color : @(item.Quantity > item.Bonsai.Quantity ? "red" : "black")">@item.Quantity</td>
+                    <td>@item.Bonsai.Quantity</td>
                     <td>@item.Price.ToString("F3") vnđ</td>
                     <td>@((item.Quantity * item.Price).ToString("F3")) vnđ</td>
                     <td class="d-flex">
-                        <button class="order" data-id="@item.CART_D_ID" data-product="@item.Bonsai.BonsaiName">
+                        <button class="btn_create_payment btn btn-primary" data-name="@item.Bonsai.BonsaiName" data-id="@item.BONSAI_ID" data-quantity="@item.Quantity" popovertarget="create_payment">
                             Đặt hàng
                         </button>
-                        <button class="btn_up_quantity mx-2" data-id="@item.CART_D_ID" data-product="@item.Bonsai.BonsaiName" data-quantity="@item.Quantity" popovertarget="update_quantity">
+                        <button class="btn_up_quantity btn btn-warning mx-2" data-id="@item.CART_D_ID" data-product="@item.Bonsai.BonsaiName" data-quantity="@item.Quantity" popovertarget="update_quantity">
                             Cập nhật số lượng
                         </button>
                         <form asp-action="RemoveFromCart">
                             <input type="hidden" name="CART_D_ID" value="@item.CART_D_ID" />
-                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="submit" class="btn btn-outline-danger">Xóa</button>
                         </form>
                     </td>
                 </tr>
@@ -56,13 +61,13 @@ else
         <tfoot>
             <tr style="height: 100px"></tr>
             <tr>
-                <td><span id="all_id"></span></td>
+                <td></td>
                 <td colspan="3">Tổng cộng:</td>
                 <td>
                     <span id="totalall">0.000 vnđ</span>
                 </td>
                 <td>
-                    <button id="order2">
+                    <button id="btn_create_payments" class="btn btn-success" popovertarget="create_payment">
                         Đặt hàng
                     </button>
                 </td>
@@ -70,15 +75,69 @@ else
         </tfoot>
     </table>
 }
+@using WebsiteSellingBonsaiAPI.Utils
+@using WebsiteSellingBonsaiAPI.Models
+@{
+    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
+    var scheme = Context.Request.Scheme;
+    var host = Context.Request.Host;
+    var path = Context.Request.Path;
+    var queryString = Context.Request.QueryString;
 
-@* <form asp-action="" asp-controller="">
-    <input name="ListOrder" value="" />
+    var url = $"{scheme}://{host}{path}{queryString}";
+}
+
+<div id="create_payment" popover>
+<form asp-action="CreatePayment" asp-controller="payment">
+    <h3>@((userInfo != null && !string.IsNullOrEmpty(userInfo.Address )) ? "Xác nhận lại địa chỉ " : "Vui lòng nhập địa chỉ giao hàng")</h3>
+    <input name="list_bonsai" value="" type="hidden" />
+    <input name="list_quantity" value="" type="hidden" />
+    <input name="Address" value="@userInfo?.Address" />
+    <input name="redirectUrl" value="@url" type="hidden" />
+	<p><h5>Những sản phẩm đã chọn: </h5><span id="listNameBonsaiOrder"></span></p>
+    
+    <button class="btn btn-primary" type="submit">Đặt hàng</button>
+    @* <input name="PhoneNumber" value="@userInfo?.PhoneNumber" /> *@
 </form>
- *@
+</div>
+
+
 @section Scripts {
     <script>
+        function Totalproduct() {
+            let total = 0;
+            let all_id = [];
+            let all_quantity = []
+            let all_name_order = []
+
+            // Lặp qua tất cả các checkbox để tính tổng và lấy id
+            document.querySelectorAll('.checkboxproduct').forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    total += parseFloat(checkbox.getAttribute('data-total'));
+                    all_quantity.push(checkbox.getAttribute('data-quantity'));
+                    all_id.push(checkbox.getAttribute('data-id'));
+                    all_name_order.push(checkbox.getAttribute('data-name') + " x" + checkbox.getAttribute('data-quantity'));
+                }
+            });
+
+            // Hiển thị tổng vào phần tử có id 'totalall'
+            document.getElementById('totalall').textContent = total.toFixed(3) + ' vnđ';
+
+            // Hiển thị tất cả các id vào phần tử có id 'all_id'
+            const list_bonsai_input = document.querySelector('input[name="list_bonsai"]');
+            list_bonsai_input.value = all_id.join('_');
+            const list_quantity_input = document.querySelector('input[name="list_quantity"]');
+            list_quantity_input.value = all_quantity.join('_');
+            const listNameBonsaiOrder = document.getElementById('listNameBonsaiOrder');
+            listNameBonsaiOrder.textContent = all_name_order.join(', ');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const btnUpQuantity = document.querySelectorAll('.btn_up_quantity');
+            const btn_create_payment = document.querySelectorAll('.btn_create_payment');
+            const checkboxes = document.querySelectorAll('.checkboxproduct');
+            const btn_create_payments = document.getElementById("btn_create_payments")
+
 
             btnUpQuantity.forEach(function(button) {
                 button.addEventListener('click', function(event) {
@@ -96,39 +155,32 @@ else
                     productNameSpan.textContent = productName;
                 });
             });
-        });
-                document.addEventListener('DOMContentLoaded', function() {
-            // Lấy tất cả các checkbox có class 'checkboxproduct'
-            const checkboxes = document.querySelectorAll('.checkboxproduct');
 
-            // Lắng nghe sự kiện 'click' trên mỗi checkbox
+            btn_create_payment.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    const BONSAIId = button.getAttribute('data-id');
+                    const quantity = button.getAttribute('data-quantity');
+                    const name = button.getAttribute('data-name');
+
+                    const list_bonsai_input = document.querySelector('input[name="list_bonsai"]');
+                    list_bonsai_input.value = BONSAIId;
+                    const list_quantity_input = document.querySelector('input[name="list_quantity"]');
+                    list_quantity_input.value = quantity;
+
+                    document.getElementById("listNameBonsaiOrder").textContent = name + " x"+ quantity;
+                });
+            });
+
             checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('click', function() {
-                    // Gọi hàm tính tổng khi có sự kiện click
                     Totalproduct();
                 });
             });
-        });
 
-        function Totalproduct() {
-            let total = 0;
-            let all_id = [];
-
-            // Lặp qua tất cả các checkbox để tính tổng và lấy id
-            document.querySelectorAll('.checkboxproduct').forEach(function(checkbox) {
-                if (checkbox.checked) {
-                    // Lấy giá trị data-total và data-id
-                    total += parseFloat(checkbox.getAttribute('data-total'));
-                    all_id.push(checkbox.getAttribute('data-id'));
-                }
+            btn_create_payments.addEventListener('click', function(){
+                Totalproduct();
             });
-
-            // Hiển thị tổng vào phần tử có id 'totalall'
-            document.getElementById('totalall').textContent = total.toFixed(3) + ' vnđ';
-
-            // Hiển thị tất cả các id vào phần tử có id 'all_id'
-            document.getElementById('all_id').textContent = all_id.join('_');
-        }
+        });
     </script>
     
 }

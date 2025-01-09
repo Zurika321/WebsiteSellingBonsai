@@ -130,6 +130,9 @@
                             <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
                         </li>
                         <li>
+                            <a asp-action="Index" asp-controller="Order" class="dropdown-item">Đơn hàng</a>
+                        </li>
+                        <li>
                             <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
                                 <button type="submit" class="dropdown-item">Đăng xuất</button>
                             </form>
@@ -165,6 +168,9 @@
                         <li><a class="dropdown-item" href="#">Thông tin</a></li>
                         <li>
                             <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Order" class="dropdown-item">Đơn hàng</a>
                         </li>
                         <li>
                             <form asp-action="Logout" asp-controller="Users" asp-area="Admin" method="post">
@@ -218,156 +224,155 @@
     }
     <style>
         #main_banner{
-            position: relative;
+        position: relative;
         }
         #menu_banner{
-            align-items: center;
-            overflow-x: hidden;
-            overflow: hidden;
-            width: calc(100% - 40px);
-            margin-left: 20px;
+        align-items: center;
+        overflow-x: hidden;
+        overflow: hidden;
+        width: calc(100% - 40px);
+        margin-left: 20px;
         }
         #list_banner{
-            display: flex;
-            transition: transform 1s ease-in-out;
+        display: flex;
+        transition: transform 1s ease-in-out;
         }
         #list_banner > div {
-            flex: 0 0 100%;
-            max-width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
         }
         .banner{
-            width: 100%;
-            z-index: 9;
+        width: 100%;
+        z-index: 9;
         }
         #btn-left{
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            z-index: 9;
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        z-index: 9;
         }
         #btn-right{
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            z-index: 9;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        z-index: 9;
         }
     </style>
-  <!-- Dynamic Banner Image -->
-  <div id="main_banner">
-    <button id="btn-left" title="cuộn sang trái">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <button id="btn-right" title="cuộn sang phải">
-        <i
-        class="fa-solid fa-chevron-left"
-        style="transform: rotate(180deg)"
-        ></i>
-    </button>
-    <div id="menu_banner">
-       <div id="list_banner">
-            @foreach (var banner in banners)
-            {
-                <div class="banner" style="background-image: url('@banner.ImageOld'); background-size: cover; background-position: center; height: 400px;">
-                    <div class="h-100 d-flex align-items-end">
-                        <div style="background-color: rgba(0, 0, 0, 0.3)" class="w-100 text-center">
-                            <h1 class="text-white text-center fw-bold">@banner.Title</h1>
+    <!-- Dynamic Banner Image -->
+    <div id="main_banner" style="display: @((Context.Request.Path == "/" || Context.Request.Path == "/Home") ? "block" : "none");">
+        <button id="btn-left" title="cuộn sang trái">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="btn-right" title="cuộn sang phải">
+            <i
+            class="fa-solid fa-chevron-left"
+            style="transform: rotate(180deg)"
+            ></i>
+        </button>
+        <div id="menu_banner">
+            <div id="list_banner">
+                @foreach (var banner in banners)
+                {
+                    <div class="banner" style="background-image: url('@banner.ImageOld'); background-size: cover; background-position: center; height: 400px;">
+                        <div class="h-100 d-flex align-items-end">
+                            <div style="background-color: rgba(0, 0, 0, 0.3)" class="w-100 text-center">
+                                <h1 class="text-white text-center fw-bold">@banner.Title</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-  </div>
-      
-  
-  
-  <script>
+
+
+
+    <script>
         const track = document.querySelector("#list_banner");
         let index = 0;
         let interval;
 
         const updateAnimeItems = () => {
-          const animeItems = document.querySelectorAll(".banner");
-          return animeItems;
+        const animeItems = document.querySelectorAll(".banner");
+        return animeItems;
         };
 
         const updateCarousel = () => {
-          const animeItems = updateAnimeItems();
-          track.style.transform = `translateX(-${index * 100}%)`;
+        const animeItems = updateAnimeItems();
+        track.style.transform = `translateX(-${index * 100}%)`;
         };
 
         let tienlen = true;
         const startAutoScroll = () => {
-          interval = setInterval(() => {
-            const animeItems = updateAnimeItems(); // Cập nhật lại animeItems
-            if (animeItems.length <= 1) return;
-            if (tienlen) {
-              index++;
-              if (index >= animeItems.length) {
-                index -= 2;
-                tienlen = false;
-              }
-            } else {
-              index--;
-              if (index <= -1) {
-                index += 2;
-                tienlen = true;
-              }
-            }
-            updateCarousel();
-          }, 6000);
+        interval = setInterval(() => {
+        const animeItems = updateAnimeItems(); // Cập nhật lại animeItems
+        if (animeItems.length <= 1) return;
+        if (tienlen) {
+        index++;
+        if (index >= animeItems.length) {
+        index -= 2;
+        tienlen = false;
+        }
+        } else {
+        index--;
+        if (index <= -1) {
+        index += 2;
+        tienlen = true;
+        }
+        }
+        updateCarousel();
+        }, 6000);
         };
 
         const resetAndRestartAutoScroll = () => {
-          clearInterval(interval);
-          startAutoScroll();
+        clearInterval(interval);
+        startAutoScroll();
         };
 
         document.getElementById("btn-left").addEventListener("click", () => {
-          index--;
-          const animeItems = updateAnimeItems();
-          if (index < 0) {
-            index = animeItems.length - 1;
-          }
-          updateCarousel();
-          resetAndRestartAutoScroll();
+        index--;
+        const animeItems = updateAnimeItems();
+        if (index < 0) {
+        index = animeItems.length - 1;
+        }
+        updateCarousel();
+        resetAndRestartAutoScroll();
         });
 
         document.getElementById("btn-right").addEventListener("click", () => {
-          index++;
-          const animeItems = updateAnimeItems();
-          if (index >= animeItems.length) {
-            index = 0;
-          }
-          updateCarousel();
-          resetAndRestartAutoScroll();
+        index++;
+        const animeItems = updateAnimeItems();
+        if (index >= animeItems.length) {
+        index = 0;
+        }
+        updateCarousel();
+        resetAndRestartAutoScroll();
         });
 
         // Cập nhật lại animeItems mỗi 5 giây
         setInterval(() => {
-          updateCarousel(); // Cập nhật carousel sau mỗi 5 giây
+        updateCarousel(); // Cập nhật carousel sau mỗi 5 giây
         }, 5000);
 
         // Cập nhật lại kiểu của các phần tử anime
         const updateAnimeStyle = () => {
-          const animeItems = updateAnimeItems();
-          animeItems.forEach((item) => {
-            item.style.flex = "0 0 100%";
-          });
+        const animeItems = updateAnimeItems();
+        animeItems.forEach((item) => {
+        item.style.flex = "0 0 100%";
+        });
         };
 
         startAutoScroll();
-      </script>
+    </script>
 
     <!-- nav bar -->
-    <div
-      style="
-        position: sticky;
-        top: 70px;
-        z-index: 10;
-        background-color: white;
-      "
-    >
+    <div style="
+    position: sticky;
+    top: 70px;
+    z-index: 10;
+    background-color: white;
+    display: @((Context.Request.Path == "/" || Context.Request.Path == "/Home") ? "block" : "none");
+    ">
       <div
         class="px-5 d-flex justify-content-between align-items-center shadow"
         style="height: 50px"

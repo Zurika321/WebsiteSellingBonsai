@@ -96,6 +96,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Order/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Order/On_Delivery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JkZXJcT25fRGVsaXZlcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Order/Order_Cancelled.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JkZXJcT3JkZXJfQ2FuY2VsbGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Order/Order_Completed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JkZXJcT3JkZXJfQ29tcGxldGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Order/ViewOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JkZXJcVmlld09yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Areas/Admin/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -190,6 +210,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Views/Order/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Views/Order/ViewOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcVmlld09yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Views/Payment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Views/Payment/NoOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxOb09yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/NAM VO/source/repos/WebsiteSellingBonsai/Views/Shared/Error.cshtml]
