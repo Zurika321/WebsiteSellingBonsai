@@ -39780,6 +39780,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\caykhe_20250102164854.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\caykhe_20250102164854_20250110081937.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/caykhe_20250102164854_20250110081937.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>e6agr7mow3</Fingerprint>
+      <Integrity>hm7Xkl27Fesu7vLRy1uqk0hhFiu0s74ajntVbHfZHJw=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\caykhe_20250102164854_20250110081937.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\conifer-dawn-daylight-evergreen-167698_20241220210710.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>WebsiteSellingBonsai</SourceId>
@@ -39833,6 +39851,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\hoa-mau-don-do_20250102164454.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\hoa-mau-don-do_20250102164454_20250110081501.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteSellingBonsai</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteSellingBonsai</BasePath>
+      <RelativePath>Data/Product/hoa-mau-don-do_20250102164454_20250110081501.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>36w1y9dyor</Fingerprint>
+      <Integrity>G89USUtIf2FdMjvHr4dvPdyA5ei4y7m4Y+YkcqLJoDI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\hoa-mau-don-do_20250102164454_20250110081501.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Data\Product\trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg'))">
       <SourceType>Package</SourceType>

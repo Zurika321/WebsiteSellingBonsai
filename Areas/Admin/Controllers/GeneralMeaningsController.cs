@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.Models;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
@@ -142,25 +143,21 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             var generalMeaning = await _context.GeneralMeaning
                 .Include(g => g.Bonsais)
                 .FirstOrDefaultAsync(g => g.Id == id);
+
             if (generalMeaning != null)
             {
                 if (generalMeaning.Bonsais.Any())
                 {
-                    if (string.IsNullOrEmpty(password))
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
                     {
-                        ViewData["ErrorMessage"] = "Có ràng buộc với các Bonsais liên quan. Nhập mật khẩu để xác nhận xóa.";
-                        return View("ConfirmDelete", generalMeaning);
-                    }
+                        Message = "Không thể xóa General Meaning này vì có liên kết với bảng khác!",
+                        MessageType = TypeThongBao.Warning,
+                        DisplayTime = 5,
+                    });
 
-                    if (password != "123456") 
-                    {
-                        ViewData["ErrorMessage"] = "Mật khẩu không đúng. Vui lòng thử lại.";
-                        return View("ConfirmDelete", generalMeaning);
-                    }
-
-                    _context.Bonsais.RemoveRange(generalMeaning.Bonsais);
+                    return RedirectToAction(nameof(Index));
                 }
-
+                //_context.Bonsais.RemoveRange(style.Bonsais);
                 _context.GeneralMeaning.Remove(generalMeaning);
 
                 await _context.SaveChangesAsync();

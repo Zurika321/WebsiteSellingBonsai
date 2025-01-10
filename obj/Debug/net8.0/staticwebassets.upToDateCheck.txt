@@ -2208,9 +2208,11 @@ wwwroot\Data\Product\Cay Tùng_20250102164315_20250103232742.jpg
 wwwroot\Data\Product\cay-da-canh_20250102164718.jpg
 wwwroot\Data\Product\cay-hoa-giay_20250102164408.jpg
 wwwroot\Data\Product\caykhe_20250102164854.jpg
+wwwroot\Data\Product\caykhe_20250102164854_20250110081937.jpg
 wwwroot\Data\Product\conifer-dawn-daylight-evergreen-167698_20241220210710.jpg
 wwwroot\Data\Product\giphy_20241223104523.gif
 wwwroot\Data\Product\hoa-mau-don-do_20250102164454.jpg
+wwwroot\Data\Product\hoa-mau-don-do_20250102164454_20250110081501.jpg
 wwwroot\Data\Product\trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg
 wwwroot\Data\Product\usernoimage_20250103222954.png
 wwwroot\Data\usernoimage.png

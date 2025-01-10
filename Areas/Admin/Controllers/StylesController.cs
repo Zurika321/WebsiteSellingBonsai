@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.Models;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
@@ -145,8 +146,18 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 
             if (style != null)
             {
-                _context.Bonsais.RemoveRange(style.Bonsais);
-
+                if (style.Bonsais.Any())
+                {
+                    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                    {
+                        Message = "Không thể xóa style này vì có liên kết với bảng khác!",
+                        MessageType = TypeThongBao.Warning,
+                        DisplayTime = 5,
+                    });
+                    
+                    return RedirectToAction(nameof(Index));
+                }
+                //_context.Bonsais.RemoveRange(style.Bonsais);
                 _context.Styles.Remove(style);
 
                 await _context.SaveChangesAsync();
