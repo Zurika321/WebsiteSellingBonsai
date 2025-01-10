@@ -34,7 +34,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 
         public OrderController(APIServices processingServices, MiniBonsaiDBAPI context)
         {
-            _apiServices = processingServices;
+            _apiServices = processingServices; 
             _context = context;
         }
         [HttpGet]
@@ -230,7 +230,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> CancelOrder(int ORDER_ID,string cancelReason)
+        public async Task<IActionResult> CancelOrder(int ORDER_ID,string cancelReason,string LinkUrl)
         {
             if (ORDER_ID <= 0 || string.IsNullOrEmpty(cancelReason))
             {
@@ -254,6 +254,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     MessageType = TypeThongBao.Warning,
                     DisplayTime = 5,
                 });
+                if (!string.IsNullOrEmpty(LinkUrl)) return Redirect(LinkUrl);
                 return RedirectToAction("Index");
             }
 
@@ -265,6 +266,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     MessageType = TypeThongBao.Warning,
                     DisplayTime = 5,
                 });
+                if (!string.IsNullOrEmpty(LinkUrl)) return Redirect(LinkUrl);
                 return RedirectToAction("Index");
             }
 
@@ -290,6 +292,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                         MessageType = TypeThongBao.Danger,
                         DisplayTime = 5,
                     });
+                    if (!string.IsNullOrEmpty(LinkUrl)) return Redirect(LinkUrl);
                     return RedirectToAction("Index");
                 }
             }
@@ -301,6 +304,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 MessageType = TypeThongBao.Warning,
                 DisplayTime = 5,
             });
+            if (!string.IsNullOrEmpty(LinkUrl)) return Redirect(LinkUrl);
             return RedirectToAction("Index");
         }
     }

@@ -170,13 +170,13 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 }
                 var (success, thongBao) = await _apiServices.Register(sigin);
 
+                ViewData["Message"] = thongBao.Message;
                 if (success)
                 {
                     return RedirectToAction(nameof(Login));
                 }
                 else
                 {
-                    ViewData["Message"] = thongBao.Message;
                     return View();
                 }
             }
@@ -208,6 +208,12 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginModel login)
         {
+            if (string.IsNullOrEmpty(login.Username) || string.IsNullOrEmpty(login.Password))
+            {
+                ViewData["Message"] = "Vui lòng điền đầy đủ";
+                return View();
+
+            }
             var (success, thongBao, token) = await _apiServices.Login(login);
 
             if (success)

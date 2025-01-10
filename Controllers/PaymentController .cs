@@ -57,6 +57,17 @@ namespace WebsiteSellingBonsai.Controllers
         {
             var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
 
+            if(create_Order.Address == "Không có địa chỉ")
+            {
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
+                {
+                    Message = "Vui lòng nhập địa chỉ",
+                    MessageType = TypeThongBao.Warning,
+                    DisplayTime = 5,
+                });
+                return Redirect(redirectUrl ?? Url.Action("Index", "Home"));
+            }    
+
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });
 
@@ -75,7 +86,7 @@ namespace WebsiteSellingBonsai.Controllers
         }
 
         [HttpPost("Create_Order")]
-        public async Task<IActionResult> Create_Order()
+        public async Task<IActionResult> Create_Order(/*string paymentMethod*/)
         {
             var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
 
@@ -97,6 +108,11 @@ namespace WebsiteSellingBonsai.Controllers
 
             var (Success, thongbao) = await _apiServices.FetchDataApiPost<Order>("OrdersAPI/create_order", order);
             TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbao);
+
+            if (HttpContext.Session.Get<Order>("Payment_Order") != null)
+            {
+                HttpContext.Session.Remove("Payment_Order");
+            }
 
             return RedirectToAction("Index" , "Order");
         }

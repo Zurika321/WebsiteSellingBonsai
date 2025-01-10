@@ -248,6 +248,7 @@ DROP TABLE Banners;          --10
 DROP TABLE Styles;           --11
 DROP TABLE Types;            --12
 DROP TABLE AdminUsers;       --13
+DROP TABLE Favourites;       --14
 
 SELECT *FROM Banners;
 SELECT *FROM Features;
@@ -262,3 +263,4 @@ Select * FROM BonsaiPhanLoai
 SELECT *FROM GeneralMeanings;
 SELECT *FROM Styles;
 SELECT *FROM Types;
+SELECT *FROM Favourites;

@@ -9,7 +9,17 @@
 <div>
     <p><strong>Người mua hàng:</strong> @Model.CreatedBy</p>
     <p><strong>Địa chỉ giao hàng:</strong> @Model.Address</p>
-    <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod</p>
+    <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod
+    <form asp-action="Create_Order" id="FormCreateOrder">
+        @* <select id="paymentMethod" name="paymentMethod" class="form-control">
+            <option value="CashOnDelivery">Thanh toán khi nhận hàng</option>
+            <option value="Cash">Tiền mặt</option>
+            <option value="CreditCard">Thẻ tín dụng</option>
+            <option value="BankTransfer">Chuyển khoản ngân hàng</option>
+            <option value="EWallet">Ví điện tử</option>
+        </select> *@
+		</form>
+	</p>
 </div>
 
 <h3>Chi tiết sản phẩm</h3>
@@ -43,7 +53,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><strong>Tổng tiền:</strong> @Model.Total.ToString("F3") vnđ <form method="post" asp-action="Create_Order"><button type="submit" class="btn btn-outline-success">Thanh toán</button></form></td>
+            <td><strong>Tổng tiền:</strong> @Model.Total.ToString("F3") vnđ @* <form method="post" asp-action="Create_Order">*@<button class="btn btn-outline-success" onclick="document.getElementById('FormCreateOrder').submit()">Thanh toán</button>@* </form> *@</td>
         </tr>
     </tfoot>
 </table>

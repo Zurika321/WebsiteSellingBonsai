@@ -13,7 +13,7 @@ else
     <div id="update_quantity" popover>
         <form asp-action="update_quantity">
             <h3 class="text-center">Cập nhật số lượng: <span id="productname"></span></h3>
-			<p>(Số lượng tối đa là 10 sản phẩm nếu muốn mua nhiều hơn có thể liên hệ. <a href="#">Liên hệ</a>)</p>
+			<p>(Số lượng tối đa là 10 sản phẩm nếu muốn lấy sỉ-lẻ có thể liên hệ. <a href="#">Liên hệ</a>)</p>
             <input type="hidden" name="CART_D_ID" />
 			<div class="row container">
                 <input type="number" name="quantity" min="1" max="10" class="col"/>
@@ -89,7 +89,7 @@ else
 
 <div id="create_payment" popover>
 <form asp-action="CreatePayment" asp-controller="payment">
-    <h3>@((userInfo != null && !string.IsNullOrEmpty(userInfo.Address )) ? "Xác nhận lại địa chỉ " : "Vui lòng nhập địa chỉ giao hàng")</h3>
+    <h3>@((userInfo != null && !string.IsNullOrEmpty(userInfo.Address) && userInfo.Address != "Không có địa chỉ") ? "Xác nhận lại địa chỉ " : "Vui lòng nhập địa chỉ giao hàng")</h3>
     <input name="list_bonsai" value="" type="hidden" />
     <input name="list_quantity" value="" type="hidden" />
     <input name="Address" value="@userInfo?.Address" />
