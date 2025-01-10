@@ -42,7 +42,7 @@
         <tr style="height:100px"></tr>
         <tr>
             <td>
-                @if (Model.Status != StatusOrder.Order_Completed || Model.Status != StatusOrder.Order_Cancelled)
+                @if (Model.Status != StatusOrder.Order_Completed && Model.Status != StatusOrder.Order_Cancelled)
                 {
                     <button class="btn btn-outline-light text-danger" popovertarget="FormCancelOrder">
                         Hủy đơn hàng
@@ -56,10 +56,19 @@
     </tfoot>
 </table>
 
+@{
+    var scheme = Context.Request.Scheme; // http hoặc https
+    var host = Context.Request.Host; // Tên miền và cổng
+    var path = Context.Request.Path; // Đường dẫn
+    var queryString = Context.Request.QueryString; // Chuỗi truy vấn
+
+    var url = $"{scheme}://{host}{path}{queryString}";
+}
 <div id="FormCancelOrder" popover>
-    <form asp-action="CancelOrder" method="post">
+    <form asp-action="CancelOrder" asp-controller="Order" asp-area="Admin" method="post">
         <h3>Vui lòng chọn lý do hủy</h3>
         <input type="hidden" name="ORDER_ID" value="@Model.ORDER_ID" />
+        <input type="hidden" name="LinkUrl" value="@url" />
 
         <select name="cancelReason" class="form-control" required>
             <option value="" disabled selected>-- Chọn lý do hủy --</option>
