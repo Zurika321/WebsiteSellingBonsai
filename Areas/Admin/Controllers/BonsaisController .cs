@@ -12,7 +12,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using WebsiteSellingBonsaiAPI.DTOS;
 using WebsiteSellingBonsaiAPI.Utils;
 using WebsiteSellingBonsaiAPI.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -21,6 +20,8 @@ using System.Reflection;
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using WebsiteSellingBonsaiAPI.DTOS.Constants;
+using WebsiteSellingBonsaiAPI.DTOS.User;
+using WebsiteSellingBonsaiAPI.DTOS.View;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
@@ -116,7 +117,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 var AvatarPath = await _apiServices.ProcessImage(bonsai.Image, bonsai.ImageOld, "Product");
                 
-                var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+                var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
                 var bonsaiEntity = new Bonsai
                 {
@@ -221,7 +222,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 var AvatarPath = await _apiServices.ProcessImage(bonsai.Image,bonsai.ImageOld,"Product");
 
-                var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+                var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
                 var bonsaiEntity = new Bonsai
                 {

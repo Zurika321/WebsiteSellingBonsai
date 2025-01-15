@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.DTOS.Orders;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });
@@ -79,7 +80,7 @@ namespace WebsiteSellingBonsai.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });

@@ -1,0 +1,428 @@
+﻿@{
+    ViewData["Title"] = "Xem chi tiết Bonsai";
+}
+@using WebsiteSellingBonsaiAPI.Utils
+@using WebsiteSellingBonsaiAPI.DTOS.User
+@using WebsiteSellingBonsaiAPI.Models
+@model WebsiteSellingBonsaiAPI.DTOS.View.BonsaiDetailViewModel
+
+@{
+    var userInfo = Context.Session.Get<ApplicationUserDTO>("userInfo");
+    var scheme = Context.Request.Scheme;
+    var host = Context.Request.Host;
+    var path = Context.Request.Path;
+    var queryString = Context.Request.QueryString;
+    var url = $"{scheme}://{host}{path}{queryString}";
+}
+
+@if (Model != null)
+{
+    <style>
+        .scroll-container {
+        height: 300px;
+        overflow-y: scroll;
+        border: 1px solid #ddd;
+        padding: 10px 30px;
+        }
+
+        html {
+        scroll-behavior: smooth; /* Cuộn mượt */
+        }
+
+        #MeaningfulRelatedProducts, #RelatedProductsStyle, #RelatedProductsType {
+        scroll-margin-top: 200px;
+        }
+    </style>
+    <div id="create_payment" popover>
+        <form asp-action="CreatePayment" asp-controller="payment">
+            <h3>@((userInfo != null && !string.IsNullOrEmpty(userInfo.Address) && userInfo.Address != "Không có địa chỉ") ? "Xác nhận lại địa chỉ " : "Vui lòng nhập địa chỉ giao hàng")</h3>
+            <input name="list_bonsai" value="@Model.CurrentBonsai.Id" type="hidden" />
+            <input name="list_quantity" value="1" type="hidden" id="quantity_input" />
+            <input name="Address" value="@userInfo?.Address" />
+            <input name="redirectUrl" value="@url" type="hidden" />
+
+            <button class="btn btn-primary" type="submit">Đặt hàng</button>
+            @* <input name="PhoneNumber" value="@userInfo?.PhoneNumber" /> *@
+        </form>
+    </div>
+    <div class="container mt-5">
+        <!-- Phần Chi Tiết Sản Phẩm -->
+        <div class="row">
+            <div class="col col-12 col-lg-auto d-flex justify-content-center">
+                <img src="@Url.Content("~/" + (!string.IsNullOrEmpty(Model.CurrentBonsai.ImageOld) ? Model.CurrentBonsai.ImageOld : "Data/noimage.png" ))"
+                alt="@Model.CurrentBonsai.BonsaiName"
+                class="img-fluid rounded shadow"
+                style="max-height: 500px; object-fit: cover;">
+            </div>
+            <div class="col col-12 col-lg">
+                <div class="w-100 d-flex justify-content-end mt-2 mt-lg-0">
+                    <a href="@(Model.BonsaiRelatedMeaning != null && Model.BonsaiRelatedMeaning.Any() ? "#MeaningfulRelatedProducts" : "#")" class="bg-success text-white rounded-pill border p-2">@Model.CurrentBonsai?.GeneralMeaning?.Meaning</a>
+                    <a href="@(Model.BonsaiRelatedStyle != null && Model.BonsaiRelatedStyle.Any() ? "#RelatedProductsStyle" : "#")" class="bg-warning text-white rounded-pill border p-2 mx-2">@Model.CurrentBonsai?.Style?.Name</a>
+                    <a href="@(Model.BonsaiRelatedType != null && Model.BonsaiRelatedType.Any() ? "#RelatedProductsType" : "#")" class="bg-primary text-white rounded-pill border p-2">@Model.CurrentBonsai?.Type?.Name</a>
+                </div>
+                <h1>@Model.CurrentBonsai.BonsaiName</h1>
+                <h3 class="text-danger">@Model.CurrentBonsai.Price.ToString("F3") vnđ</h3>
+                <p>@Html.Raw(Model.CurrentBonsai.Description)</p>
+                <p>@Html.Raw(Model.CurrentBonsai.FengShuiMeaning)</p>
+                <p class="text-muted">Vòng đời: @Model.CurrentBonsai.MinLife - @Model.CurrentBonsai.MaxLife năm</p>
+                <p class="text-muted">Tuổi cây: @Model.CurrentBonsai.YearOld năm</p>
+                <p class="text-muted">Kích thước: @Model.CurrentBonsai.Size cm</p>
+                <p class="text-muted">Số lượng còn: @Model.CurrentBonsai.Quantity cây</p>
+                <p class="text-muted">
+                    Số lượt yêu thích: @Model.CurrentBonsai.CountFav 
+                </p>
+
+                <!-- Đánh giá sản phẩm -->
+                <div class="rating">
+                    <span class="text-warning">
+                        @for (int i = 0; i < (Model.CurrentBonsai.rates ?? 0); i++) // Dùng giá trị mặc định là 0 nếu Rates là null
+                        {
+                            <i class="fas fa-star"></i>
+                        }
+                        @for (int i = (Model.CurrentBonsai.rates ?? 0); i < 5; i++) // Tiếp tục logic cho các sao còn thiếu
+                        {
+                            <i class="far fa-star"></i>
+                        }
+                    </span>
+                    <span>
+                        (@(Model.CurrentBonsai.nopwr) người đánh giá)
+                    </span>
+                </div>
+
+                <div class="border p-3 rounded-2">
+                    <h4>Chọn số lượng</h4>
+                    <div class="d-flex justify-content-start">
+                        <select id="select_quantity" onchange="change_quantity(this.value)">
+                            <script>
+                                for(let i = 1 ; i <= 10 ; i++){
+                                document.write("<option value=" + i + '>' + i +"</option>")
+                                }
+                            </script>
+                        </select>
+                        <script>
+                            function change_quantity(quantity){
+                            document.getElementById("quantity_input").value = quantity;
+                            document.getElementById("quantity_input2").value = quantity;
+                            }
+                        </script>
+                        <form asp-action="AddCart" asp-controller="Cart" method="post">
+                            <input type="hidden" value="@Model.CurrentBonsai.Id" name="bonsai_id" />
+                            <input type="hidden" name="quantity" value="1" id="quantity_input2"/>
+                            <input type="hidden" name="redirectUrl" value="@url" />
+                            <button class="btn btn-primary mx-2">Thêm vào giỏ hàng</button>
+                        </form>
+                        <button id="btn_create_payments" class="btn btn-success" popovertarget="create_payment">
+                            Đặt hàng
+                            <form asp-action="AddFavorite" asp-controller="Favourite" method="post">
+                                <input type="hidden" value="@url" name="redirectUrl" />
+                                <input type="hidden" value="@Model.CurrentBonsai.Id" name="bonsai_id" />
+                                <button class="btn btn-outline-danger mx-2" type="submit">
+                                    @if (Model.CurrentBonsai.IsFav == true)
+                                    {
+                                        <i class="fa-duotone fa-light fa-heart"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-light fa-heart"></i>
+                                    }
+                                </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <button id="btnToggleReviews" class="btn btn-info mb-3">Xem đánh giá</button>
+
+            <!-- Phần đánh giá sản phẩm (ẩn mặc định) -->
+            <div id="reviewSection" class="d-none">
+                <h3 class="mb-4">Đánh giá sản phẩm</h3>
+
+                <!-- Phần thêm đánh giá -->
+                <div class="mb-4">
+                    <h5>Viết đánh giá của bạn:</h5>
+                    <form id="reviewForm" asp-action="SubmitReview" asp-controller="Review" method="post">
+                        <input type="hidden" name="bonsaiId" value="@Model.CurrentBonsai.Id" />
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Số sao:</label>
+                            <select name="rating" id="rating" class="form-select">
+                                @for (int i = 5; i >= 1; i--)
+                                {
+                                    <option value="@i">@i Sao</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Đánh giá:</label>
+                            <textarea name="reviewText" id="reviewText" rows="3" class="form-control" placeholder="Nhập đánh giá của bạn..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Gửi đánh giá</button>
+                    </form>
+                </div>
+
+                @{
+                    // var listreview = new List<dynamic>{
+                    //     new { Name = "Nguyễn Văn A", Rating = 5, Comment = "Sản phẩm rất tuyệt vời!", Date = DateTime.Now.AddDays(-1) },
+                    //     new { Name = "Trần Thị B", Rating = 4, Comment = "Cây đẹp nhưng giao hàng hơi chậm.", Date = DateTime.Now.AddDays(-3) },
+                    //     new { Name = "Lê Hoàng C", Rating = 3, Comment = "Chất lượng ổn, nhưng giá hơi cao.", Date = DateTime.Now.AddDays(-7) }
+                    // };
+                    var listreview = ViewData["Reviews"] as List<Review>;
+                    if (listreview == null){
+                        listreview = new List<Review>();
+                    }
+                }
+                <!-- Danh sách đánh giá -->
+                <div class="scroll-container">
+                    @if (listreview.Count != 0){
+                        foreach (var review in listreview)
+                        {
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">@review.USE_ID</h5>
+                                        <p class="text-warning">
+                                            @for (int i = 0; i < review.Rate; i++)
+                                            {
+                                                <i class="fas fa-star"></i>
+                                            }
+                                            @for (double i = review.Rate; i < 5; i++)
+                                            {
+                                                <i class="far fa-star"></i>
+                                            }
+                                        </p>
+                                    </div>
+                                    <p class="card-text">@review.Comment</p>
+                                    <small class="text-muted">
+                                        @(review.CreatedDate?.ToShortDateString() ?? "No date")
+                                    </small>
+                                </div>
+                            </div>
+                        }
+                    }else{
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center align-items-center" style="height: 300px">
+                                    <h3>Chưa có đánh giá nào về sản phẩm</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <script>
+            document.getElementById("btnToggleReviews").addEventListener("click", function () {
+                const reviewSection = document.getElementById("reviewSection");
+                reviewSection.classList.toggle("d-none");
+                this.textContent = reviewSection.classList.contains("d-none") ? "Xem đánh giá" : "Ẩn đánh giá";
+            });
+        </script>
+
+        <!-- Thanh Trượt Sản Phẩm Liên Quan { Ý nghĩa } -->
+        @if (Model.BonsaiRelatedMeaning != null && Model.BonsaiRelatedMeaning.Any())
+        {
+            var chunks = Model.BonsaiRelatedMeaning.Chunk(4); // Chia thành từng nhóm 4 sản phẩm
+            var isActive = true;
+            <div class="row mt-5">
+                <h2 class="text-center mb-4">Sản phẩm có chung ý nghĩa: @Model.CurrentBonsai?.GeneralMeaning?.Meaning</h2>
+                <div id="MeaningfulRelatedProducts" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" style="padding: 0 40px">
+                        @foreach (var chunk in chunks)
+                        {
+                            <div class="carousel-item @(isActive ? "active" : "")">
+                                <div class="row">
+                                    @foreach (var bonsai in chunk)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="card product-card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                                                <img src="@Url.Content("~/" + (!string.IsNullOrEmpty(bonsai.ImageOld) ? bonsai.ImageOld : "Data/noimage.png" ))"
+                                                        class="card-img-top img-fluid"
+                                                        alt="@bonsai.BonsaiName"
+                                                        style="height: 150px; object-fit: cover;">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title text-truncate">@bonsai.BonsaiName</h5>
+                                                    <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
+                                                    <div class="d-flex justify-content-center">
+                                                        <form asp-action="AddFavorite" asp-controller="Favourite" method="post">
+                                                            <input type="hidden" value="@url" name="redirectUrl" />
+                                                            <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                                            <button class="btn btn-outline-danger rounded-circle my-1" type="submit">
+                                                                @if (bonsai.IsFav == true)
+                                                                {
+                                                                    <i class="fa-duotone fa-light fa-heart"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa-light fa-heart"></i>
+                                                                }
+                                                            </button>
+														</form>
+														<form asp-action="AddCart" asp-controller="Cart" method="post">
+															<input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+															<input type="hidden" name="quantity" value="1" />
+															<input type="hidden" name="redirectUrl" value="@url" />
+															<button class="btn btn-outline-primary rounded-circle mx-2" type="submit"><i class="fa-light fa-cart-shopping"></i></button>
+														</form>
+														<a asp-controller="bonsai" asp-action="index" asp-route-id="@bonsai.Id" class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            isActive = false;
+                        }
+                    </div>
+                    <button class="carousel-control-prev btn btn-primary" style="width: 40px" type="button" data-bs-target="#MeaningfulRelatedProducts" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next btn btn-primary" style="width: 40px" type="button" data-bs-target="#MeaningfulRelatedProducts" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+			</div>
+		}
+		<!-- Thanh Trượt Sản Phẩm Liên Quan { Type } -->
+        @if (Model.BonsaiRelatedType != null && Model.BonsaiRelatedType.Any())
+		{
+            var chunks = Model.BonsaiRelatedType.Chunk(4);
+            var isActive = true;
+            <div class="row mt-5">
+                <h2 class="text-center mb-4">Sản phẩm liên quan có chung loại cây : @Model.CurrentBonsai?.Type?.Name</h2>
+                <div id="RelatedProductsType" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" style="padding: 0 40px">
+                        @foreach (var chunk in chunks)
+                        {
+                            <div class="carousel-item @(isActive ? "active" : "")">
+                                <div class="row">
+                                    @foreach (var bonsai in chunk)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="card product-card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                                                <img src="@Url.Content("~/" + (!string.IsNullOrEmpty(bonsai.ImageOld) ? bonsai.ImageOld : "Data/noimage.png" ))"
+                                                        class="card-img-top img-fluid"
+                                                        alt="@bonsai.BonsaiName"
+                                                        style="height: 150px; object-fit: cover;">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title text-truncate">@bonsai.BonsaiName</h5>
+                                                    <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
+                                                    <div class="d-flex justify-content-center">
+                                                        <form asp-action="AddFavorite" asp-controller="Favourite" method="post">
+                                                            <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                                            <input type="hidden" value="@url" name="redirectUrl" />
+                                                            <button class="btn btn-outline-danger rounded-circle my-1" type="submit">
+                                                                @if (bonsai.IsFav == true)
+                                                                {
+                                                                    <i class="fa-duotone fa-light fa-heart"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa-light fa-heart"></i>
+                                                                }
+                                                            </button>
+                                                        </form>
+                                                        <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                            <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <input type="hidden" name="redirectUrl" value="@url" />
+                                                            <button class="btn btn-outline-primary rounded-circle mx-2" type="submit"><i class="fa-light fa-cart-shopping"></i></button>
+                                                        </form>
+                                                        <a asp-controller="bonsai" asp-action="index" asp-route-id="@bonsai.Id" class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            isActive = false;
+                        }
+                    </div>
+                    <button class="carousel-control-prev btn btn-primary" style="width: 40px" type="button" data-bs-target="#RelatedProductsType" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next btn btn-primary" style="width: 40px" type="button" data-bs-target="#RelatedProductsType" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+			</div>
+		}
+		<!-- Thanh Trượt Sản Phẩm Liên Quan { Style } -->
+        @if (Model.BonsaiRelatedStyle != null && Model.BonsaiRelatedStyle.Any())
+		{
+			var chunks = Model.BonsaiRelatedStyle.Chunk(4); // Chia thành từng nhóm 4 sản phẩm
+			var isActive = true;
+            <div class="row mt-5">
+                <h2 class="text-center mb-4">Sản phẩm liên quan có chung kiểu dáng : @Model.CurrentBonsai?.Style?.Name</h2>
+                <div id="RelatedProductsStyle" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" style="padding: 0 40px">
+                        @foreach (var chunk in chunks)
+                        {
+                            <div class="carousel-item @(isActive ? "active" : "")">
+                                <div class="row">
+                                    @foreach (var bonsai in chunk)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="card product-card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                                                <img src="@Url.Content("~/" + (!string.IsNullOrEmpty(bonsai.ImageOld) ? bonsai.ImageOld : "Data/noimage.png" ))"
+                                                        class="card-img-top img-fluid"
+                                                        alt="@bonsai.BonsaiName"
+                                                        style="height: 150px; object-fit: cover;">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title text-truncate">@bonsai.BonsaiName</h5>
+                                                    <p class="card-text text-danger font-weight-bold">@bonsai.Price.ToString("F3") vnđ</p>
+                                                    <div class="d-flex justify-content-center">
+                                                        <form asp-action="AddFavorite" asp-controller="Favourite" method="post">
+                                                            <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                                            <input type="hidden" value="@url" name="redirectUrl" />
+                                                            <button class="btn btn-outline-danger rounded-circle my-1" type="submit">
+                                                                @if (bonsai.IsFav == true)
+                                                                {
+                                                                    <i class="fa-duotone fa-light fa-heart"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa-light fa-heart"></i>
+                                                                }
+                                                            </button>
+                                                        </form>
+                                                        <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                            <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <input type="hidden" name="redirectUrl" value="@url" />
+                                                            <button class="btn btn-outline-primary rounded-circle mx-2" type="submit"><i class="fa-light fa-cart-shopping"></i></button>
+                                                        </form>
+                                                        <a asp-controller="bonsai" asp-action="index" asp-route-id="@bonsai.Id" class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            isActive = false;
+                        }
+                    </div>
+                    <button class="carousel-control-prev btn btn-primary" style="width: 40px" type="button" data-bs-target="#RelatedProductsStyle" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next btn btn-primary" style="width: 40px" type="button" data-bs-target="#RelatedProductsStyle" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+			</div>
+		}
+    </div>
+}
+else
+{
+    <div style="height: 300px;width: 100%" class="d-flex justify-content-center align-items-center"><h3>Không tìm thấy Bonsai với id null</h3></div>
+}

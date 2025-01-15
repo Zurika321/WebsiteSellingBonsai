@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Comfirm Email";
+    Layout = null;
+}
+<div style="height: 100vH;width: 100%;display: flex;justify-content: center;align-items: center">
+    @if (ViewData["Success"] != null)
+    {
+		<h3>@ViewData["thongbao"] <a asp-action="Login" asp-controller="Users" asp-area="Admin">Đăng nhập</a></h3>
+    }else{
+		<h3>@ViewData["thongbao"] <a asp-action="Index" asp-controller="Home" asp-area="">Quay lại trang chủ</a></h3>
+    }
+</div>

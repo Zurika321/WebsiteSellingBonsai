@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\WebsiteSellingBonsai.tj8w7zcg9i.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Feature\\cay-da-canh_20250102164718_20250114221644.jpg",
+      "PackagePath": "staticwebassets\\Data\\Feature\\cay-da-canh_20250102164718_20250114221644.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Feature\\cay-da-canh_20250102164718_20250114222210.jpg",
+      "PackagePath": "staticwebassets\\Data\\Feature\\cay-da-canh_20250102164718_20250114222210.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Feature\\caykhe_20250102164854_20250114223916.jpg",
+      "PackagePath": "staticwebassets\\Data\\Feature\\caykhe_20250102164854_20250114223916.jpg"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Product\\Cay Phong La Do_20250102164350.jpg",
       "PackagePath": "staticwebassets\\Data\\Product\\Cay Phong La Do_20250102164350.jpg"
     },
@@ -77,6 +89,42 @@
       "PackagePath": "staticwebassets\\Data\\Product\\usernoimage_20250103222954.png"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114193822.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114193822.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114194051.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114194051.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114194517.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114194517.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114194746.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114194746.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114194843.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114194843.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114195010.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114195010.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\canh_20250114200725.png",
+      "PackagePath": "staticwebassets\\Data\\Users\\canh_20250114200725.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\conifer-dawn-daylight-evergreen-167698_20250114194120.jpg",
+      "PackagePath": "staticwebassets\\Data\\Users\\conifer-dawn-daylight-evergreen-167698_20250114194120.jpg"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\Users\\conifer-dawn-daylight-evergreen-167698_20250114195618.jpg",
+      "PackagePath": "staticwebassets\\Data\\Users\\conifer-dawn-daylight-evergreen-167698_20250114195618.jpg"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\backgroud3_20241223145853.jpg",
       "PackagePath": "staticwebassets\\Data\\banner\\backgroud3_20241223145853.jpg"
     },
@@ -93,6 +141,10 @@
       "PackagePath": "staticwebassets\\Data\\banner\\canh_20241223124850.png"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\cay hoa do quyen_20250102164534_20250110142726.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\cay hoa do quyen_20250102164534_20250110142726.jpg"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\giphy_20241223123328.gif",
       "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223123328.gif"
     },
@@ -105,6 +157,10 @@
       "PackagePath": "staticwebassets\\Data\\banner\\giphy_20241223134721.gif"
     },
     {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\hoa-mau-don-do_20250102164454_20250110142623.jpg",
+      "PackagePath": "staticwebassets\\Data\\banner\\hoa-mau-don-do_20250102164454_20250110142623.jpg"
+    },
+    {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\banner\\hoang1_20250106092025.jpg",
       "PackagePath": "staticwebassets\\Data\\banner\\hoang1_20250106092025.jpg"
     },
@@ -113,8 +169,16 @@
       "PackagePath": "staticwebassets\\Data\\banner\\hoang2_20250106092035.jpg"
     },
     {
-      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\logo\\logo.jpg",
-      "PackagePath": "staticwebassets\\Data\\logo\\logo.jpg"
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\logo\\logo.png",
+      "PackagePath": "staticwebassets\\Data\\logo\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\logo\\logo1.png",
+      "PackagePath": "staticwebassets\\Data\\logo\\logo1.png"
+    },
+    {
+      "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\logo\\logo2.jpg",
+      "PackagePath": "staticwebassets\\Data\\logo\\logo2.jpg"
     },
     {
       "Id": "C:\\Users\\NAM VO\\source\\repos\\WebsiteSellingBonsai\\wwwroot\\Data\\noimage.png",

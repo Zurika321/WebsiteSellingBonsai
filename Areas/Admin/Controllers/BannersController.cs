@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebsiteSellingBonsaiAPI.DTOS;
+using WebsiteSellingBonsaiAPI.DTOS.View;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
 

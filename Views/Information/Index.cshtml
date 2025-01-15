@@ -1,0 +1,71 @@
+﻿@using WebsiteSellingBonsaiAPI.Utils
+@using WebsiteSellingBonsaiAPI.DTOS.User
+@{
+    ViewData["Title"] = "Information";
+    var userInfo = Context.Session.Get<ApplicationUserDTO>("userInfo");
+}
+
+<div class="container">
+    <div class="row">
+        <!-- Bên trái: Avatar và nút thay đổi -->
+        <div class="col-md-4">
+            <div class="avatar-section">
+                <img src="@userInfo.Avatar" alt="User Avatar" class="img-fluid rounded-circle" id="userAvatar">
+                <button class="btn btn-primary mt-2" popovertarget="avatarPopoverContent">
+                    Thay đổi Avatar
+                </button>
+            </div>
+        </div>
+
+        <!-- Bên phải: Thông tin người dùng -->
+        <div class="col-md-8">
+            <h2>Thông tin cá nhân</h2>
+            <p><strong>Họ và tên:</strong> @userInfo.UserName</p>
+            <p><strong>Email:</strong> @userInfo.Email</p>
+            <p><strong>Số điện thoại:</strong> @userInfo.PhoneNumber</p>
+            <p><strong>Vai trò:</strong> @userInfo.Role.First().ToString()</p>
+            <p><strong>Địa chỉ:</strong> @userInfo.Address</p>
+            <p><strong>Ngày tạo tài khoản:</strong> @userInfo.CreatedDate.ToString("dd/MM/yyyy")</p>
+
+            <!-- Nút chỉnh sửa thông tin -->
+            <button class="btn btn-warning" id="editInfoBtn">Chỉnh sửa thông tin</button>
+            <a asp-action="ForgotPassword" asp-controller="Users" asp-area="Admin" class="btn btn-danger" id="editInfoBtn">Thay đổi mật khẩu</a>
+
+            <!-- Form chỉnh sửa thông tin (ẩn ban đầu) -->
+            <div id="editInfoForm" style="display:none;">
+                <form method="post" asp-action="update_information">
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input type="text" name="Address" class="form-control" id="address" value="@userInfo.Address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                        <input type="text" name="Phone" class="form-control" id="phoneNumber" value="@userInfo.PhoneNumber">
+                    </div>
+                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popover Thay đổi Avatar -->
+<div id="avatarPopoverContent" popover>
+    <form method="post" asp-action="update_avatar" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="newAvatar" class="form-label">Chọn ảnh avatar mới</label>
+            <input name="newAvatar" class="form-control" type="file" accept="image/*" id="Image">
+            <input name="ImageOld" class="form-control" type="hidden" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật Avatar</button>
+    </form>
+</div>
+
+<!-- Script để hiển thị popover và xử lý chỉnh sửa thông tin -->
+<script>
+    // Hiển thị form chỉnh sửa thông tin
+    document.getElementById('editInfoBtn').addEventListener('click', function () {
+        const form = document.getElementById('editInfoForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+</script>

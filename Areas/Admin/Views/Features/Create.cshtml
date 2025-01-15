@@ -1,0 +1,121 @@
+﻿@model WebsiteSellingBonsaiAPI.DTOS.View.FeatureDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Feature</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" id="Image">
+                <input asp-for="ImageUrl" class="form-control" type="hidden" accept="image/*" id="Image">
+                <img src="/Data/noimage.png"
+                     id="imgPreview" style="max-height: 300px" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" maxlength="500" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <input asp-for="CreatedBy" class="form-control" type="hidden" />
+            <input asp-for="UpdatedDate" class="form-control" type="hidden" />
+            <input asp-for="UpdatedBy" class="form-control" type="hidden" />
+            <input asp-for="CreatedDate" class="form-control" type="hidden" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Header {
+    @{
+        <link href="~/admin/plugins/ckeditor5/ckeditor5.css" rel="stylesheet" />
+    }
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "/admin/plugins/ckeditor5/ckeditor5.js",
+                "ckeditor5/": "/admin/plugins/ckeditor5/"
+            }
+        }
+    </script>
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Paragraph,
+            Bold,
+            Italic,
+            Font
+        } from 'ckeditor5';
+
+        // Lấy tất cả phần tử với ID 'Details' hoặc 'Description'
+        const editors = document.querySelectorAll('#Description');
+
+        // Khởi tạo editor cho từng phần tử
+        editors.forEach(editorElement => {
+            ClassicEditor
+                .create(editorElement, {
+                    plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                    toolbar: [
+                        'undo', 'redo', '|', 'bold', 'italic', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                    ]
+                })
+                .then(editor => {
+                    console.log(`Editor initialized for:`, editorElement.id);
+                })
+                .catch(error => {
+                    console.error(`Error initializing editor for ${editorElement.id}:`, error);
+                });
+        });
+    </script>
+    <script>
+            console.log("a")
+        window.onload = () => {
+                document.getElementById("Image").onchange = (e) => {
+                var preview = document.getElementById('imgPreview');
+                var file = e.target.files[0];
+                var reader  = new FileReader();
+
+                reader.onloadend = function () {
+                  preview.src = reader.result;
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '/Data/noimage.png';
+                }
+            };
+        }
+    </script>
+}
