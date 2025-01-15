@@ -18,14 +18,16 @@
 <div class="d-flex justify-content-center align-items-center bg-dark" style="Height: 100vh" id="body" >
     <div class="login-box">
             <div class="card card-outline card-success">
-                <div class="card-header"> <a href="index.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
-                        <h1 class="mb-0"> <b>Admin</b>LTE</h1>
-                    </a> </div>
+            <div class="card-header">
+                <a href="index.html" class="link-dark d-flex justify-content-center text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+                    <img style="height:60px" class="img-fluid" src="~/Data/logo/logo.png" />
+                </a>
+            </div>
                 <div class="card-body login-card-body rounded">
-                    <p class="login-box-msg text-danger">Login to start your session</p>
+                <p class="login-box-msg text-danger">Login to start your session @(ViewData["nexturl"] != null ? @ViewData["nexturl"] : "")</p>
                 @if (ViewData["Message"] != null)
                 {
-                                <p class="login-box-msg text-danger">@ViewData["Message"]</p>
+                    <p class="login-box-msg text-danger">@ViewData["Message"]</p>
                 }
                 <form asp-action="Login" method="post">
                         <div class="input-group mb-2">
@@ -70,9 +72,10 @@
                         </div>
                         <!--end::Row-->
                       </form>
-                          <p class="text-center">Don't have an account? <a asp-action="Sigin">Sigin</a></p>
+                            <p class="text-center">Don't have an account? <a asp-action="Sigin">Sigin</a></p>
+                            <p class="text-center"><a asp-action="ForgotPassword">Forgot a password</a></p>
                       <div>
-                          <a asp-area="Home" asp-controller="Home" asp-action="Index">Back to List</a>
+                          <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
                      </div>
                     <!-- <div class="social-auth-links text-center mb-3 d-grid gap-2">
                         <p>- OR -</p> <a href="#" class="btn btn-primary"> <i class="bi bi-facebook me-2"></i> Sign in using Facebook

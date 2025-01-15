@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebsiteSellingBonsaiAPI.DTOS.Constants;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 using WebsiteSellingBonsaiAPI.Models;
+using WebsiteSellingBonsaiAPI.Utils;
 
 namespace WebsiteSellingBonsai.Areas.Admin.Controllers
 {
@@ -59,6 +61,13 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
+                if (userInfo == null)
+                    return RedirectToAction("Login", "Users", new { area = "Admin" });
+                generalMeaning.UpdatedDate = DateTime.Now;
+                generalMeaning.UpdatedBy = userInfo.UserName;
+                generalMeaning.CreatedDate = DateTime.Now;
+                generalMeaning.CreatedBy = userInfo.UserName;
                 _context.Add(generalMeaning);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,6 +107,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             {
                 try
                 {
+                    var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
+                    if (userInfo == null)
+                        return RedirectToAction("Login", "Users", new { area = "Admin" });
+                    generalMeaning.UpdatedDate = DateTime.Now;
+                    generalMeaning.UpdatedBy = userInfo.UserName;
                     _context.Update(generalMeaning);
                     await _context.SaveChangesAsync();
                 }

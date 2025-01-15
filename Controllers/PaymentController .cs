@@ -8,6 +8,7 @@ using System.Net.Http;
 using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.DTOS.Orders;
 using System.Text.Json;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -26,7 +27,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });
@@ -44,7 +45,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpGet]
         public async Task<IActionResult> NoOrder()
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });
@@ -55,7 +56,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpPost("CreatePayment")]
         public async Task<IActionResult> CreatePayment(Create_order create_Order,string redirectUrl)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if(create_Order.Address == "Không có địa chỉ")
             {
@@ -88,7 +89,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpPost("Create_Order")]
         public async Task<IActionResult> Create_Order(/*string paymentMethod*/)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });

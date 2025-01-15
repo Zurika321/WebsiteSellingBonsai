@@ -264,3 +264,9 @@ SELECT *FROM GeneralMeanings;
 SELECT *FROM Styles;
 SELECT *FROM Types;
 SELECT *FROM Favourites;
+
+
+SELECT *FROM AspNetUsers;
+SELECT *FROM AspNetRoles;
+SELECT *FROM AspNetUserRoles;
+SELECT *FROM AspNetUserClaims;

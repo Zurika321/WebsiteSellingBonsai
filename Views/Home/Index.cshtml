@@ -2,17 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 @using System.Linq
-
-@model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO>
+@using WebsiteSellingBonsaiAPI.Models
+@model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.View.BonsaiDTO>
 
 <style>
     .card {
-    background-color: #f9fdf9; /* Màu nền nhạt, hợp với cây cảnh */
-    transition: transform 0.3s ease, border-color 0.3s ease;
+        background-color: #f9fdf9;
     }
 
     .card:hover {
-    transform: scale(1.05);
     border-color: #218838;
     }
     .product-card {
@@ -50,57 +48,89 @@
     font-size: 0.875rem;
     }
 
+    #listproduct {
+        scroll-margin-top: 120px; /* Đặt khoảng cách 200px từ đỉnh */
+    }
+
+
 </style>
 <div class="container">
     <section id="featured-products" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-4">
                 <h2 class="fw-bold text-success">Sản Phẩm Nổi Bật</h2>
-                <p class="text-muted">Khám phá những mẫu bonsai đẹp nhất chúng tôi cung cấp</p>
+                <p class="text-muted mb-5">Khám phá những mẫu bonsai đẹp nhất chúng tôi cung cấp</p>
             </div>
 
-            <div class="row g-4">
-                <!-- Product Card 1 -->
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 1" style="object-fit: cover; height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title text-success">Bonsai Nhật Bản</h5>
-                            <p class="card-text text-muted">Phong cách tinh tế, mang lại không gian thiền định.</p>
-                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-                        </div>
+            @{
+                var features = ViewData["Features"] as List<Feature>;
+                int chunkSize = 3;
+            }
+
+            @if (features != null && features.Any())
+            {
+                var chunks = features.Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(g => g.Select(x => x.Value).ToList())
+                .ToList();
+
+                <div id="featuresCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < chunks.Count; i++)
+                        {
+                            var chunk = chunks[i];
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <div class="row g-4">
+                                    @foreach (var feature in chunk)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="card border-0 shadow-sm">
+                                                <img src="@(string.IsNullOrEmpty(feature.ImageUrl) ? "/Data/noimage.png" : feature.ImageUrl)"
+                                                     class="card-img-top"
+                                                     alt="@feature.Title"
+                                                     style="object-fit: cover; height: 200px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-success">@feature.Title</h5>
+                                                    <p class="card-text text-muted">@Html.Raw(feature.Description)</p>
+                                                    <a href="@feature.Link" class="btn btn-outline-success w-100">Xem Chi Tiết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
                     </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev btn btn-primary" style="width: 45px" type="button" data-bs-target="#featuresCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next btn btn-primary" style="width: 45px" type="button" data-bs-target="#featuresCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
 
-                <!-- Product Card 2 -->
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 2" style="object-fit: cover; height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title text-success">Bonsai Nghệ Thuật</h5>
-                            <p class="card-text text-muted">Tác phẩm nghệ thuật sống động từ thiên nhiên.</p>
-                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-                        </div>
-                    </div>
+                <!-- Indicators -->
+				<div class="position-absolute d-flex justify-content-center" style="bottom: 0px">
+                    @for (int i = 0; i < chunks.Count; i++)
+                    {
+                        <button type="button" class="mx-1" data-bs-target="#featuresCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @(i + 1)">@i</button>
+                    }
                 </div>
-
-                <!-- Product Card 3 -->
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <img src="~/Data/noimage.png" class="card-img-top" alt="Bonsai 3" style="object-fit: cover; height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title text-success">Bonsai Phong Thủy</h5>
-                            <p class="card-text text-muted">Mang lại may mắn và tài lộc cho gia chủ.</p>
-                            <a href="#" class="btn btn-outline-success">Xem Chi Tiết</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
+            else
+            {
+                <p class="text-center">Không có tính năng nào để hiển thị.</p>
+            }
         </div>
     </section>
 
 
-    <h2>Cây Bonsais</h2> 
+    <h2 id="listproduct">Cây Bonsais</h2> 
     @if(ViewData["image"] != null){
         @ViewData["image"]
     }
@@ -110,6 +140,19 @@
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
+    }
+
+    function hasQueryParams() {
+        return window.location.search.length > 1; // Nếu có query parameters, search sẽ không rỗng
+    }
+
+    if (hasQueryParams()) {
+        document.addEventListener("DOMContentLoaded", function() {
+            const listProductElement = document.getElementById("listproduct");
+            if (listProductElement) {
+                listProductElement.scrollIntoView({ behavior: "smooth" });
+            }
+        });
     }
 
     const typeId = getQueryParam("TypeId");
@@ -164,9 +207,11 @@
                 <option value="Price_low" >Gía tiền từ thấp đến cao</option>
                 <option value="Price_high" >Gía tiền từ cao đến thấp</option>
                 <option value="Size_low" >Kích thước từ thấp đến cao</option>
-                <option value="Size_high" >Kích thước từ cao đến thấp</option>
+                <option value="Size_high">Kích thước từ cao đến thấp</option>
                 <option value="YearOld_low" >Độ tuối từ thấp đến cao</option>
-                <option value="YearOld_high" >Đổ tuổi từ cao đến thấp</option>
+                <option value="YearOld_high">Đổ tuổi từ cao đến thấp</option>
+                <option value="CountFav_high">Lượt yêu thích từ cao đến thấp</option>
+                <option value="CountFav_low">Lượt yêu thích từ thấp đến cao</option>
             </select>
             <script>
                 var sortby = getQueryParam("sortby"); // Giá trị này được truyền từ Controller
@@ -221,21 +266,28 @@
                   </div>
                   <div style="" class="cartt">
 						<div>
-							@* <form asp-action="Yeuthich" asp-controller="Yeuthich" method="post"> *@
-								<input type="hidden" value="@bonsai.Id" name="bonsai_id" />
-								<button class="btn btn-outline-danger rounded-circle my-1" type="submit"><i class="fa-light fa-heart"></i></button>
-							@* </form> *@
+                            <form asp-action="AddFavorite" asp-controller="Favourite" method="post">
+                                <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
+                                <input type="hidden" value="@url" name="redirectUrl" />
+                                <p class="text-center" style="transform: translateY(20px);background: rgb(255,255,255,0.5)">@bonsai.CountFav</p>
+                                <button class="btn btn-outline-danger rounded-circle my-1" type="submit">
+                                        @if (bonsai.IsFav == true)
+                                        {
+                                            <i class="fa-duotone fa-light fa-heart"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa-light fa-heart"></i>
+                                        }
+                                </button>
+							</form>
 						    <form asp-action="AddCart" asp-controller="Cart" method="post">
 							    <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
 							    <input type="hidden" name="quantity" value="1" />
                                 <input type="hidden" name="redirectUrl" value="@url" />
                                 <button class="btn btn-outline-primary rounded-circle my-1" type="submit"><i class="fa-light fa-cart-shopping"></i></button>
 						    </form>
-                            @* <form asp-action="" asp-controller="" method="post"> *@
-                                <input type="hidden" value="@bonsai.Id" name="bonsai_id" />
-                                <input type="hidden" name="quantity" value="1" />
-                                <button class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></button>
-                            @* </form> *@
+                            <a asp-controller="bonsai" asp-action="index" asp-route-id="@bonsai.Id" class="btn btn-outline-success rounded-circle my-1" type="submit"><i class="fa-light fa-eye"></i></a>
                       </div>
                   </div>
                   <div class="card-body text-center">

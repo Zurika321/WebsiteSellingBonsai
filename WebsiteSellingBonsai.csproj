@@ -23,7 +23,8 @@
 		<Folder Include="Areas\Admin\Models\" />
 		<Folder Include="App_Data\" />
 		<Folder Include="SQL\" />
-		<Folder Include="wwwroot\Data\NewFolder\" />
+		<Folder Include="wwwroot\Data\Feature\" />
+		<Folder Include="wwwroot\Data\Users\" />
 		<Folder Include="wwwroot\Data\Product\" />
 	</ItemGroup>
 

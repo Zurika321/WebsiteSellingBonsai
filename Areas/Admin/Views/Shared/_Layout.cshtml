@@ -1,7 +1,7 @@
 ﻿@using WebsiteSellingBonsaiAPI.Utils
-@using WebsiteSellingBonsaiAPI.Models
+@using WebsiteSellingBonsaiAPI.DTOS.User
 @{
-    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
+    var userInfo = Context.Session.Get<ApplicationUserDTO>("userInfo");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +23,16 @@
     <!-- Thêm trong <head> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
-
     @RenderSection("Header", required: false)
+    <style>
+        .card {
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body class ="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse bg-body-tertiary">
     <!--begin::App Wrapper-->
@@ -144,7 +152,7 @@
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar shadow" data-bs-theme="light">
             <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="../index.html" class="brand-link"> <!--begin::Brand Image--> <img src="~/admin/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="../index.html" class="brand-link"> <!--begin::Brand Image--> <img src="~/Data/logo/logo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--><!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <!--begin::Sidebar Menu-->
@@ -226,15 +234,9 @@
 							</ul>
 						</li>
                         <li class="nav-item rounded">
-                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" class="nav-link">
+                            <a asp-action="Index" asp-controller="UserManager" asp-area="Admin" class="nav-link">
                                 <i class="nav-icon bi bi-circle-fill"></i>
                                 <p>Khách hàng</p>
-                            </a>
-                        </li>
-                        <li class="nav-item rounded">
-                            <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
-                                <i class="nav-icon bi bi-circle-fill"></i>
-                                <p>Danh sách yêu thích</p>
                             </a>
                         </li>
                         <li class="nav-item rounded">
@@ -253,15 +255,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Features" asp-area="Admin" class="nav-link">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Feature</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Banners" asp-area="Admin" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Cards</p>
                                     </a>
                                 </li>
                             </ul>

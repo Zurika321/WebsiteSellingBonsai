@@ -77,6 +77,7 @@ namespace WebsiteSellingMiniBonsai
 
             // Đăng ký AuthService làm dịch vụ
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddScoped<IUrlService, UrlService>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
             builder.Services.AddScoped<EmailSender>();
             builder.Services.AddScoped<IAuthService, AuthService>();
@@ -115,7 +116,6 @@ namespace WebsiteSellingMiniBonsai
                 opts.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
             });
 
-
             // Thêm d?ch v? Controllers và Views
             builder.Services.AddControllersWithViews();
 
@@ -153,7 +153,8 @@ namespace WebsiteSellingMiniBonsai
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
 
             app.Run();
         }

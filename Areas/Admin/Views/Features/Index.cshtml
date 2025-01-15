@@ -1,0 +1,105 @@
+﻿@model IEnumerable<WebsiteSellingBonsaiAPI.Models.Feature>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .img_show_preview {
+        display: inline-block;
+        max-height: 50px;
+        max-width: 100px;
+        position: relative;
+    }
+
+        .img_show_preview .img1 {
+            max-height: 50px;
+            max-width: 100px;
+        }
+
+        .img_show_preview .img2 {
+            max-height: 200px;
+            max-width: 400px;
+            position: absolute;
+            left: 0;
+            top: -50%;
+            transform: translateY(-50%);
+            display: none
+        }
+
+        .img_show_preview:hover .img2 {
+            display: block
+        }
+</style>
+
+<div class="card card-success card-outline">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md"><h3 class="card-title">Features</h3></div>
+            <div class="col-md-auto">
+                <button id="btnAdd" type="button" class="btn btn-success">
+                    <a asp-action="Create" class="text-white text-decoration-none"><i class="fa-light fa-add me-1"></i> Add new</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive ">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImageUrl)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Link)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageUrl)')">
+                                        <img src="@Url.Content("~/" + item.ImageUrl)" alt="Product Image" class="img1" />
+                                        <img src="@Url.Content("~/" + item.ImageUrl)" alt="Product Image" class="img2" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="img_show_preview" style="background-image: url('@Url.Content("~/" + item.ImageUrl)')">
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img1" />
+                                        <img src="/Data/noimage.png" alt="Product Image" class="img2" />
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @Html.Raw(item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Link)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.FEA_ID">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.FEA_ID">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.FEA_ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

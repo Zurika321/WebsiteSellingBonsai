@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using WebsiteSellingBonsaiAPI.DTOS.Carts;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -23,39 +24,39 @@ namespace WebsiteSellingBonsai.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
 
             if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" }); // trang login
 
-            //var (cart, thongbaopcart) = await _apiServices.FetchDataApiGet<Cart>("CartsAPI/GetCart");
-            //if (cart == default)
-            //    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopcart);
+            var (cart, thongbaopcart) = await _apiServices.FetchDataApiGet<Cart>("CartsAPI/GetCart");
+            if (cart == default)
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopcart);
             //    TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopcart);
 
-            var cart = await _context.Carts
-                .Include(c => c.CartDetails)
-                    .ThenInclude(cd => cd.Bonsai)
-                .FirstOrDefaultAsync(c => c.USE_ID == userInfo.Id);
+            //var cart = await _context.Carts
+            //    .Include(c => c.CartDetails)
+            //        .ThenInclude(cd => cd.Bonsai)
+            //    .FirstOrDefaultAsync(c => c.USE_ID == userInfo.Id);
 
-            if (cart == null)
-            {
-                // Nếu giỏ hàng chưa tồn tại, tạo mới
-                cart = new Cart
-                {
-                    USE_ID = userInfo.Id,
-                    CreatedBy = userInfo.UserName,
-                    CreatedDate = DateTime.Now,
-                    UpdatedBy = userInfo.UserName,
-                    UpdatedDate = DateTime.Now,
-                };
-                _context.Carts.Add(cart);
-                await _context.SaveChangesAsync();
-                cart.CartDetails = new List<CartDetail>();
-            }
-            if (cart.CartDetails == null)
-            {
-                cart.CartDetails = new List<CartDetail>();
-            }
+            //if (cart == null)
+            //{
+            //    // Nếu giỏ hàng chưa tồn tại, tạo mới
+            //    cart = new Cart
+            //    {
+            //        USE_ID = userInfo.Id,
+            //        CreatedBy = userInfo.UserName,
+            //        CreatedDate = DateTime.Now,
+            //        UpdatedBy = userInfo.UserName,
+            //        UpdatedDate = DateTime.Now,
+            //    };
+            //    _context.Carts.Add(cart);
+            //    await _context.SaveChangesAsync();
+            //    cart.CartDetails = new List<CartDetail>();
+            //}
+            //if (cart.CartDetails == null)
+            //{
+            //    cart.CartDetails = new List<CartDetail>();
+            //}
 
             return View(cart);
         }
@@ -63,7 +64,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpPost, ActionName("AddCart")]
         public async Task<IActionResult> AddCart(Addcart addcart,string redirectUrl)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
             if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
 
             var (Success, thongbaopostcart) = await _apiServices.FetchDataApiPost<Addcart>("CartsAPI/AddBonsai", addcart);
@@ -72,11 +73,12 @@ namespace WebsiteSellingBonsai.Controllers
             }
             TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaopostcart);
             return Redirect(redirectUrl ?? Url.Action("Index", "Home"));
+            //return NoContent();
         }
         [HttpPost, ActionName("update_quantity")]
         public async Task<IActionResult> update_quantity(Update_cart up)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
             if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
 
             var (Success, thongbaopostcart) = await _apiServices.FetchDataApiPut<Update_cart>($"CartsAPI/update_cart", up);
@@ -91,7 +93,7 @@ namespace WebsiteSellingBonsai.Controllers
         [HttpPost, ActionName("RemoveFromCart")]
         public async Task<IActionResult> RemoveFromCart(int CART_D_ID)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
             if (userInfo == null) return RedirectToAction("Login", "Users", new { area = "Admin" });
 
             var (Success, thongbaopostcart) = await _apiServices.FetchDataApiDelete($"CartsAPI/{CART_D_ID}" , image: null);
