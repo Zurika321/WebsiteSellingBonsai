@@ -1,4 +1,8 @@
-﻿@model WebsiteSellingBonsaiAPI.Models.Cart
+﻿@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+@model WebsiteSellingBonsaiAPI.Models.Cart
 
 <h2>Giỏ hàng của bạn</h2>
 
@@ -21,7 +25,7 @@ else
             </div>
         </form>
     </div>
-    <table class="table">
+	<table class="table">
         <thead>
             <tr>
                 <th></th>
@@ -58,27 +62,28 @@ else
                 </tr>
             }
         </tbody>
-        <tfoot>
-            <tr style="height: 100px"></tr>
-            <tr>
-                <td></td>
-                <td colspan="3">Tổng cộng:</td>
-                <td>
-                    <span id="totalall">0.000 vnđ</span>
-                </td>
-                <td>
-                    <button id="btn_create_payments" class="btn btn-success" popovertarget="create_payment">
-                        Đặt hàng
-                    </button>
-                </td>
-            </tr>
-        </tfoot>
+    </table>
+
+    <table>
+        <tr style="height: 100px"></tr>
+        <tr>
+            <td></td>
+            <td colspan="3">Tổng cộng:</td>
+            <td>
+                <span id="totalall">0.000 vnđ</span>
+            </td>
+            <td>
+                <button id="btn_create_payments" class="btn btn-success" popovertarget="create_payment">
+                    Đặt hàng
+                </button>
+            </td>
+        </tr>
     </table>
 }
 @using WebsiteSellingBonsaiAPI.Utils
-@using WebsiteSellingBonsaiAPI.Models
+@using WebsiteSellingBonsaiAPI.DTOS.User
 @{
-    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
+    var userInfo = Context.Session.Get<ApplicationUserDTO>("userInfo");
     var scheme = Context.Request.Scheme;
     var host = Context.Request.Host;
     var path = Context.Request.Path;

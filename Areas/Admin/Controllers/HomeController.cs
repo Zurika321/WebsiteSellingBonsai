@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebsiteSellingBonsaiAPI.DTOS.Constants;
 using WebsiteSellingBonsaiAPI.DTOS.Orders;
+using WebsiteSellingBonsaiAPI.DTOS.User;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
 
@@ -20,7 +21,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index([FromServices] UserManager<ApplicationUser> userManager)
         {
-            var userInfo = HttpContext.Session.Get<ApplicationUser>("userInfo");
+            var userInfo = HttpContext.Session.Get<ApplicationUserDTO>("userInfo");
             if (userInfo == null)
                 return RedirectToAction("Login", "Users", new { area = "Admin" });
 

@@ -1,8 +1,8 @@
 ﻿@using WebsiteSellingBonsaiAPI.Utils
-@using WebsiteSellingBonsaiAPI.Models
-@using WebsiteSellingBonsaiAPI.DTOS
+@using WebsiteSellingBonsaiAPI.DTOS.User
+@using WebsiteSellingBonsaiAPI.DTOS.View
 @{
-    var userInfo = Context.Session.Get<ApplicationUser>("userInfo");
+    var userInfo = Context.Session.Get<ApplicationUserDTO>("userInfo");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -39,20 +39,25 @@
         right: 0;
         z-index: 1000;
         }
+
         .card {
-        transition: transform 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
         }
 
         .card div {
         overflow: hidden;
         }
-        :root{
+        /* :root{
         --color-ui : rgb(85, 215, 111);
         --bg-mode-l: rgb(255,255,255);
         --bg-mode-d: rgb(30,30,30);
         --text-mode-l: rgb(0,0,0);
         --text-mode-d: rgb(255,255,255);
-        }
+        } */
         #menu_search{
         position: absolute;
         background-color: white;
@@ -86,8 +91,7 @@
     ">
         <div class="container d-flex justify-content-between align-items-center py-2" style="height: 80px">
             <!-- Logo -->
-            <div style="overflow: hidden;max-height: 60px;width: 120px"><img src="~/Data/logo/logo.jpg" alt="logo_web" class="img-fluid border rounded" style="cursor: pointer; width: 120px;" onclick="window.location.href = '/'" /></div>
-
+            <img src="~/Data/logo/logo.png" alt="logo_web" class="img-fluid border rounded" style="cursor: pointer;max-height:60px" onclick="window.location.href = '/'" />
             <!-- Main Menu -->
             <nav class="d-none d-md-flex align-items-center gap-3">
                 <a class="btn btn-outline-success px-2 mx-1" href="#">Trang chủ</a>
@@ -125,7 +129,9 @@
                         <span>@userInfo?.UserName</span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownUserInfo">
-                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Information" class="dropdown-item">Thông tin</a>
+                        </li>
                         <li>
                             <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
                         </li>
@@ -164,8 +170,9 @@
                     <li><a class="dropdown-item" href="#">Liên hệ</a></li>
                     @if (userInfo != null)
                     {
-
-                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li>
+							<a asp-action="Index" asp-controller="Information" class="dropdown-item">Thông tin</a>
+                        </li>
                         <li>
                             <a asp-action="Index" asp-controller="Cart" class="dropdown-item">Giỏ hàng</a>
                         </li>
@@ -596,7 +603,6 @@
             thong_bao_chung(thongBao.Message, thongBao.DisplayTime, thongBao.MessageType);
         </script>
     }
-
     <script src="~/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
   </body>

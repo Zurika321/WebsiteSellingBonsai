@@ -2190,12 +2190,19 @@ wwwroot\Data\banner\backgroud_20241223145833.jpg
 wwwroot\Data\banner\backgroud_20241223150632.jpg
 wwwroot\Data\banner\backgroud3_20241223145853.jpg
 wwwroot\Data\banner\canh_20241223124850.png
+wwwroot\Data\banner\cay hoa do quyen_20250102164534_20250110142726.jpg
 wwwroot\Data\banner\giphy_20241223123328.gif
 wwwroot\Data\banner\giphy_20241223125312.gif
 wwwroot\Data\banner\giphy_20241223134721.gif
+wwwroot\Data\banner\hoa-mau-don-do_20250102164454_20250110142623.jpg
 wwwroot\Data\banner\hoang1_20250106092025.jpg
 wwwroot\Data\banner\hoang2_20250106092035.jpg
-wwwroot\Data\logo\logo.jpg
+wwwroot\Data\Feature\cay-da-canh_20250102164718_20250114221644.jpg
+wwwroot\Data\Feature\cay-da-canh_20250102164718_20250114222210.jpg
+wwwroot\Data\Feature\caykhe_20250102164854_20250114223916.jpg
+wwwroot\Data\logo\logo.png
+wwwroot\Data\logo\logo1.png
+wwwroot\Data\logo\logo2.jpg
 wwwroot\Data\noimage.png
 wwwroot\Data\Product\canh_20241219165458.png
 wwwroot\Data\Product\canh_20241223072740.png
@@ -2216,6 +2223,15 @@ wwwroot\Data\Product\hoa-mau-don-do_20250102164454_20250110081501.jpg
 wwwroot\Data\Product\trong-hoa-nhai-trong-chau-10-min_20250102164446.jpeg
 wwwroot\Data\Product\usernoimage_20250103222954.png
 wwwroot\Data\usernoimage.png
+wwwroot\Data\Users\canh_20250114193822.png
+wwwroot\Data\Users\canh_20250114194051.png
+wwwroot\Data\Users\canh_20250114194517.png
+wwwroot\Data\Users\canh_20250114194746.png
+wwwroot\Data\Users\canh_20250114194843.png
+wwwroot\Data\Users\canh_20250114195010.png
+wwwroot\Data\Users\canh_20250114200725.png
+wwwroot\Data\Users\conifer-dawn-daylight-evergreen-167698_20250114194120.jpg
+wwwroot\Data\Users\conifer-dawn-daylight-evergreen-167698_20250114195618.jpg
 wwwroot\favicon.ico
 wwwroot\js\bootstrap.bundle.min.js
 wwwroot\js\site.js

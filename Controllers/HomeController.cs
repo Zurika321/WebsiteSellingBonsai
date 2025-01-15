@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using NuGet.Protocol.Model;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
-using WebsiteSellingBonsaiAPI.DTOS;
+using WebsiteSellingBonsaiAPI.DTOS.View;
 using WebsiteSellingBonsaiAPI.Models;
 using WebsiteSellingBonsaiAPI.Utils;
 
@@ -38,6 +38,17 @@ namespace WebsiteSellingBonsai.Controllers
 
             var (bonsais, thongbaobonsai) = await _apiServices.FetchDataApiGetList<BonsaiDTO>("bonsaisAPI");
             var (banners, thongbaobanner) = await _apiServices.FetchDataApiGetList<BannerDTO>("bannersAPI");
+            var (features, thongbaofeature) = await _apiServices.FetchDataApiGetList<Feature>("FeaturesAPI");
+
+            if (features == default)
+            {
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaofeature);
+                ViewData["Features"] = new List<Feature>();
+            }
+            else
+            {
+                ViewData["Features"] = features;
+            }
 
             var (phanloai, thongbaophanloai) = await _apiServices.FetchDataApiGet<PhanLoaiBonsaiDTO>("PhanLoaiBonsaiAPI");
             if (phanloai != default)
@@ -59,7 +70,6 @@ namespace WebsiteSellingBonsai.Controllers
             ViewData["typesort"] = typesort;
 
             const int pageSize = 12;
-            
             
             if (bonsais != default)
             {

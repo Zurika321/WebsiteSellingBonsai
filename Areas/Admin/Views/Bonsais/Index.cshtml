@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.BonsaiDTO>
+﻿@model IEnumerable<WebsiteSellingBonsaiAPI.DTOS.View.BonsaiDTO>
 
 @{
     ViewData["Title"] = "Index";
@@ -69,12 +69,15 @@
                         <th>
                                         @Html.DisplayNameFor(model => model.Type)
                         </th>
+                        <th>
+                                        Lượt yêu thích
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                                @foreach (var item in Model)
-                                {
+                    @foreach (var item in Model)
+                    {
                         <tr>
                             <td>
                                 @if (!string.IsNullOrEmpty(item.ImageOld))
@@ -111,12 +114,15 @@
                                              @Html.Raw(item.Type.Name)
                             </td>
                             <td>
+                                            @Html.Raw(item.CountFav)
+                            </td>
+                            <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-sharp-duotone fa-regular fa-pen-to-square" style="color: blue"></i></a>
                                         <a asp-action="Details" asp-route-id="@item.Id" title="View"><i class="fa-duotone fa-solid fa-eye" style="--fa-primary-color: #24a36c; --fa-secondary-color: #24a36c;"></i></a>
                                         <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-duotone fa-regular fa-trash" style="--fa-primary-color: #ff0000; --fa-secondary-color: #ff0000;"></i></a>
                             </td>
                         </tr>
-                                }
+                    }
                 </tbody>
             </table>
         </div>
