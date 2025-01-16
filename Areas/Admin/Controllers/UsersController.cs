@@ -170,6 +170,11 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(string email)
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewData["Message"] = "Vui lòng nhập email để gửi xác nhận về email";
+                return View();
+            }
             var (success, thongBao) = await _apiServices.FetchDataApiPost("Authenticate/ForgotPassword", email);
             ViewData["Message"] = thongBao.Message;
             return View();
@@ -190,10 +195,24 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
         {
-            var (success, thongBao) = await _apiServices.FetchDataApiPost<ResetPassword>("Authenticate/ResetPassword", resetPassword);
-            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
+            if (string.IsNullOrEmpty(resetPassword.newpassword) || string.IsNullOrEmpty(resetPassword.Comfirmpassword))
+            {
+                ViewData["Message"] = "Vui lòng nhập đầy đủ password và password comfirm";
+                return View();
+            }
+            if (string.IsNullOrEmpty(resetPassword.token) || string.IsNullOrEmpty(resetPassword.userid))
+            {
+                ViewData["Message"] = "Không xác nhận được người thay đổi mật khẩu";
+                return View();
+            }
+            if (ModelState.IsValid)
+            {
+                var (success, thongBao) = await _apiServices.FetchDataApiPost<ResetPassword>("Authenticate/ResetPassword", resetPassword);
+                TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongBao);
 
-            return Redirect("/");
+                return Redirect("/");
+            }
+            return View();
         }
 
         [HttpPost]
