@@ -8,6 +8,8 @@ using System.Net.Http;
 using WebsiteSellingBonsaiAPI.DTOS.Carts;
 using WebsiteSellingBonsaiAPI.DTOS.User;
 using WebsiteSellingBonsaiAPI.DTOS.View;
+using WebsiteSellingBonsaiAPI.DTOS.Constants;
+using WebsiteSellingBonsaiAPI.DTOS.Review;
 
 namespace WebsiteSellingBonsai.Controllers
 {
@@ -81,6 +83,16 @@ namespace WebsiteSellingBonsai.Controllers
             };
 
             return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendReview(AddReview addReview)
+        {
+            
+            var (review, thongbaoreview) = await _apiServices.FetchDataApiPost<AddReview>("reviewsAPI/AddReview", addReview);
+
+            TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaoreview);
+
+            return RedirectToAction("Index", "Bonsai", new { id = addReview.bonsai_id });
         }
     }
 }

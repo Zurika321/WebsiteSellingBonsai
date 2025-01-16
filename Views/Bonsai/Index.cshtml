@@ -75,17 +75,23 @@
                 <!-- Đánh giá sản phẩm -->
                 <div class="rating">
                     <span class="text-warning">
-                        @for (int i = 0; i < (Model.CurrentBonsai.rates ?? 0); i++) // Dùng giá trị mặc định là 0 nếu Rates là null
+                        @for (int i = 0; i < Math.Floor(Model.CurrentBonsai.rates ?? 0); i++)  // Làm tròn xuống
                         {
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i> <!-- Sao đầy đủ -->
                         }
-                        @for (int i = (Model.CurrentBonsai.rates ?? 0); i < 5; i++) // Tiếp tục logic cho các sao còn thiếu
+
+                        @if (Model.CurrentBonsai.rates % 1 != 0) // Kiểm tra nếu có phần thập phân (số lẻ)
                         {
-                            <i class="far fa-star"></i>
+                            <i class="fa-sharp-duotone fa-solid fa-star-half-stroke"></i> <!-- Sao nửa -->
+                        }
+
+                        @for (int i = (int)Math.Ceiling(Model.CurrentBonsai.rates ?? 0); i < 5; i++)  // Làm tròn lên
+                        {
+                            <i class="far fa-star"></i> <!-- Sao trống -->
                         }
                     </span>
                     <span>
-                        (@(Model.CurrentBonsai.nopwr) người đánh giá)
+                        (@Math.Round(Model.CurrentBonsai.rates ?? 0, 1) sao, @(Model.CurrentBonsai.nopwr) người đánh giá)
                     </span>
                 </div>
 
@@ -138,15 +144,23 @@
             <!-- Phần đánh giá sản phẩm (ẩn mặc định) -->
             <div id="reviewSection" class="d-none">
                 <h3 class="mb-4">Đánh giá sản phẩm</h3>
+				@{
+					var listreview = ViewData["Reviews"] as List<Review>;
+					var myreview = ViewData["MyReview"] as Review;
+					if (listreview == null)
+					{
+						listreview = new List<Review>();
+					}
+				}
 
                 <!-- Phần thêm đánh giá -->
                 <div class="mb-4">
                     <h5>Viết đánh giá của bạn:</h5>
-                    <form id="reviewForm" asp-action="SubmitReview" asp-controller="Review" method="post">
-                        <input type="hidden" name="bonsaiId" value="@Model.CurrentBonsai.Id" />
+                    <form id="reviewForm" asp-action="SendReview" method="post">
+                        <input type="hidden" name="bonsai_id" value="@Model.CurrentBonsai.Id" />
                         <div class="mb-3">
                             <label for="rating" class="form-label">Số sao:</label>
-                            <select name="rating" id="rating" class="form-select">
+                            <select name="rate" id="rating" class="form-select">
                                 @for (int i = 5; i >= 1; i--)
                                 {
                                     <option value="@i">@i Sao</option>
@@ -155,32 +169,50 @@
                         </div>
                         <div class="mb-3">
                             <label for="reviewText" class="form-label">Đánh giá:</label>
-                            <textarea name="reviewText" id="reviewText" rows="3" class="form-control" placeholder="Nhập đánh giá của bạn..."></textarea>
+                            <textarea name="comment" id="reviewText" rows="3" class="form-control" placeholder="Nhập đánh giá của bạn...">@(myreview != null ? myreview.Comment : "")</textarea>
                         </div>
-                        <button type="submit" class="btn btn-success">Gửi đánh giá</button>
+                        <button type="submit" class="btn btn-success">@(myreview != null ? "Cập nhật lại đánh giá" : "Gửi đánh giá")</button>
                     </form>
                 </div>
 
-                @{
-                    // var listreview = new List<dynamic>{
-                    //     new { Name = "Nguyễn Văn A", Rating = 5, Comment = "Sản phẩm rất tuyệt vời!", Date = DateTime.Now.AddDays(-1) },
-                    //     new { Name = "Trần Thị B", Rating = 4, Comment = "Cây đẹp nhưng giao hàng hơi chậm.", Date = DateTime.Now.AddDays(-3) },
-                    //     new { Name = "Lê Hoàng C", Rating = 3, Comment = "Chất lượng ổn, nhưng giá hơi cao.", Date = DateTime.Now.AddDays(-7) }
-                    // };
-                    var listreview = ViewData["Reviews"] as List<Review>;
-                    if (listreview == null){
-                        listreview = new List<Review>();
-                    }
-                }
+                
                 <!-- Danh sách đánh giá -->
                 <div class="scroll-container">
+                    @if (myreview != null){
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+										<h5 class="card-title mx-2">@myreview.UpdatedBy </h5><small>@(myreview.UpdatedDate != myreview.CreatedDate ? "(Đã chỉnh sửa)" : "")</small>
+                                    </div>
+									
+                                    <p class="text-warning">
+                                        @for (int i = 0; i < myreview.Rate; i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        @for (double i = myreview.Rate; i < 5; i++)
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    </p>
+                                </div>
+                                <p class="card-text">@myreview.Comment</p>
+                                <small class="text-muted">
+                                    @(myreview.CreatedDate?.ToShortDateString() ?? "No date")
+                                </small>
+                            </div>
+                        </div>
+                    }
                     @if (listreview.Count != 0){
                         foreach (var review in listreview)
                         {
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">@review.USE_ID</h5>
+                                        <div class="d-flex">
+                                            <h5 class="card-title mx-2">@review.UpdatedBy </h5><small>(@(review.UpdatedDate != review.CreatedDate ? "Đã chỉnh sửa" : ""))</small>
+                                        </div>
                                         <p class="text-warning">
                                             @for (int i = 0; i < review.Rate; i++)
                                             {
@@ -199,7 +231,9 @@
                                 </div>
                             </div>
                         }
-                    }else{
+                    }
+                    else if (listreview.Count != 0 && myreview == null)
+                    {
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center" style="height: 300px">

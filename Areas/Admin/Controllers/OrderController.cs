@@ -176,12 +176,7 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                 });
                 return RedirectToAction("Index");
             }
-
-            order.Status = StatusOrder.On_Delivery;
-            order.UpdatedDate = DateTime.Now;
-            order.UpdatedBy = userInfo.UserName;
-
-            if (order.Status == StatusOrder.NotConfirmed)
+            else
             {
                 foreach (var detail in order.OrderDetails)
                 {
@@ -208,17 +203,21 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
                     }
 
                     bonsai.Quantity -= detail.Quantity;
-
+                    _context.Update(bonsai);
                 }
             }
-            
+
+            order.Status = StatusOrder.On_Delivery;
+            order.UpdatedDate = DateTime.Now;
+            order.UpdatedBy = userInfo.UserName;
+
             var (user, thongbaogetuser) = await _apiServices.FetchDataApiGet<ApplicationUserDTO>($"Authenticate/getuserinfobyid?id={order.USE_ID}");
             if (user == null)
             {
                 TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(thongbaogetuser);
                 return RedirectToAction("Index");
             }
-
+            
             await _context.SaveChangesAsync();
             TempData["ThongBao"] = Newtonsoft.Json.JsonConvert.SerializeObject(new ThongBao
             {

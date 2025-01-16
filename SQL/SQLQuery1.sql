@@ -223,6 +223,12 @@ JOIN
     Title NVARCHAR(255),
     ImageURL NVARCHAR(1024),
     Description NVARCHAR(1024),
+	Link NVARCHAR(1024),
+
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(50) DEFAULT 'Admin',
+    UpdatedDate DATETIME DEFAULT GETDATE(),
+    UpdatedBy NVARCHAR(50) DEFAULT 'Admin',
 );
 
 CREATE TABLE Favourites (
@@ -234,6 +240,16 @@ CREATE TABLE Favourites (
    FOREIGN KEY (USE_ID) REFERENCES AspNetUsers(Id),
    FOREIGN KEY (BONSAI_ID) REFERENCES Bonsais(ID)
 );
+CREATE TABLE Settings
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),   -- ID tự động tăng
+    Title NVARCHAR(255) NOT NULL,         -- Tiêu đề
+    Value NVARCHAR(MAX) NULL,             -- Giá trị của thiết lập, có thể lưu trữ dữ liệu động
+    Link NVARCHAR(255) NULL,              -- Đường dẫn liên kết (dành cho các title có link)
+    CreatedDate DATETIME DEFAULT GETDATE(), -- Thời gian tạo
+    UpdatedDate DATETIME DEFAULT GETDATE()  -- Thời gian cập nhật
+);
+
 
 DROP TABLE OrderDetails;     --1
 DROP TABLE Orders;           --2
@@ -270,3 +286,22 @@ SELECT *FROM AspNetUsers;
 SELECT *FROM AspNetRoles;
 SELECT *FROM AspNetUserRoles;
 SELECT *FROM AspNetUserClaims;
+
+--Phân loại role
+INSERT INTO AspNetRoles (Id,Name,NormalizedName)
+VALUES
+('7a513386-d3d1-4b4e-9174-6287e2a9f952','Admin','ADMIN'),
+('d96409b7-05f1-4828-bbb6-49866416de5f','User','USER');
+
+ALTER TABLE Bonsais DROP CONSTRAINT [DF__Bonsais__Rates__51BA1E3A];
+
+ALTER TABLE Bonsais ALTER COLUMN Rates FLOAT NULL;
+SELECT name
+FROM sys.default_constraints
+WHERE parent_object_id = OBJECT_ID('Bonsais') 
+  AND parent_column_id = (
+      SELECT column_id
+      FROM sys.columns
+      WHERE object_id = OBJECT_ID('Bonsais') 
+        AND name = 'Rates'
+  );

@@ -25,13 +25,13 @@
 
     @RenderSection("Header", required: false)
     <style>
-        .card {
+        /* .card {
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .card:hover {
             transform: scale(1.05);
-        }
+        } */
     </style>
 </head>
 <body class ="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse bg-body-tertiary">
@@ -136,15 +136,15 @@
                                     <small>@userInfo?.CreatedDate</small>
                                 </p>
                             </li> <!--end::User Image--> <!--begin::Menu Body-->
-                            <li class="user-body">
+							@*<li class="user-body">
                                 <!--begin::Row-->
-                                <div class="row">
+                                 <div class="row">
                                     <div class="col-4 text-center"> <a href="#">Followers</a> </div>
                                     <div class="col-4 text-center"> <a href="#">Sales</a> </div>
                                     <div class="col-4 text-center"> <a href="#">Friends</a> </div>
-                                </div> <!--end::Row-->
-                            </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
-                            <li class="user-footer"> <a class="btn btn-default btn-flat">Profile</a> <form asp-action="Logout" asp-controller="Users" method="post" class="btn btn-default btn-flat float-end"><button type=submit>Sign out</button></form> </li> <!--end::Menu Footer-->
+                                </div> 
+                            </li> *@
+                            <li class="user-footer"> <a asp-action="Index" asp-controller="Information" asp-area="" class="btn btn-default btn-flat">Information</a> <form asp-action="Logout" asp-controller="Users" method="post" class="btn btn-default btn-flat float-end"><button type=submit>Sign out</button></form> </li> <!--end::Menu Footer-->
                         </ul>
                     </li> <!--end::User Menu Dropdown-->
                 </ul> <!--end::End Navbar Links-->
@@ -152,7 +152,7 @@
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar shadow" data-bs-theme="light">
             <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="../index.html" class="brand-link"> <!--begin::Brand Image--> <img src="~/Data/logo/logo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--><!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="/" class="brand-link"> <!--begin::Brand Image--> <img src="~/Data/logo/logo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--><!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <!--begin::Sidebar Menu-->

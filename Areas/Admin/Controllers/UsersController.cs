@@ -28,11 +28,14 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
     {
         private readonly MiniBonsaiDBAPI _context;
         private readonly APIServices _apiServices;
+        private readonly ICaptchaService _captchaService;
 
-        public UsersController(MiniBonsaiDBAPI context, APIServices apiServices)
+
+        public UsersController(MiniBonsaiDBAPI context, APIServices apiServices, ICaptchaService captchaService)
         {
             _context = context;
             _apiServices = apiServices;
+            _captchaService = captchaService;
         }
 
         // GET: Admin/AdminUsers
@@ -46,8 +49,21 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Sigin(RegisterModel sigin)
+        public async Task<IActionResult> Sigin(RegisterModel sigin ,string captchaResponse)
         {
+            if (string.IsNullOrEmpty(captchaResponse))
+            {
+                ViewData["Message"] = "reCAPTCHA không hợp lệ.";
+                return View(sigin);
+            }
+
+            var isCaptchaValid = await _captchaService.VerifyCaptchaAsync(captchaResponse);
+            if (!isCaptchaValid)
+            {
+                ViewData["Message"] = "Xác thực reCAPTCHA thất bại.";
+                return View(sigin);
+            }
+
             if (ModelState.IsValid)
             {
                 if (sigin.Password != sigin.ComfrimPassword)
@@ -211,5 +227,14 @@ namespace WebsiteSellingBonsai.Areas.Admin.Controllers
             // Redirect về trang đăng nhập
             return RedirectToAction("Login", "Users");
         }
+        //public async Task<bool> VerifyCaptchaAsync(string captchaResponse)
+        //{
+        //    var secretKey = "6LcM7bcqAAAAAAhCqRTR6JyRTINm-5rcJfRboe9E"; // Thay bằng secret key của bạn
+        //    var client = new HttpClient();
+        //    var response = await client.PostAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}", null);
+        //    var jsonString = await response.Content.ReadAsStringAsync();
+        //    dynamic jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+        //    return jsonData.success == true;
+        //}
     }
 }

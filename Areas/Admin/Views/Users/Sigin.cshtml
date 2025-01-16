@@ -16,8 +16,8 @@
     <link href="~/admin/css/adminlte.css" rel="stylesheet" />
     <link href="~/admin/css/custom.css" rel="stylesheet" />
     <link href="~/admin/plugins/font-awesome/css/all.css" rel="stylesheet" />
-<div class="d-flex justify-content-center align-items-center bg-dark" style="Height: 100vh" id="body" >
-    <div class="login-box">
+<div class="d-flex justify-content-center bg-dark" id="body" >
+    <div class="login-box my-5">
             <div class="card card-outline card-success">
             <div class="card-header">
                 <a href="index.html" class="link-dark d-flex justify-content-center text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
@@ -30,7 +30,7 @@
                 {
                      <p class="login-box-msg text-danger">@ViewData["Message"]</p>
                 }
-                <form asp-action="Sigin" method="post">
+                <form asp-action="Sigin" method="post" id="form" onsubmit="validateCaptcha();">
                         <div class="input-group mb-3">
                           <div class="form-floating">
                             @* <label asp-for="Username" class="control-label"></label>      *@     
@@ -71,19 +71,40 @@
                             <span asp-validation-for="ComfrimPassword" class="text-danger"></span>
                             <label for="ComfrimPassword">Comfrim Password</label>
                           </div>
+                        
                           <div class="input-group-text">
                             <i class="fa-light fa-lock"></i>
                           </div>
                         </div>
+
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                @* <div class="g-recaptcha" data-sitekey="6LcM7bcqAAAAACrl4jG-V3VYp9TQdXa1iRJIfj1o"></div> *@
+                            <div class="g-recaptcha" data-sitekey="6LdH9bcqAAAAAPUk0lY78JCnep4r3PC0C7zwSIJJ"></div>
+                            <input type="hidden" name="captchaResponse" id="captchaResponse" />
+                            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                            <script>
+                                window.onload = function() {
+                                    document.getElementById("form").addEventListener("submit", function (event) {
+                                        var captchaResponse = grecaptcha.getResponse(); // Lấy giá trị từ reCAPTCHA
+
+                                        if (!captchaResponse) {
+                                            alert("Vui lòng hoàn thành CAPTCHA!");
+                                            event.preventDefault(); // Dừng gửi form
+                                        } else {
+                                            // Gán giá trị vào input ẩn
+                                            document.getElementById("captchaResponse").value = captchaResponse;
+                                        }
+                                    });
+                                }
+                            </script>
+                            
+						    </div>
+                        </div>
                         <!--begin::Row-->
                         <div class="row">
-                          <div class="col-8 d-inline-flex align-items-center" type="hidden">
-                            @* <div class="form-check">
-                                <input asp-for="RememberMe" class="form-check-input" type="hidden" id="flexCheckDefault" />
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    
-                                </label>
-                            </div> *@
+                          <div class="col-8 d-inline-flex align-items-center">
+                            
                           </div>
                           <!-- /.col -->
                           <div class="col-4">
@@ -139,9 +160,23 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
-    <script src="~/admin/plugins/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js"></script>
-    <script src="~/admin/js/bootstrap.bundle.min.js"></script>
-    <script src="~/admin/js/adminlte.js"></script>
+	}
     <script src="~/admin/plugins/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="~/admin/plugins/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js"></script>
+	<script src="~/admin/js/bootstrap.bundle.min.js"></script>
+	<script src="~/admin/js/adminlte.js"></script>
+
+    @* <script>
+        function validateCaptcha() {
+            var captchaResponse = grecaptcha.getResponse(); // Lấy giá trị từ reCAPTCHA
+            if (!captchaResponse) {
+                alert("Vui lòng hoàn thành CAPTCHA!");
+                return false;
+            }
+            document.getElementById('captchaResponse').value = captchaResponse; // Gán giá trị vào input ẩn
+            return true;
+        }
+    </script> *@
+}
+    

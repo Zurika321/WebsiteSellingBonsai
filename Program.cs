@@ -80,6 +80,7 @@ namespace WebsiteSellingMiniBonsai
             builder.Services.AddScoped<IUrlService, UrlService>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
             builder.Services.AddScoped<EmailSender>();
+            builder.Services.AddScoped<ICaptchaService, CaptchaService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<APIServices>();
             //builder.Services.AddTransient<IEmailSender, EmailSender>();
